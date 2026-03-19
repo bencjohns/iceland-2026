@@ -17,7 +17,7 @@
 - [x] Per-user voting (upvote/downvote) with voter name display
 - [x] Comments with threaded replies
 - [x] User-submitted suggestions with delete capability
-- [x] Leaderboard view ranked by net vote score with cost estimation, thumbnail images, and descriptions
+- [x] "Most Liked" view (formerly Leaderboard) ranked by net vote score with cost estimation, thumbnail images, and descriptions
 - [x] Password gate ("ingeborg") — persists in localStorage
 
 ### Interactive Map View
@@ -29,41 +29,45 @@
 - [x] List/Map toggle in filter bar
 - [x] All existing filters (type, cost, booking) apply to map view
 
-### Personal Itinerary Builder (Day-by-Day)
-- [x] Each family member can build their own day-by-day itinerary (tied to fixed 8-day trip structure)
-- [x] Family selector grid showing stop count and plan summary per person
-- [x] Card picker modal with search + Type/Cost/Booking filters to add stops to any day
-- [x] Reorder stops with ▲/▼ buttons, remove with ✕
-- [x] Drive time and distance computed between consecutive stops (haversine × 1.4 road factor ÷ 70 km/h)
-- [x] Day summaries: stop count, total drive time, total cost per person
-- [x] Click any stop to expand inline with full card details (image carousel, description, votes, comments)
-- [x] Expand All / Collapse All button to toggle all stop details at once
-- [x] Others can view itineraries read-only and leave comments/suggestions
-- [x] Real-time sync via Firebase
-
-### My Trip Side Panel
-- [x] Floating "My Trip" button accessible from all pages (List, Map, Leaderboard, Itineraries)
+### My Trip Side Panel (Primary Planning Interface)
+- [x] Floating "My Trip" button accessible from all pages (List, Map, Most Liked, Itineraries)
 - [x] Slide-out right panel (380px desktop, full-screen mobile) for personal trip planning
+- [x] Pre-seeded with 8 days matching actual trip structure (dates, regions — e.g., "Day 3 · Sep 7 📍 Snæfellsnes")
+- [x] Day headers: left side shows "Day N · date", right side shows "📍 Region"; stats row below (stops, drive time, cost/pp)
 - [x] "Liked but unplanned" section — upvoted cards grouped by region (Reykjavik, Golden Circle, etc.)
-- [x] User-created days (blank slate, not tied to fixed trip structure)
-- [x] Compact stop rows with reorder ▲/▼, remove ✕, and click-to-expand full card details
+- [x] Each stop in its own bordered card with drag handle, thumbnail, details, and action buttons
+- [x] Drag-and-drop reordering — click and hold anywhere on a card to drag vertically; teal insertion line shows drop position; other cards slide around smoothly (mouse-event based, not HTML5 drag API)
+- [x] Cross-day drag — drag stops between days, including into empty days ("Drop here" zone)
+- [x] Arrow buttons (▲/▼) as fallback for reordering (hidden on mobile, visible on desktop)
 - [x] Drive time connectors between stops
 - [x] "+ Add stop" per day with searchable card picker modal (Type/Cost/Booking filters)
-- [x] "+ Add Day" to create additional days
-- [x] 📋 button on every card (List + Map view) to add directly to trip
-- [x] Auto-detect region labels per day using GPS nearest-centroid matching
+- [x] "+ Add Day" to create additional days beyond the 8 trip days
+- [x] + button on every card (top-right, List + Map view) to add directly to trip
+- [x] Auto-detect region labels for extra days using GPS nearest-centroid matching
 
 ### Trip Drafts System
-- [x] Itineraries tab has two sub-tabs: "Day-by-Day" and "Trip Drafts"
+- [x] Itineraries tab has two sub-tabs: "Compare" (default) and "Browse Trips"
 - [x] Each family member can save up to 5 named drafts
-- [x] Draft switcher pills in side panel header to switch between drafts
+- [x] Draft switcher pills in side panel header — hidden when only 1 draft, appears automatically with 2+
 - [x] Click draft title to rename inline
 - [x] Save & Start New / Rename / Delete controls per draft
 - [x] "Set as Active" to choose which draft the side panel edits
-- [x] Trip Drafts tab: family grid → person's drafts → expandable day-by-day view
+- [x] Browse Trips tab: family grid → person's drafts → expandable day-by-day view
 - [x] Click stops to expand with full card details + Expand All / Collapse All
 - [x] Auto-creates "Draft 1" on first use
 - [x] Stored in Firebase `/trip-drafts/` (separate from Day-by-Day `/itineraries/`)
+
+### Draft Comparison View
+- [x] "Compare" sub-tab (default when entering Itineraries) shows all drafts with 1+ stops side-by-side
+- [x] Horizontal scrolling grid — one column per draft (360–440px), rows aligned by day
+- [x] Column headers with person avatar, draft title, and stop count
+- [x] Day rows with color-coded badges, region labels, and summary stats (stops, drive time, cost/pp)
+- [x] Consensus highlighting — stops appearing in 2+ drafts get teal background + frequency badge (e.g., "3×")
+- [x] Inline expand/collapse per stop with horizontal card layout (image left, details right)
+- [x] Expand All / Collapse All button for all stops across all columns
+- [x] Expanded cards show which other drafts include the same stop as teal pills
+- [x] Drive time connectors between stops
+- [x] Reads from existing `/trip-drafts/` — no new Firebase paths needed
 
 ### Real-Time Sync (Firebase)
 - [x] Firebase Realtime Database (Spark/free plan)
@@ -71,10 +75,10 @@
 - [x] Current user selection stays local (per-browser)
 
 ### Navigation & Filtering
-- [x] Sticky header + filter bar (All Days, Must-Decide, Restaurants, Suggestions, Leaderboard, Itineraries)
+- [x] Sticky header + filter bar (All Days, Must-Decide, Restaurants, Suggestions, Most Liked, Itineraries)
 - [x] Advanced filters: activity type, cost tier, booking lead time — toggle off by re-clicking
-- [x] Day navigator (right-side dots, click to scroll)
-- [x] Floating day bar (shows current day when scrolling) — fixed, uses portal to document.body
+- [x] Day navigator (right-side dots with "DAY" label, click to scroll)
+- [x] Floating day bar (shows current day when scrolling, text-lg title matching card titles) — fixed, uses portal to document.body
 
 ### Card Details
 - [x] Image carousel (full left/right click zones, arrow key support)
@@ -85,11 +89,21 @@
 - [x] Google Search + Reddit Search links per card
 - [x] Booking URLs
 
-### UX
-- [x] Onboarding tutorial modal (first visit)
+### UX & Onboarding
+- [x] Spotlight tour (6-step carousel with coach marks) — shown on first visit after user selection
+- [x] Each step highlights the real UI element with a dimmed overlay + rounded cutout
+- [x] Tour card positions near the highlighted element (above/below/side), glides smoothly between steps
+- [x] Arrow key navigation (left/right), Escape to close, clickable dot indicators, "Skip tour" link
+- [x] Same tour accessible anytime via (i) info button in header next to card count
+- [x] Graceful enter/exit animations (fade + scale) on open and close
 - [x] "What's New" update notification banner
 - [x] Configurable home base for distance display
 - [x] Responsive design (3-col → 2-col → 1-col)
+
+### Animated Modals
+- [x] Reusable `AnimatedModal` component — all modals fade + scale in/out (300ms)
+- [x] Applied to: Suggestion modal, Home Base modal, map expanded card, itinerary card pickers, side panel card picker, side panel expanded card
+- [x] Side panel uses separate slide transition (already existed)
 
 ## Known Issues
 
@@ -100,7 +114,6 @@
 
 ## Future Ideas
 
-- Side-by-side family itinerary comparison view
 - Decide if itinerary views should use the same card-grid design as the home page
 - Bring all cards to 5 photos each
 - Add a proper service worker for offline support + real "update available" refresh

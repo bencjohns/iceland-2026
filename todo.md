@@ -51,6 +51,15 @@ Requirements:
 - Could be a split-pane view or a merged timeline with color-coded entries per person
 
 ## 8. Itinerary View Design Consistency
-- Decide if itinerary views (Day-by-Day and Trip Drafts) should use the same card-grid list view design as the home page original itinerary
+- Decide if itinerary views (Browse Trips and Compare) should use the same card-grid list view design as the home page original itinerary
 - Currently itinerary stops are compact rows; the home page shows full cards with image carousels, descriptions, and all details visible
 - Evaluate which format works better for planning vs. browsing
+
+## 9. My Trip Side Panel — Drag-and-Drop Not Working
+- Click-and-drag on stop cards in the side panel does not move cards
+- The mouse-based drag system (mousedown → mousemove → mouseup) fires events but cards don't visually reorder
+- The dragged card should turn gray, move vertically in-place, and a teal insertion line should appear between other cards
+- Other cards should slide around smoothly to show where the drop will land
+- Cross-day dragging (moving a stop from one day to another) should also work
+- Arrow buttons (▲/▼) still work as a fallback for reordering
+- Needs debugging: verify event listeners attach correctly, check that `translateY` transform applies, ensure `setDragState` triggers re-renders with insertion line

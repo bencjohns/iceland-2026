@@ -3091,6 +3091,8 @@
       const [pickerFilters, setPickerFilters] = useState({ category: 'all', cost: 'all', booking: 'all' });
       const [expandedCard, setExpandedCard] = useState(null);
       const [editingTitle, setEditingTitle] = useState(false);
+      const [dragState, setDragState] = useState({ fromDay: null, fromIdx: null, overDay: null, overIdx: null, position: 'before' });
+      const dragRef = useRef({ active: false, ghostEl: null, startY: 0, scrollInterval: null });
 
       const userTripDrafts = tripDrafts[currentUser] || {};
       const activeDraft = activeDraftId && userTripDrafts[activeDraftId] ? userTripDrafts[activeDraftId] : {};
@@ -3149,6 +3151,133 @@
           stops.push(cardId);
           onSetDraftDay(activeDraftId, dayNum, stops);
         }
+      };
+
+      // Mouse-based drag system — card moves in-place vertically, others slide around
+      const handlePointerDown = (dayNum, idx, e) => {
+        if (e.button !== 0) return;
+        if (e.target.closest('button')) return;
+        e.preventDefault();
+        const el = e.currentTarget;
+        if (!el) return;
+        const startX = e.clientX, startY = e.clientY;
+        const rect = el.getBoundingClientRect();
+        const panelEl = el.closest('.overflow-y-auto');
+        let started = false;
+        const clickTarget = e.target;
+
+        const startDrag = () => {
+          started = true;
+          dragRef.current = { active: true, ghostEl: null, startY: rect.top, offsetY: startY - rect.top, el, scrollInterval: null };
+          el.style.position = 'relative';
+          el.style.zIndex = '100';
+          el.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+          el.style.background = '#e5e7eb';
+          el.style.borderColor = '#d1d5db';
+          el.style.transition = 'none';
+          setDragState({ fromDay: dayNum, fromIdx: idx, overDay: dayNum, overIdx: idx, position: 'before' });
+        };
+
+        const onMove = (me) => {
+          if (!started) {
+            const dist = Math.abs(me.clientY - startY) + Math.abs(me.clientX - startX);
+            if (dist < 5) return;
+            startDrag();
+          }
+          if (!dragRef.current.active) return;
+          const dy = me.clientY - dragRef.current.offsetY - dragRef.current.startY;
+          el.style.transform = `translateY(${dy}px)`;
+
+          // Auto-scroll
+          if (panelEl) {
+            const panelRect = panelEl.getBoundingClientRect();
+            const edgeZone = 40;
+            if (dragRef.current.scrollInterval) { clearInterval(dragRef.current.scrollInterval); dragRef.current.scrollInterval = null; }
+            if (me.clientY < panelRect.top + edgeZone) {
+              dragRef.current.scrollInterval = setInterval(() => panelEl.scrollTop -= 8, 16);
+            } else if (me.clientY > panelRect.bottom - edgeZone) {
+              dragRef.current.scrollInterval = setInterval(() => panelEl.scrollTop += 8, 16);
+            }
+          }
+
+          // Hit-test stop rows
+          const rows = document.querySelectorAll('[data-stop-row]');
+          let found = false;
+          rows.forEach(row => {
+            if (row === el) return;
+            const r = row.getBoundingClientRect();
+            if (me.clientY >= r.top && me.clientY <= r.bottom) {
+              const d = parseInt(row.dataset.stopDay);
+              const i = parseInt(row.dataset.stopIdx);
+              const pos = me.clientY < r.top + r.height / 2 ? 'before' : 'after';
+              setDragState(prev => {
+                if (prev.overDay === d && prev.overIdx === i && prev.position === pos) return prev;
+                return { ...prev, overDay: d, overIdx: i, position: pos };
+              });
+              found = true;
+            }
+          });
+          if (!found) {
+            const empties = document.querySelectorAll('[data-empty-day]');
+            empties.forEach(zone => {
+              const r = zone.getBoundingClientRect();
+              if (me.clientY >= r.top && me.clientY <= r.bottom) {
+                const d = parseInt(zone.dataset.emptyDay);
+                setDragState(prev => {
+                  if (prev.overDay === d && prev.overIdx === 0 && prev.position === 'before') return prev;
+                  return { ...prev, overDay: d, overIdx: 0, position: 'before' };
+                });
+              }
+            });
+          }
+        };
+
+        const onUp = () => {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          if (!started) {
+            // Was just a click — simulate it since we preventDefault'd mousedown
+            const clickable = clickTarget.closest('[data-click-expand]');
+            if (clickable) clickable.click();
+            return;
+          }
+          if (dragRef.current.scrollInterval) clearInterval(dragRef.current.scrollInterval);
+          el.style.position = '';
+          el.style.zIndex = '';
+          el.style.boxShadow = '';
+          el.style.background = '';
+          el.style.borderColor = '';
+          el.style.transform = '';
+          el.style.transition = '';
+          dragRef.current.active = false;
+
+          setDragState(prev => {
+            const { fromDay, fromIdx, overDay, overIdx, position } = prev;
+            if (fromDay !== null && overDay !== null && !(fromDay === overDay && fromIdx === overIdx)) {
+              const dropIdx = position === 'after' ? overIdx + 1 : overIdx;
+              if (fromDay === overDay) {
+                const stops = [...getStops(fromDay)];
+                const [moved] = stops.splice(fromIdx, 1);
+                const insertAt = dropIdx > fromIdx ? dropIdx - 1 : dropIdx;
+                stops.splice(insertAt, 0, moved);
+                onSetDraftDay(activeDraftId, overDay, stops);
+              } else {
+                const fromStops = [...getStops(fromDay)];
+                const toStops = [...getStops(overDay)];
+                const [moved] = fromStops.splice(fromIdx, 1);
+                if (!toStops.includes(moved)) {
+                  toStops.splice(dropIdx, 0, moved);
+                  onSetDraftDay(activeDraftId, fromDay, fromStops);
+                  onSetDraftDay(activeDraftId, overDay, toStops);
+                }
+              }
+            }
+            return { fromDay: null, fromIdx: null, overDay: null, overIdx: null, position: 'before' };
+          });
+        };
+
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
       };
 
       const getDaySummary = (dayNum) => {
@@ -3354,10 +3483,12 @@
 
                     {/* Day content */}
                     {!collapsed && (
-                      <div className="px-2 py-2 space-y-0">
+                      <div className="px-2 py-2 space-y-1.5">
                         {stops.length === 0 ? (
-                          <div className="text-center py-4">
-                            <p className="text-xs text-gray-400 mb-2">No stops yet</p>
+                          <div className={`text-center py-4 rounded-lg transition-all`}
+                            data-empty-day={dayNum}>
+                            {dragState.fromDay !== null && dragState.overDay === dayNum && <div className="h-0.5 bg-teal rounded-full mx-2 mb-2" />}
+                            <p className="text-xs text-gray-400 mb-2">{dragState.fromDay !== null && dragState.overDay === dayNum ? 'Drop here' : 'No stops yet'}</p>
                             <button onClick={() => { setPickerDay(dayNum); setPickerSearch(''); }}
                               className="text-teal text-xs font-medium hover:underline">+ Add your first stop</button>
                           </div>
@@ -3367,11 +3498,20 @@
                               const card = findCard(cardId);
                               if (!card) return null;
                               const img = (IMAGE_URLS[card.id] || [])[0];
+                              const isDragging = dragState.fromDay === dayNum && dragState.fromIdx === idx;
+                              const showLineBefore = dragState.fromDay !== null && dragState.overDay === dayNum && dragState.overIdx === idx && dragState.position === 'before' && !isDragging;
+                              const showLineAfter = dragState.fromDay !== null && dragState.overDay === dayNum && dragState.overIdx === idx && dragState.position === 'after' && !isDragging;
                               return (
                                 <div key={cardId}>
-                                  <div className="panel-stop flex items-center gap-2 p-2 rounded-lg">
-                                    <div className="flex items-center gap-2 flex-1 min-w-0 cursor-pointer" onClick={() => setExpandedCard(card)}>
-                                      {img && <img src={img.url} alt={card.name} className="w-10 h-10 rounded-lg object-cover shrink-0" loading="lazy" />}
+                                  {showLineBefore && <div className="h-0.5 bg-teal rounded-full mx-2 my-1" />}
+                                  <div className={`panel-stop flex items-center gap-2 p-2 rounded-xl border cursor-grab active:cursor-grabbing select-none ${
+                                    isDragging ? 'bg-gray-200 border-gray-300' : 'bg-white border-gray-100'}`}
+                                    style={{ transition: dragState.fromDay !== null && !isDragging ? 'transform 200ms ease, opacity 200ms ease' : '' }}
+                                    data-stop-row data-stop-day={dayNum} data-stop-idx={idx}
+                                    onMouseDown={(e) => handlePointerDown(dayNum, idx, e)}>
+                                    <span className="text-gray-300 text-xs shrink-0">⠿</span>
+                                    <div className="flex items-center gap-2 flex-1 min-w-0 cursor-pointer" data-click-expand onClick={() => setExpandedCard(card)}>
+                                      {img && <img src={img.url} alt={card.name} className="w-10 h-10 rounded-lg object-cover shrink-0 pointer-events-none" loading="lazy" />}
                                       <span className="text-sm shrink-0">{getCategoryIcon(card.category)}</span>
                                       <div className="flex-1 min-w-0">
                                         <div className="font-semibold text-xs text-[#1A1A1A] truncate hover:text-teal transition-colors">{card.name}</div>
@@ -3380,14 +3520,15 @@
                                     </div>
                                     <div className="flex gap-0.5 shrink-0">
                                       <button onClick={() => moveStop(dayNum, idx, -1)} disabled={idx === 0}
-                                        className="w-6 h-6 rounded bg-gray-100 hover:bg-teal-50 text-[11px] disabled:opacity-30">▲</button>
+                                        className="w-6 h-6 rounded bg-gray-100 hover:bg-teal-50 text-[11px] disabled:opacity-30 hidden sm:flex items-center justify-center">▲</button>
                                       <button onClick={() => moveStop(dayNum, idx, 1)} disabled={idx === stops.length - 1}
-                                        className="w-6 h-6 rounded bg-gray-100 hover:bg-teal-50 text-[11px] disabled:opacity-30">▼</button>
+                                        className="w-6 h-6 rounded bg-gray-100 hover:bg-teal-50 text-[11px] disabled:opacity-30 hidden sm:flex items-center justify-center">▼</button>
                                       <button onClick={() => removeStop(dayNum, idx)}
                                         className="w-6 h-6 rounded bg-red-50 hover:bg-red-100 text-red-500 text-[11px]">✕</button>
                                     </div>
                                   </div>
-                                  {idx < stops.length - 1 && (() => {
+                                  {showLineAfter && <div className="h-0.5 bg-teal rounded-full mx-2 my-1" />}
+                                  {idx < stops.length - 1 && !showLineAfter && (() => {
                                     const info = getDriveInfo(stops[idx], stops[idx + 1]);
                                     return info && info.km > 0 ? (
                                       <div className="flex items-center justify-center py-0.5">
