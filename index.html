@@ -1051,37 +1051,52 @@
       );
     }
 
-    function DayHeader({ dayData, homeBase, stickyTop }) {
+    function DayHeaderContent({ dayData, homeBase, compact }) {
       const baseLabel = homeBase || 'Reykjavik';
-      const topPx = stickyTop || 120;
-
       return (
-        <div className="sticky z-20 bg-[#FAFAF7]/95 backdrop-blur-md py-2 mt-6 mb-4 border-b border-transparent"
-          id={`day-section-${dayData.day}`}
-          style={{ top: `${topPx}px`, scrollMarginTop: `${topPx + 16}px` }}>
-          <div className="flex items-center gap-3 flex-wrap">
-            <h2 className="font-display text-lg font-bold text-[#1A1A1A] shrink-0">
-              Day {dayData.day} — {dayData.date}
-            </h2>
-            <span className="text-sm text-gray-500">{dayData.title}</span>
-            {dayData.distFromPrev && (
-              <span className="text-[11px] text-gray-400 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gray-50 border border-gray-100">
-                🚗 {dayData.distFromPrev}
-              </span>
-            )}
-            {dayData.distFromBase && dayData.distFromBase !== "0 km" && (
-              <span className="text-[11px] text-teal inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-teal-50 border border-teal/10">
-                🏠 {dayData.distFromBase} from {baseLabel}
-              </span>
-            )}
-            <span className="text-[11px] text-blue-600 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-50">
-              🌤️ {dayData.weather}
+        <div className="flex items-center gap-3 flex-wrap">
+          <h2 className={`font-display font-bold text-[#1A1A1A] shrink-0 ${compact ? 'text-sm' : 'text-lg'}`}>
+            Day {dayData.day} — {dayData.date}
+          </h2>
+          <span className={`text-gray-500 ${compact ? 'text-xs' : 'text-sm'}`}>{dayData.title}</span>
+          {dayData.distFromPrev && (
+            <span className="text-[11px] text-gray-400 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gray-50 border border-gray-100">
+              🚗 {dayData.distFromPrev}
             </span>
-            {dayData.flight && (
-              <span className="text-[11px] text-amber-600 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 border border-amber-100">
-                ✈️ {dayData.flight}
-              </span>
-            )}
+          )}
+          {dayData.distFromBase && dayData.distFromBase !== "0 km" && (
+            <span className="text-[11px] text-teal inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-teal-50 border border-teal/10">
+              🏠 {dayData.distFromBase} from {baseLabel}
+            </span>
+          )}
+          <span className="text-[11px] text-blue-600 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-50">
+            🌤️ {dayData.weather}
+          </span>
+          {dayData.flight && (
+            <span className="text-[11px] text-amber-600 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 border border-amber-100">
+              ✈️ {dayData.flight}
+            </span>
+          )}
+        </div>
+      );
+    }
+
+    function DayHeader({ dayData, homeBase, stickyTop }) {
+      return (
+        <div id={`day-section-${dayData.day}`} className="mt-6 mb-4 py-2"
+          style={{ scrollMarginTop: `${(stickyTop || 100) + 50}px` }}>
+          <DayHeaderContent dayData={dayData} homeBase={homeBase} />
+        </div>
+      );
+    }
+
+    function FloatingDayBar({ dayData, homeBase, stickyTop }) {
+      if (!dayData) return null;
+      return (
+        <div className="fixed left-0 right-0 z-30 bg-[#FAFAF7]/95 backdrop-blur-md border-b border-gray-200/40 shadow-sm"
+          style={{ top: `${stickyTop || 100}px` }}>
+          <div className="max-w-7xl mx-auto px-6 py-1.5">
+            <DayHeaderContent dayData={dayData} homeBase={homeBase} compact />
           </div>
         </div>
       );
@@ -1614,6 +1629,7 @@
       const [homeBase, setHomeBase] = useState('Reykjavik');
       const [showHomeBaseModal, setShowHomeBaseModal] = useState(false);
       const [activeDay, setActiveDay] = useState(1);
+      const [showFloatingDay, setShowFloatingDay] = useState(false);
       const [advancedFilters, setAdvancedFilters] = useState({ category: 'all', cost: 'all', booking: 'all' });
       const [stickyHeight, setStickyHeight] = useState(100);
       const stickyRef = useRef(null);
@@ -1678,14 +1694,18 @@
       useEffect(() => {
         const handleScroll = () => {
           let current = 1;
+          let anyPinned = false;
           for (const d of DAYS) {
             const el = document.getElementById('day-section-' + d.day);
             if (el) {
               const rect = el.getBoundingClientRect();
-              if (rect.top <= 150) current = d.day;
+              if (rect.top <= 150) { current = d.day; anyPinned = true; }
             }
           }
           setActiveDay(current);
+          // Show floating bar once first day header scrolls above the sticky header
+          const firstDay = document.getElementById('day-section-1');
+          setShowFloatingDay(anyPinned && firstDay && firstDay.getBoundingClientRect().top < 0);
         };
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
@@ -1818,6 +1838,9 @@
           <HeroSection cards={CARDS} votes={votes} suggestions={suggestions} />
 
           {activeFilter === 'all' && <DayNavigator activeDay={activeDay} />}
+          {activeFilter === 'all' && showFloatingDay && (
+            <FloatingDayBar dayData={DAYS.find(d => d.day === activeDay)} homeBase={homeBase} stickyTop={stickyHeight} />
+          )}
 
           {activeFilter === 'leaderboard' ? (
             <LeaderboardView allCards={allCards} votes={votes} currentUser={currentUser}
