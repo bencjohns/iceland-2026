@@ -29,19 +29,45 @@
 - [x] List/Map toggle in filter bar
 - [x] All existing filters (type, cost, booking) apply to map view
 
-### Personal Itinerary Builder
-- [x] Each family member can build their own day-by-day itinerary
+### Personal Itinerary Builder (Day-by-Day)
+- [x] Each family member can build their own day-by-day itinerary (tied to fixed 8-day trip structure)
 - [x] Family selector grid showing stop count and plan summary per person
-- [x] Card picker modal with search to add stops to any day
+- [x] Card picker modal with search + Type/Cost/Booking filters to add stops to any day
 - [x] Reorder stops with ▲/▼ buttons, remove with ✕
 - [x] Drive time and distance computed between consecutive stops (haversine × 1.4 road factor ÷ 70 km/h)
 - [x] Day summaries: stop count, total drive time, total cost per person
+- [x] Click any stop to expand inline with full card details (image carousel, description, votes, comments)
+- [x] Expand All / Collapse All button to toggle all stop details at once
 - [x] Others can view itineraries read-only and leave comments/suggestions
 - [x] Real-time sync via Firebase
 
+### My Trip Side Panel
+- [x] Floating "My Trip" button accessible from all pages (List, Map, Leaderboard, Itineraries)
+- [x] Slide-out right panel (380px desktop, full-screen mobile) for personal trip planning
+- [x] "Liked but unplanned" section — upvoted cards grouped by region (Reykjavik, Golden Circle, etc.)
+- [x] User-created days (blank slate, not tied to fixed trip structure)
+- [x] Compact stop rows with reorder ▲/▼, remove ✕, and click-to-expand full card details
+- [x] Drive time connectors between stops
+- [x] "+ Add stop" per day with searchable card picker modal (Type/Cost/Booking filters)
+- [x] "+ Add Day" to create additional days
+- [x] 📋 button on every card (List + Map view) to add directly to trip
+- [x] Auto-detect region labels per day using GPS nearest-centroid matching
+
+### Trip Drafts System
+- [x] Itineraries tab has two sub-tabs: "Day-by-Day" and "Trip Drafts"
+- [x] Each family member can save up to 5 named drafts
+- [x] Draft switcher pills in side panel header to switch between drafts
+- [x] Click draft title to rename inline
+- [x] Save & Start New / Rename / Delete controls per draft
+- [x] "Set as Active" to choose which draft the side panel edits
+- [x] Trip Drafts tab: family grid → person's drafts → expandable day-by-day view
+- [x] Click stops to expand with full card details + Expand All / Collapse All
+- [x] Auto-creates "Draft 1" on first use
+- [x] Stored in Firebase `/trip-drafts/` (separate from Day-by-Day `/itineraries/`)
+
 ### Real-Time Sync (Firebase)
 - [x] Firebase Realtime Database (Spark/free plan)
-- [x] Votes, comments, suggestions, home base, itineraries, itinerary comments sync across all devices
+- [x] Votes, comments, suggestions, home base, itineraries, itinerary comments, trip drafts sync across all devices
 - [x] Current user selection stays local (per-browser)
 
 ### Navigation & Filtering
@@ -74,6 +100,8 @@
 
 ## Future Ideas
 
+- Side-by-side family itinerary comparison view
+- Decide if itinerary views should use the same card-grid design as the home page
 - Bring all cards to 5 photos each
 - Add a proper service worker for offline support + real "update available" refresh
 - Tighten Firebase security rules (allow only authenticated family members)

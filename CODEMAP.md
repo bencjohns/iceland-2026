@@ -79,9 +79,10 @@ STATUS.md           — Project status
 | `CardComponent` | 1555 | Full card: image carousel, cost badge, tier, description, details, Google/Reddit links, votes, comments |
 | `SuggestionModal` | 1668 | Form to submit new activity/restaurant suggestion |
 | `LeaderboardView` | 1770 | Ranked cards by net vote score with thumbnail images, descriptions, and estimated cost |
-| `ItineraryView` | 1862 | Personal itinerary builder: family selector → day-by-day planner with card picker, reorder controls, drive time connectors, day summaries, and comment system |
+| `ItineraryView` | 1862 | Two sub-tabs: "Day-by-Day" (fixed 8-day itinerary with expandable stops, expand/collapse all) and "Trip Drafts" (personal sandbox plans with multi-draft support, expandable card details) |
+| `ItinerarySidePanel` | ~2304 | Slide-out right panel (380px) for personal trip planning via portal. Draft switcher, liked-but-unplanned cards grouped by region, user-created days, card picker with filters. Reads/writes to `/trip-drafts/` |
 
-### App Component (lines 2164–2540)
+### App Component (lines ~2710+)
 
 **State:**
 | State | Storage | Shared? |
@@ -93,6 +94,8 @@ STATUS.md           — Project status
 | `homeBase` | Firebase `/homeBase` | Yes (real-time) |
 | `itineraries` | Firebase `/itineraries` | Yes (real-time) |
 | `itineraryComments` | Firebase `/itinerary-comments` | Yes (real-time) |
+| `tripDrafts` | Firebase `/trip-drafts` | Yes (real-time) |
+| `sidePanelOpen` | React state only | No |
 | `authenticated` | localStorage `icp_auth` | No (per-browser) |
 | `hasUpdate` | localStorage `icp_version` vs `APP_VERSION` | No (per-browser) |
 | `activeFilter` | React state only | No |
@@ -113,14 +116,22 @@ STATUS.md           — Project status
 | `handleSetHomeBase` | Writes to `db.ref('homeBase')` |
 | `handleSetItineraryDay` | Writes ordered card IDs to `db.ref('itineraries/{name}/days/{dayNum}/stops')` + updates timestamp |
 | `handleAddItineraryComment` | Appends comment to `db.ref('itinerary-comments/{name}')` |
+| `handleSetDraftDay` | Writes stops to `db.ref('trip-drafts/{user}/{draftId}/days/{dayNum}/stops')` |
+| `handleCreateDraft` | Creates new draft (max 5) at `db.ref('trip-drafts/{user}/{newKey}')` |
+| `handleDeleteDraft` | Removes draft, reassigns active if needed |
+| `handleRenameDraft` | Updates draft title |
+| `handleSetActiveDraft` | Sets `db.ref('trip-drafts/{user}/activeDraftId')` |
+| `handleAddToTrip` | Adds card to active draft's target day |
 
 **Render flow:**
 1. Loading spinner → PasswordGate → UserSelector → (TutorialModal) → Main app
 2. Main app: sticky Header + FilterBar → then one of:
-   - **Itineraries tab:** ItineraryView (family selector → day-by-day planner)
+   - **Itineraries tab:** ItineraryView (sub-tabs: Day-by-Day planner | Trip Drafts browser)
    - **Leaderboard tab:** LeaderboardView
    - **Map mode:** MapView (full-screen map with pins)
    - **List mode:** HeroSection → FloatingDayBar → DayNavigator → Day sections (DayHeader + CardGrid)
+3. Floating buttons: "My Trip" (opens ItinerarySidePanel) + "Add a Suggestion"
+4. ItinerarySidePanel (portal to body, z-1003) — always available, edits active draft
 
 ### Render Entry Point (lines 2542–2546)
 ```js
@@ -138,6 +149,12 @@ root.render(<App />);
 /itineraries/{name}/days/{dayNum}/stops: ["cardId1", "cardId2", ...]
 /itineraries/{name}/updatedAt: "2026-03-19T..."
 /itinerary-comments/{name}: [{author, text, timestamp}]
+/trip-drafts/{name}/{draftId}/title: "Draft 1"
+/trip-drafts/{name}/{draftId}/days/{dayNum}/stops: ["cardId1", ...]
+/trip-drafts/{name}/{draftId}/dayCount: 3
+/trip-drafts/{name}/{draftId}/createdAt: "2026-03-19T..."
+/trip-drafts/{name}/{draftId}/updatedAt: "2026-03-19T..."
+/trip-drafts/{name}/activeDraftId: "draftKey123"
 ```
 
 ## Deployment

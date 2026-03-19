@@ -44,3 +44,13 @@ Requirements:
 - Each card should have a link/button labelled "Reddit"
 - Opens in a new tab: `https://www.google.com/search?q={name}+Iceland+reddit`
 - Simple, unobtrusive placement alongside the Google search link
+
+## 7. Side-by-Side Family Itinerary Comparison
+- Easily view family itineraries side-by-side
+- Compare what different family members have planned for the same days
+- Could be a split-pane view or a merged timeline with color-coded entries per person
+
+## 8. Itinerary View Design Consistency
+- Decide if itinerary views (Day-by-Day and Trip Drafts) should use the same card-grid list view design as the home page original itinerary
+- Currently itinerary stops are compact rows; the home page shows full cards with image carousels, descriptions, and all details visible
+- Evaluate which format works better for planning vs. browsing
