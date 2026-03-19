@@ -126,7 +126,7 @@
 ## How to Deploy Updates
 
 1. Edit `index.html`
-2. Bump `APP_VERSION` (line 91) and update `APP_UPDATE_NOTES` (line 92)
+2. Bump `APP_VERSION` (line 107) and update `APP_UPDATE_NOTES` (line 108)
 3. `git add index.html && git commit -m "description" && git push`
 4. GitHub Pages auto-deploys in ~1 minute
 5. Users see a blue "What's New" banner on next page load
