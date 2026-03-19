@@ -8,6 +8,8 @@
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -62,40 +64,18 @@
 <body class="bg-[#FAFAF7] font-body text-[#1A1A1A] min-h-screen">
   <div id="root"></div>
 
-  <!-- Storage Polyfill (localStorage-backed) -->
+  <!-- Firebase Setup -->
   <script>
-    window.storage = {
-      async get(key, shared) {
-        try {
-          var prefix = shared ? 'ics_' : 'icp_';
-          return localStorage.getItem(prefix + key);
-        } catch (e) { return null; }
-      },
-      async set(key, value, shared) {
-        try {
-          var prefix = shared ? 'ics_' : 'icp_';
-          localStorage.setItem(prefix + key, typeof value === 'string' ? value : JSON.stringify(value));
-        } catch (e) {}
-      },
-      async delete(key, shared) {
-        try {
-          var prefix = shared ? 'ics_' : 'icp_';
-          localStorage.removeItem(prefix + key);
-        } catch (e) {}
-      },
-      async list(prefix) {
-        try {
-          var results = [], sp = 'ics_';
-          for (var i = 0; i < localStorage.length; i++) {
-            var fk = localStorage.key(i);
-            if (fk && fk.startsWith(sp + prefix)) {
-              results.push({ key: fk.substring(sp.length), value: localStorage.getItem(fk) });
-            }
-          }
-          return results;
-        } catch (e) { return []; }
-      }
-    };
+    firebase.initializeApp({
+      apiKey: "AIzaSyD6_T0ieZ5zsJ5a0pc3NMcO4ydU0d2OZ6E",
+      authDomain: "iceland-family-trip.firebaseapp.com",
+      databaseURL: "https://iceland-family-trip-default-rtdb.firebaseio.com",
+      projectId: "iceland-family-trip",
+      storageBucket: "iceland-family-trip.firebasestorage.app",
+      messagingSenderId: "82702680710",
+      appId: "1:82702680710:web:45b6ae34591ad459374707"
+    });
+    window.db = firebase.database();
   </script>
 
   <!-- App -->
@@ -745,7 +725,7 @@
     function getNetScore(cardId, votes) {
       let up = 0, down = 0;
       Object.entries(votes).forEach(([k, v]) => {
-        if (k.startsWith(cardId + ':')) {
+        if (k.startsWith(cardId + '__')) {
           if (v === 'up') up++;
           else if (v === 'down') down++;
         }
@@ -756,8 +736,8 @@
     function getVoters(cardId, votes) {
       const upVoters = [], downVoters = [];
       Object.entries(votes).forEach(([k, v]) => {
-        if (k.startsWith(cardId + ':')) {
-          const name = k.split(':').pop();
+        if (k.startsWith(cardId + '__')) {
+          const name = k.split('__').pop();
           if (v === 'up') upVoters.push(name);
           else if (v === 'down') downVoters.push(name);
         }
@@ -1133,7 +1113,7 @@
 
     function VoteButtons({ cardId, currentUser, votes, onVote }) {
       const { upVoters, downVoters } = getVoters(cardId, votes);
-      const myVote = votes[`${cardId}:${currentUser}`] || null;
+      const myVote = votes[`${cardId}__${currentUser}`] || null;
 
       const handleVote = (type) => {
         if (myVote === type) {
@@ -1602,46 +1582,49 @@
       const stickyRef = useRef(null);
       const [loading, setLoading] = useState(true);
 
-      // Load all data on mount
+      // Load personal data from localStorage, shared data from Firebase (real-time)
       useEffect(() => {
-        (async () => {
-          try {
-            // Load current user
-            const user = await window.storage.get('currentUser', false);
-            if (user) setCurrentUser(user);
+        // Personal (per-browser) — stays in localStorage
+        const user = localStorage.getItem('icp_currentUser');
+        if (user) setCurrentUser(user);
 
-            // Load votes
-            const voteEntries = await window.storage.list('vote:');
-            const voteMap = {};
-            voteEntries.forEach(({ key, value }) => {
-              const parts = key.replace('vote:', '');
-              voteMap[parts] = value;
-            });
-            setVotes(voteMap);
+        const db = window.db;
+        let loadCount = 0;
+        const checkReady = () => { loadCount++; if (loadCount >= 4) setLoading(false); };
 
-            // Load comments
-            const commentEntries = await window.storage.list('comments:');
-            const commentMap = {};
-            for (const { key, value } of commentEntries) {
-              const cardId = key.replace('comments:', '');
-              try { commentMap[cardId] = JSON.parse(value); } catch { commentMap[cardId] = []; }
-            }
-            setComments(commentMap);
+        // Votes — real-time listener
+        db.ref('votes').on('value', (snap) => {
+          setVotes(snap.val() || {});
+          checkReady();
+        });
 
-            // Load suggestions
-            const suggestionsRaw = await window.storage.get('suggestions', true);
-            if (suggestionsRaw) {
-              try { setSuggestions(JSON.parse(suggestionsRaw)); } catch {}
-            }
+        // Comments — real-time listener
+        db.ref('comments').on('value', (snap) => {
+          setComments(snap.val() || {});
+          checkReady();
+        });
 
-            // Load home base
-            const hb = await window.storage.get('homeBase', true);
-            if (hb) setHomeBase(hb);
-          } catch (e) {
-            console.error('Failed to load data:', e);
-          }
-          setLoading(false);
-        })();
+        // Suggestions — real-time listener
+        db.ref('suggestions').on('value', (snap) => {
+          setSuggestions(snap.val() || []);
+          checkReady();
+        });
+
+        // Home base — real-time listener
+        db.ref('homeBase').on('value', (snap) => {
+          if (snap.val()) setHomeBase(snap.val());
+          checkReady();
+        });
+
+        // If no user stored, still stop loading
+        if (!user) setLoading(false);
+
+        return () => {
+          db.ref('votes').off();
+          db.ref('comments').off();
+          db.ref('suggestions').off();
+          db.ref('homeBase').off();
+        };
       }, []);
 
       // Track sticky header height
@@ -1669,64 +1652,55 @@
         return () => window.removeEventListener('scroll', handleScroll);
       }, []);
 
-      const handleSelectUser = async (name) => {
+      const handleSelectUser = (name) => {
         const wasNull = currentUser === null;
         setCurrentUser(name);
-        await window.storage.set('currentUser', name, false);
+        localStorage.setItem('icp_currentUser', name);
         if (wasNull) {
-          const seen = await window.storage.get('tutorialSeen', false);
+          const seen = localStorage.getItem('icp_tutorialSeen');
           if (!seen) setShowTutorial(true);
         }
       };
 
-      const handleDismissTutorial = async () => {
+      const handleDismissTutorial = () => {
         setShowTutorial(false);
-        await window.storage.set('tutorialSeen', 'true', false);
+        localStorage.setItem('icp_tutorialSeen', 'true');
       };
 
-      const handleSetHomeBase = async (value) => {
-        setHomeBase(value);
-        await window.storage.set('homeBase', value, true);
+      const handleSetHomeBase = (value) => {
         setShowHomeBaseModal(false);
+        window.db.ref('homeBase').set(value);
       };
 
-      const handleVote = async (cardId, voter, type) => {
-        const key = `${cardId}:${voter}`;
-        const newVotes = { ...votes };
+      const handleVote = (cardId, voter, type) => {
+        // Firebase keys can't contain . # $ [ ] so we use _ separator
+        const fbKey = `${cardId}__${voter}`;
         if (type === null) {
-          delete newVotes[key];
-          await window.storage.delete(`vote:${key}`, true);
+          window.db.ref(`votes/${fbKey}`).remove();
         } else {
-          newVotes[key] = type;
-          await window.storage.set(`vote:${key}`, type, true);
+          window.db.ref(`votes/${fbKey}`).set(type);
         }
-        setVotes(newVotes);
       };
 
-      const handleAddComment = async (cardId, comment, replaceAll) => {
+      const handleAddComment = (cardId, comment, replaceAll) => {
         let updated;
         if (replaceAll) {
-          // Replace entire comments array (used for replies)
           updated = replaceAll;
         } else {
           const existing = comments[cardId] || [];
           updated = [...existing, comment];
         }
-        const newComments = { ...comments, [cardId]: updated };
-        setComments(newComments);
-        await window.storage.set(`comments:${cardId}`, JSON.stringify(updated), true);
+        window.db.ref(`comments/${cardId}`).set(updated);
       };
 
-      const handleAddSuggestion = async (suggestion) => {
+      const handleAddSuggestion = (suggestion) => {
         const updated = [...suggestions, suggestion];
-        setSuggestions(updated);
-        await window.storage.set('suggestions', JSON.stringify(updated), true);
+        window.db.ref('suggestions').set(updated);
       };
 
-      const handleDeleteSuggestion = async (id) => {
+      const handleDeleteSuggestion = (id) => {
         const updated = suggestions.filter(s => s.id !== id);
-        setSuggestions(updated);
-        await window.storage.set('suggestions', JSON.stringify(updated), true);
+        window.db.ref('suggestions').set(updated);
       };
 
       // Combine pre-loaded cards with suggestions
