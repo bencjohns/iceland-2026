@@ -1,0 +1,1905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iceland 2026 — Trip Planner</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Playfair Display"', 'serif'],
+            body: ['"DM Sans"', 'sans-serif'],
+          },
+          colors: {
+            cream: '#FAFAF7',
+            teal: { DEFAULT: '#2B6B6B', light: '#3A8A8A', dark: '#1E4F4F', '50': '#E8F4F4', '100': '#D1E9E9' },
+            terracotta: { DEFAULT: '#C4654A', light: '#D4856A', dark: '#A4452A' },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'DM Sans', sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Playfair Display', serif; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scaleClick {
+      0% { transform: scale(1); }
+      50% { transform: scale(0.92); }
+      100% { transform: scale(1); }
+    }
+    .card-enter { animation: fadeInUp 0.4s ease-out both; }
+    .vote-click { animation: scaleClick 0.2s ease-out; }
+    .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    @media (max-width: 1100px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 700px) { .card-grid { grid-template-columns: 1fr; } }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #FAFAF7; }
+    ::-webkit-scrollbar-thumb { background: #c4c4c0; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #999; }
+    .suggestion-card { border: 2px dashed #2B6B6B; background: #f0fafa; }
+    .day-nav { position: fixed; right: 12px; top: 50%; transform: translateY(-50%); z-index: 35; display: flex; flex-direction: column; gap: 2px; }
+    .day-nav-dot { width: 32px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; background: white; color: #999; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .day-nav-dot:hover { background: #E8F4F4; color: #2B6B6B; }
+    .day-nav-dot.active { background: #2B6B6B; color: white; border-color: #2B6B6B; box-shadow: 0 2px 8px rgba(43,107,107,0.3); }
+    @media (max-width: 900px) { .day-nav { display: none; } }
+    .day-header-bar { transition: background-color 0.3s, box-shadow 0.3s, backdrop-filter 0.3s; border-bottom: 1px solid transparent; }
+    .sticky > .day-header-bar { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  </style>
+</head>
+<body class="bg-[#FAFAF7] font-body text-[#1A1A1A] min-h-screen">
+  <div id="root"></div>
+
+  <!-- Storage Polyfill (localStorage-backed) -->
+  <script>
+    window.storage = {
+      async get(key, shared) {
+        try {
+          var prefix = shared ? 'ics_' : 'icp_';
+          return localStorage.getItem(prefix + key);
+        } catch (e) { return null; }
+      },
+      async set(key, value, shared) {
+        try {
+          var prefix = shared ? 'ics_' : 'icp_';
+          localStorage.setItem(prefix + key, typeof value === 'string' ? value : JSON.stringify(value));
+        } catch (e) {}
+      },
+      async delete(key, shared) {
+        try {
+          var prefix = shared ? 'ics_' : 'icp_';
+          localStorage.removeItem(prefix + key);
+        } catch (e) {}
+      },
+      async list(prefix) {
+        try {
+          var results = [], sp = 'ics_';
+          for (var i = 0; i < localStorage.length; i++) {
+            var fk = localStorage.key(i);
+            if (fk && fk.startsWith(sp + prefix)) {
+              results.push({ key: fk.substring(sp.length), value: localStorage.getItem(fk) });
+            }
+          }
+          return results;
+        } catch (e) { return []; }
+      }
+    };
+  </script>
+
+  <!-- App -->
+  <script type="text/babel">
+    const { useState, useEffect, useRef, useCallback, useMemo } = React;
+
+    // ═══════════════════════════════════════════
+    // CONSTANTS
+    // ═══════════════════════════════════════════
+
+    const FAMILY = ['Murray', 'Laurel', 'Claire', 'Mati', 'Ben', 'Cade'];
+
+    const DAYS = [
+      { day: 1, date: "Aug 28", title: "Arrive in Reykjavik", weather: "~12°C / 54°F · 16 hrs daylight",
+        flight: "Depart Denver 8:10 PM MT → Arrive Iceland Aug 29 morning", distFromPrev: null, distFromBase: null, region: "Reykjavik" },
+      { day: 2, date: "Aug 29", title: "Golden Circle", weather: "~11°C / 52°F · 16 hrs daylight",
+        distFromPrev: null, distFromBase: "100 km", region: "Golden Circle" },
+      { day: 3, date: "Aug 30", title: "Snæfellsnes Peninsula", weather: "~11°C / 52°F · 15.5 hrs daylight",
+        distFromPrev: "200 km from Golden Circle", distFromBase: "175 km", region: "Snæfellsnes" },
+      { day: 4, date: "Aug 31", title: "South Coast — Waterfalls & Vík", weather: "~11°C / 52°F · 15.5 hrs daylight",
+        distFromPrev: "270 km from Snæfellsnes", distFromBase: "185 km", region: "South Coast" },
+      { day: 5, date: "Sep 1", title: "Westman Islands Day Trip", weather: "~11°C / 52°F · 15 hrs daylight",
+        distFromPrev: "35 km from Vík", distFromBase: "130 km", region: "Westman Islands" },
+      { day: 6, date: "Sep 2", title: "Glaciers & Jökulsárlón", weather: "~10°C / 50°F · 15 hrs daylight",
+        distFromPrev: "265 km from Westman Islands", distFromBase: "380 km", region: "Southeast" },
+      { day: 7, date: "Sep 3", title: "Return West & Relax", weather: "~10°C / 50°F · 14.5 hrs daylight",
+        distFromPrev: "280 km from Jökulsárlón", distFromBase: "100 km", region: "South / Flúðir" },
+      { day: 8, date: "Sep 4", title: "Reykjavik Day", weather: "~10°C / 50°F · 14 hrs daylight",
+        distFromPrev: "100 km from Flúðir", distFromBase: "0 km", region: "Reykjavik" },
+      { day: 9, date: "Sep 5", title: "Departure ✈️", weather: "~10°C / 50°F · 13.5 hrs daylight",
+        distFromPrev: null, distFromBase: "50 km", region: "KEF Airport" },
+    ];
+
+    const CARDS = [
+      // ── Day 1 ──
+      { id:"day1-blue-lagoon", day:1, name:"Blue Lagoon", category:"activity", tier:"must-decide",
+        description:"One of the world's most famous geothermal spas — milky-blue waters rich in silica and minerals at 37–40°C. Sauna, steam room, in-water bar, mask bar. Located between the airport and Reykjavik, perfect for a post-flight soak.",
+        costPerPerson:95, costDisplay:"$85–105/person", costTier:"splurge", parkingCost:null, timeNeeded:"2–3 hours",
+        bookAhead:"2–4 weeks ahead", bookAheadLabel:"Book 2–4 weeks ahead", bookingUrl:"https://www.bluelagoon.com", bookingSiteName:"bluelagoon.com",
+        driveFromPrevious:"22 km / 20 min from KEF Airport", redditScore:3, bookSoonFlag:true,
+        images:[{alt:"Blue Lagoon aerial milky water"},{alt:"People soaking in Blue Lagoon"},{alt:"Blue Lagoon at dusk"}] },
+      { id:"day1-sky-lagoon", day:1, name:"Sky Lagoon", category:"activity", tier:"must-decide",
+        description:"Newer geothermal spa with stunning ocean views and a 7-step ritual (lagoon, cold plunge, sauna, fog room, sky body scrub, steam, shower). Less touristy than Blue Lagoon, closer to Reykjavik. Locals actually go here.",
+        costPerPerson:65, costDisplay:"$55–75/person", costTier:"moderate", parkingCost:null, timeNeeded:"2–3 hours",
+        bookAhead:"1–2 weeks ahead", bookAheadLabel:"Book 1–2 weeks ahead", bookingUrl:"https://www.skylagoon.com", bookingSiteName:"skylagoon.com",
+        driveFromPrevious:"15 min from downtown Reykjavik", redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Sky Lagoon infinity edge ocean view"},{alt:"Sky Lagoon 7-step ritual"},{alt:"Sky Lagoon at sunset"}] },
+      { id:"day1-hallgrimskirkja", day:1, name:"Hallgrímskirkja Church Tower", category:"sightseeing", tier:"optional",
+        description:"Reykjavik's iconic rocket-shaped church. Take the elevator to the observation tower for the best panoramic view of the city — colorful rooftops stretching to the harbor with mountains beyond.",
+        costPerPerson:12, costDisplay:"$12/person (tower)", costTier:"free", parkingCost:null, timeNeeded:"20–30 min",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"Downtown Reykjavik (walkable)", redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Hallgrímskirkja exterior"},{alt:"View from Hallgrímskirkja tower"},{alt:"Hallgrímskirkja at night"}] },
+      { id:"day1-baejarins-beztu", day:1, name:"Bæjarins Beztu Pylsur", category:"restaurant", tier:"core",
+        description:'Iceland\'s legendary hot dog stand since 1937. Order "eina með öllu" (one with everything) — ketchup, sweet mustard, raw and fried onions, remoulade. Even Bill Clinton stopped by. Quick, cheap, iconic.',
+        costPerPerson:6.5, costDisplay:"$5–8/person", costTier:"free", parkingCost:null, timeNeeded:"15 min",
+        bookAhead:null, bookAheadLabel:"No — walk up", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"Downtown Reykjavik (walkable)", redditScore:5, bookSoonFlag:false,
+        images:[{alt:"Bæjarins Beztu hot dog stand"},{alt:"Icelandic hot dog with toppings"}] },
+      { id:"day1-mat-bar", day:1, name:"Mat Bar", category:"restaurant", tier:"optional",
+        description:"Excellent small plates and wine bar with a neighborhood haunt feel. Great lobster tacos, smoked haddock mousse, and Icelandic black licorice mousse for dessert. Close to the art house cinema.",
+        costPerPerson:40, costDisplay:"$30–50/person", costTier:"moderate", parkingCost:null, timeNeeded:"1–1.5 hours",
+        bookAhead:null, bookAheadLabel:"Same day / walk-in OK", bookingUrl:null, bookingSiteName:"matbar.is",
+        driveFromPrevious:null, redditScore:3, bookSoonFlag:false,
+        images:[{alt:"Mat Bar interior"},{alt:"Small plates at Mat Bar"}] },
+      { id:"day1-matur-og-drykkur", day:1, name:"Matur og Drykkur", category:"restaurant", tier:"optional",
+        description:"Rustic charm by the old harbor — wooden beams and nautical decor paying homage to Iceland's maritime heritage. Creative takes on traditional recipes. Try the cod's head with dulse and bearnaise.",
+        costPerPerson:52.5, costDisplay:"$40–65/person", costTier:"moderate", parkingCost:null, timeNeeded:"1–1.5 hours",
+        bookAhead:"1–2 days ahead recommended", bookAheadLabel:"Book 1–2 days ahead", bookingUrl:null, bookingSiteName:"maturogdrykkur.is",
+        driveFromPrevious:null, redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Matur og Drykkur interior"},{alt:"Cod dish at Matur og Drykkur"}] },
+
+      // ── Day 2 ──
+      { id:"day2-thingvellir", day:2, name:"Þingvellir National Park", category:"sightseeing", tier:"core",
+        description:"UNESCO World Heritage Site. Walk through the rift valley between the North American and Eurasian tectonic plates. Site of the world's oldest parliament (930 AD). The Almannagjá gorge is dramatic — towering rock walls on either side.",
+        costPerPerson:0, costDisplay:"Free (parking ~$7/car)", costTier:"free", parkingCost:"$7/car", timeNeeded:"1–2 hours",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"47 km / 45 min from Reykjavik via Route 36", redditScore:5, bookSoonFlag:false,
+        images:[{alt:"Þingvellir rift valley aerial"},{alt:"Walking through Almannagjá gorge"},{alt:"Þingvellir church and lake"}] },
+      { id:"day2-silfra", day:2, name:"Silfra Snorkeling", category:"activity", tier:"must-decide",
+        description:"Snorkel between two continental plates in the clearest water on Earth — visibility up to 100 meters. You wear a dry suit (only your face and hands feel the cold). Rated Top 10 activity in the world by TripAdvisor.",
+        costPerPerson:165, costDisplay:"$130–200/person", costTier:"splurge", parkingCost:null, timeNeeded:"2.5–3 hours total",
+        bookAhead:"1–3 weeks ahead", bookAheadLabel:"Book 1–3 weeks ahead", bookingUrl:"https://www.dive.is", bookingSiteName:"dive.is",
+        driveFromPrevious:"Inside Þingvellir (same stop)", redditScore:5, bookSoonFlag:true,
+        images:[{alt:"Snorkeling in Silfra crystal clear water"},{alt:"Silfra fissure underwater blue"},{alt:"Diver between tectonic plates Silfra"}] },
+      { id:"day2-geysir", day:2, name:"Geysir / Strokkur", category:"sightseeing", tier:"core",
+        description:"Watch Strokkur geyser erupt every 5–8 minutes, shooting boiling water 15–30 meters high. The original Geysir (which gave all geysers their name) is dormant but the area is steaming and surreal.",
+        costPerPerson:0, costDisplay:"Free", costTier:"free", parkingCost:null, timeNeeded:"30–45 min",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"60 km / 50 min from Þingvellir via Route 37/35", redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Strokkur geyser erupting"},{alt:"Geysir geothermal area steaming"},{alt:"Strokkur mid-eruption close-up"}] },
+      { id:"day2-gullfoss", day:2, name:"Gullfoss Waterfall", category:"sightseeing", tier:"core",
+        description:"One of Iceland's most powerful waterfalls — a massive two-tiered cascade plunging into a rugged canyon. On a sunny day, rainbows hover in the mist. Two viewing platforms offer different perspectives.",
+        costPerPerson:0, costDisplay:"Free (parking ~$7/car)", costTier:"free", parkingCost:"$7/car", timeNeeded:"45 min–1 hour",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"10 km / 10 min from Geysir via Route 35", redditScore:5, bookSoonFlag:false,
+        images:[{alt:"Gullfoss waterfall two tiers"},{alt:"Rainbow at Gullfoss"},{alt:"Gullfoss from upper viewing platform"}] },
+      { id:"day2-kerid", day:2, name:"Kerið Crater", category:"sightseeing", tier:"optional",
+        description:"A colorful 3,000-year-old volcanic crater lake with vivid blue-green water and red/orange slopes. Short walk around the rim and down to the water. Quick stop on the way back to Reykjavik.",
+        costPerPerson:5, costDisplay:"~$5/person", costTier:"free", parkingCost:null, timeNeeded:"20–30 min",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"55 km / 45 min from Gullfoss via Route 35/30", redditScore:3, bookSoonFlag:false,
+        images:[{alt:"Kerið crater aerial blue water"},{alt:"Kerið crater red slopes"}] },
+      { id:"day2-grillmarkadurinn", day:2, name:"Grillmarkaðurinn (Grill Market)", category:"restaurant", tier:"optional",
+        description:"Upscale restaurant in Reykjavik specializing in Icelandic meats — lamb, reindeer, horse. Stylish interior with basalt stone and moss decor. Open kitchen with roaring flames.",
+        costPerPerson:65, costDisplay:"$50–80/person", costTier:"moderate", parkingCost:null, timeNeeded:"1.5–2 hours",
+        bookAhead:"3–5 days ahead", bookAheadLabel:"Book 3–5 days ahead", bookingUrl:null, bookingSiteName:"grillmarkadurinn.is",
+        driveFromPrevious:null, redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Grillmarkaðurinn interior basalt decor"},{alt:"Grilled lamb at Grillmarkaðurinn"}] },
+      { id:"day2-fiskfelagid", day:2, name:"Fiskfélagið (Fish Company)", category:"restaurant", tier:"optional",
+        description:"Consistently rated one of Reykjavik's best restaurants. Tasting menus featuring Icelandic seafood with global influences. Near the harbor and art museum. Dimly lit, maritime-themed interior with cozy nooks.",
+        costPerPerson:75, costDisplay:"$60–90/person", costTier:"splurge", parkingCost:null, timeNeeded:"1.5–2 hours",
+        bookAhead:"1 week ahead", bookAheadLabel:"Book 1 week ahead", bookingUrl:null, bookingSiteName:"fiskfelagid.is",
+        driveFromPrevious:null, redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Fiskfélagið seafood platter"},{alt:"Fish Company interior"}] },
+
+      // ── Day 3 ──
+      { id:"day3-ytri-tunga", day:3, name:"Ytri-Tunga Beach", category:"sightseeing", tier:"optional",
+        description:"One of Iceland's rare golden-sand beaches. Home to a seal colony — harbor seals lounge on the rocks or bob in the surf. A gentle, peaceful stop to start the peninsula.",
+        costPerPerson:0, costDisplay:"Free", costTier:"free", parkingCost:null, timeNeeded:"20–30 min",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"175 km / 2 hr 15 min from Reykjavik via Route 1 → 54", redditScore:3, bookSoonFlag:false,
+        images:[{alt:"Ytri-Tunga golden sand beach"},{alt:"Seals at Ytri-Tunga"},{alt:"Ytri-Tunga coastline"}] },
+      { id:"day3-budakirkja", day:3, name:"Búðakirkja (Black Church)", category:"sightseeing", tier:"core",
+        description:"Iconic jet-black church standing alone against a dramatic lava field and mountain backdrop. One of the most photographed spots on the peninsula. Surreal and beautiful.",
+        costPerPerson:0, costDisplay:"Free", costTier:"free", parkingCost:null, timeNeeded:"15 min",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"20 km / 15 min from Ytri-Tunga", redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Búðakirkja black church lava field"},{alt:"Búðakirkja with mountains"},{alt:"Búðakirkja close-up"}] },
+      { id:"day3-arnarstapi", day:3, name:"Arnarstapi–Hellnar Coastal Walk", category:"sightseeing", tier:"core",
+        description:"Two charming fishing villages connected by a stunning 2.5 km coastal walk along basalt cliffs, sea arches, and crashing waves. Look for the Gatklettur rock arch and natural stone bridge.",
+        costPerPerson:0, costDisplay:"Free", costTier:"free", parkingCost:null, timeNeeded:"1–1.5 hours",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"10 km / 10 min from Búðakirkja", redditScore:5, bookSoonFlag:false,
+        images:[{alt:"Arnarstapi coastal cliffs"},{alt:"Gatklettur rock arch"},{alt:"Hellnar to Arnarstapi path"}] },
+      { id:"day3-djupalonssandur", day:3, name:"Djúpalónssandur Beach", category:"sightseeing", tier:"core",
+        description:"Haunting black pebble beach with remnants of a 1948 shipwreck scattered across the stones and ancient lifting stones once used to test fishermen's strength.",
+        costPerPerson:0, costDisplay:"Free (parking ~$5/car)", costTier:"free", parkingCost:"$5/car", timeNeeded:"30–45 min",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"20 km / 20 min from Arnarstapi", redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Djúpalónssandur black pebble beach"},{alt:"Shipwreck remains on Djúpalónssandur"},{alt:"Lifting stones at Djúpalónssandur"}] },
+      { id:"day3-londrangar", day:3, name:"Lóndrangar Cliffs", category:"sightseeing", tier:"optional",
+        description:"Dramatic basalt sea stack formations rising up to 75 meters — the remains of an ancient volcanic crater shaped by the sea. Great birdwatching spot. Stunning at sunset.",
+        costPerPerson:0, costDisplay:"Free", costTier:"free", parkingCost:null, timeNeeded:"20–30 min",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"10 km / 10 min from Djúpalónssandur", redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Lóndrangar basalt sea stacks"},{alt:"Lóndrangar cliffs panoramic"},{alt:"Lóndrangar sunset"}] },
+      { id:"day3-kirkjufell", day:3, name:"Kirkjufell & Kirkjufellsfoss", category:"sightseeing", tier:"core",
+        description:'Iceland\'s most photographed mountain — distinctive arrowhead/cone shape with a three-tiered waterfall in the foreground. Made famous by Game of Thrones ("the mountain shaped like an arrowhead").',
+        costPerPerson:0, costDisplay:"Free (parking ~$7/car)", costTier:"free", parkingCost:"$7/car", timeNeeded:"30–45 min",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"55 km / 50 min from Lóndrangar", redditScore:5, bookSoonFlag:false,
+        images:[{alt:"Kirkjufell mountain with waterfall"},{alt:"Kirkjufell sunset reflection"},{alt:"Kirkjufellsfoss close-up"}] },
+
+      // ── Day 4 ──
+      { id:"day4-seljalandsfoss", day:4, name:"Seljalandsfoss", category:"sightseeing", tier:"core",
+        description:"60-meter waterfall you can walk behind on a path that loops around the falls. Bring a rain jacket — you WILL get soaked. The spray creates rainbows on sunny days.",
+        costPerPerson:0, costDisplay:"Free (parking ~$7/car)", costTier:"free", parkingCost:"$7/car", timeNeeded:"45 min",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"120 km / 1 hr 40 min from Reykjavik via Route 1", redditScore:5, bookSoonFlag:false,
+        images:[{alt:"Seljalandsfoss front view"},{alt:"Walking behind Seljalandsfoss"},{alt:"Seljalandsfoss rainbow"}] },
+      { id:"day4-gljufrabui", day:4, name:"Gljúfrabúi (Hidden Waterfall)", category:"sightseeing", tier:"optional",
+        description:"A secret waterfall tucked inside a narrow canyon — just a 5-minute walk from Seljalandsfoss. Wade through a shallow stream between rock walls to find it crashing down in a hidden chamber.",
+        costPerPerson:0, costDisplay:"Free (same parking as Seljalandsfoss)", costTier:"free", parkingCost:null, timeNeeded:"15–20 min",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"5-minute walk from Seljalandsfoss", redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Gljúfrabúi waterfall inside canyon"},{alt:"Walking through narrow canyon to Gljúfrabúi"}] },
+      { id:"day4-skogafoss", day:4, name:"Skógafoss", category:"sightseeing", tier:"core",
+        description:"Massive 25-meter-wide waterfall crashing down 60 meters. The sheer power and volume is staggering. Climb the 527 steps to the top for incredible panoramic views of the south coast and glaciers.",
+        costPerPerson:0, costDisplay:"Free (parking ~$7/car)", costTier:"free", parkingCost:"$7/car", timeNeeded:"45 min–1 hour",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"30 km / 25 min from Seljalandsfoss", redditScore:5, bookSoonFlag:false,
+        images:[{alt:"Skógafoss waterfall full view"},{alt:"Skógafoss from above after climbing steps"},{alt:"Skógafoss rainbow mist"}] },
+      { id:"day4-plane-wreck", day:4, name:"Sólheimasandur DC-3 Plane Wreck", category:"sightseeing", tier:"optional",
+        description:"A 1973 US Navy DC-3 wreck sitting on a vast, featureless black sand beach. Hauntingly photogenic — looks like a scene from another planet. But it's a 4 km walk each way across flat black sand.",
+        costPerPerson:0, costDisplay:"Free", costTier:"free", parkingCost:null, timeNeeded:"1.5–2 hours (8 km round trip walk)",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"25 km / 20 min from Skógafoss", redditScore:3, bookSoonFlag:false,
+        images:[{alt:"DC-3 plane wreck Sólheimasandur"},{alt:"Plane wreck on black sand beach"},{alt:"Walking toward plane wreck"}] },
+      { id:"day4-dyrholaey", day:4, name:"Dyrhólaey", category:"sightseeing", tier:"core",
+        description:"A dramatic 120-meter sea arch and promontory jutting into the Atlantic with panoramic views of black sand beaches stretching in both directions. One of the best viewpoints on the entire south coast.",
+        costPerPerson:0, costDisplay:"Free", costTier:"free", parkingCost:null, timeNeeded:"30–45 min",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"10 km / 10 min from plane wreck parking", redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Dyrhólaey arch aerial"},{alt:"View from Dyrhólaey lighthouse"},{alt:"Dyrhólaey black sand beach panoramic"}] },
+      { id:"day4-reynisfjara", day:4, name:"Reynisfjara Black Sand Beach", category:"sightseeing", tier:"core",
+        description:"World-famous black sand beach with towering hexagonal basalt columns, roaring Atlantic waves, and the Reynisdrangar sea stacks offshore. ⚠️ Stay well back from the water — sneaker waves are extremely dangerous.",
+        costPerPerson:0, costDisplay:"Free (parking ~$7/car)", costTier:"free", parkingCost:"$7/car", timeNeeded:"30–45 min",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"15 km / 15 min from Dyrhólaey", redditScore:5, bookSoonFlag:false,
+        images:[{alt:"Reynisfjara basalt columns"},{alt:"Reynisfjara black sand with waves"},{alt:"Reynisdrangar sea stacks from beach"}] },
+      { id:"day4-smidjan", day:4, name:"Smiðjan Brugghús", category:"restaurant", tier:"optional",
+        description:"Brewpub in Vík specializing in burgers, wings, ribs, and lovingly brewed craft beers. Casual, fun atmosphere. Exactly what you want after a long day of waterfall-chasing.",
+        costPerPerson:32.5, costDisplay:"$25–40/person", costTier:"moderate", parkingCost:null, timeNeeded:"1–1.5 hours",
+        bookAhead:null, bookAheadLabel:"No booking needed, but expect waits in peak summer", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"In Vík (10 km / 10 min from Reynisfjara)", redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Smiðjan Brugghús exterior Vík"},{alt:"Burger and beer at Smiðjan"}] },
+      { id:"day4-black-crust", day:4, name:"Black Crust Pizzeria", category:"restaurant", tier:"optional",
+        description:"Pizza with volcanic black crust made with local volcanic powder — resembles the black sand beaches outside. Unique and genuinely delicious, not just a gimmick.",
+        costPerPerson:25, costDisplay:"$20–30/person", costTier:"moderate", parkingCost:null, timeNeeded:"45 min–1 hour",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"In Vík", redditScore:3, bookSoonFlag:false,
+        images:[{alt:"Black crust pizza close-up"},{alt:"Black Crust Pizzeria interior"}] },
+
+      // ── Day 5 ──
+      { id:"day5-ferry", day:5, name:"Westman Islands Ferry", category:"activity", tier:"core",
+        description:"The Herjólfur ferry from Landeyjahöfn to Heimaey takes 35–40 minutes across open water. The approach is stunning — towering volcanic cliffs covered in green moss rising from crystalline blue water. Book early for a car spot.",
+        costPerPerson:34, costDisplay:"~$34/person round trip (pedestrian); ~$55 car", costTier:"moderate", parkingCost:null, timeNeeded:"40 min each way",
+        bookAhead:"1–2 months ahead", bookAheadLabel:"Book 1–2 months ahead", bookingUrl:"https://herjolfur.is", bookingSiteName:"herjolfur.is",
+        driveFromPrevious:"35 km / 30 min from Vík to Landeyjahöfn", redditScore:null, bookSoonFlag:true,
+        images:[{alt:"Herjólfur ferry approaching Westman Islands"},{alt:"Westman Islands cliffs from ferry"}] },
+      { id:"day5-eldfell", day:5, name:"Eldfell Volcano Hike", category:"sightseeing", tier:"core",
+        description:"Hike to the crater rim of the volcano that erupted in 1973, burying a third of the town. Only 15 minutes to the top. Ground is still warm in spots. Stunning red, orange, and black lava with panoramic island views.",
+        costPerPerson:0, costDisplay:"Free", costTier:"free", parkingCost:null, timeNeeded:"30–45 min round trip",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"5 min walk from town center", redditScore:5, bookSoonFlag:false,
+        images:[{alt:"Eldfell volcano crater view"},{alt:"Red lava slopes Eldfell"},{alt:"Panoramic view from Eldfell summit"}] },
+      { id:"day5-eldheimar", day:5, name:"Eldheimar Museum", category:"sightseeing", tier:"core",
+        description:"An incredible museum built around houses buried in the 1973 eruption's ash. You walk through excavated rooms and watch original rescue footage. Interactive, emotional, and fascinating.",
+        costPerPerson:20, costDisplay:"~$20/person", costTier:"moderate", parkingCost:null, timeNeeded:"1–1.5 hours",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:"https://eldheimar.is", bookingSiteName:"eldheimar.is",
+        driveFromPrevious:"5 min walk from Eldfell trailhead", redditScore:5, bookSoonFlag:false,
+        images:[{alt:"Eldheimar museum exterior"},{alt:"Buried house inside Eldheimar"},{alt:"Eldheimar eruption exhibit"}] },
+      { id:"day5-rib-tour", day:5, name:"RIB Boat Safari", category:"activity", tier:"must-decide",
+        description:"Zip around the archipelago in a high-speed inflatable boat. Dramatic sea cliffs, sea caves, the famous Elephant Rock, and close encounters with seabirds. One of the most exhilarating things you can do in Iceland.",
+        costPerPerson:135, costDisplay:"$90–180/person", costTier:"splurge", parkingCost:null, timeNeeded:"1–2 hours",
+        bookAhead:"1–2 weeks ahead", bookAheadLabel:"Book 1–2 weeks ahead", bookingUrl:null, bookingSiteName:"ribsafari.is",
+        driveFromPrevious:"Departs from Heimaey harbor", redditScore:4, bookSoonFlag:false,
+        images:[{alt:"RIB boat Westman Islands cliffs"},{alt:"Elephant Rock Westman Islands"},{alt:"RIB boat safari puffins"}] },
+      { id:"day5-storhofdi", day:5, name:"Stórhöfði (Puffin Colony)", category:"sightseeing", tier:"optional",
+        description:"The windiest place in Europe. The southern tip of Heimaey with a puffin observation hut. Pufflings may still be around in late August. Amazing hiking trails and cliff views.",
+        costPerPerson:0, costDisplay:"Free", costTier:"free", parkingCost:null, timeNeeded:"1–1.5 hours",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"20 min drive or 45 min walk from harbor", redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Stórhöfði puffin observation hut"},{alt:"Puffins on Westman Islands cliffs"},{alt:"Stórhöfði southern tip view"}] },
+      { id:"day5-beluga", day:5, name:"Beluga Whale Sanctuary", category:"activity", tier:"optional",
+        description:"See rescued beluga whales (Little White and Little Grey, relocated from a Shanghai aquarium) and injured puffins being rehabilitated. Good rainy-day backup option.",
+        costPerPerson:25, costDisplay:"~$25/person", costTier:"moderate", parkingCost:null, timeNeeded:"45 min",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"In Heimaey town", redditScore:3, bookSoonFlag:false,
+        images:[{alt:"Beluga whale sanctuary Heimaey"},{alt:"Beluga whales underwater"}] },
+      { id:"day5-slippurinn", day:5, name:"Slippurinn", category:"restaurant", tier:"must-decide",
+        description:"Seasonal, locally-sourced tasting menus in a converted shipyard building. One of Iceland's most acclaimed restaurants outside Reykjavik. Chef's menu changes constantly based on what's available from the island and surrounding sea.",
+        costPerPerson:80, costDisplay:"$60–100+/person", costTier:"splurge", parkingCost:null, timeNeeded:"2–2.5 hours",
+        bookAhead:"2–4 weeks ahead", bookAheadLabel:"Book 2–4 weeks ahead", bookingUrl:null, bookingSiteName:"slippurinn.is",
+        driveFromPrevious:"In Heimaey town", redditScore:5, bookSoonFlag:true,
+        images:[{alt:"Slippurinn restaurant exterior converted shipyard"},{alt:"Tasting menu at Slippurinn"}] },
+
+      // ── Day 6 ──
+      { id:"day6-fjadrargljufur", day:6, name:"Fjaðrárgljúfur Canyon", category:"sightseeing", tier:"optional",
+        description:"A 2-million-year-old river canyon with lush green moss clinging to the walls and a serpentine river winding far below. Easy walking path along the rim (~1 km) with several viewpoints.",
+        costPerPerson:0, costDisplay:"Free (parking ~$7/car)", costTier:"free", parkingCost:"$7/car", timeNeeded:"30–45 min",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"70 km / 50 min from Vík via Route 1", redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Fjaðrárgljúfur canyon aerial green"},{alt:"Fjaðrárgljúfur walking path rim"},{alt:"Fjaðrárgljúfur river below"}] },
+      { id:"day6-glacier-hike", day:6, name:"Glacier Hike at Skaftafell", category:"activity", tier:"must-decide",
+        description:"Walk on the Falljökull glacier — an outlet of Vatnajökull, Europe's largest ice cap. Crampons on, ice axe in hand, peer into deep crevasses and see dazzling blue ice formations.",
+        costPerPerson:120, costDisplay:"$100–140/person", costTier:"splurge", parkingCost:null, timeNeeded:"3–4 hours total",
+        bookAhead:"2–4 weeks ahead", bookAheadLabel:"Book 2–4 weeks ahead", bookingUrl:"https://adventures.is", bookingSiteName:"adventures.is",
+        driveFromPrevious:"135 km / 1 hr 40 min from Vík; Skaftafell Booking Center", redditScore:5, bookSoonFlag:true,
+        images:[{alt:"Glacier hiking Skaftafell crampons"},{alt:"Falljökull glacier blue ice crevasse"},{alt:"Group glacier hike Vatnajökull"}] },
+      { id:"day6-svartifoss", day:6, name:"Svartifoss (Black Falls)", category:"sightseeing", tier:"optional",
+        description:"A stunning waterfall cascading over jet-black hexagonal basalt columns — its design inspired Hallgrímskirkja church in Reykjavik. Moderate hike, about 45 minutes each way from Skaftafell parking.",
+        costPerPerson:0, costDisplay:"Free (parking ~$5–7/car)", costTier:"free", parkingCost:"$5–7/car", timeNeeded:"2–3 hours round trip",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"Same location as glacier hike (Skaftafell)", redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Svartifoss waterfall basalt columns"},{alt:"Hiking trail to Svartifoss"},{alt:"Svartifoss close-up basalt"}] },
+      { id:"day6-jokulsarlon-zodiac", day:6, name:"Jökulsárlón Zodiac Boat Tour", category:"activity", tier:"must-decide",
+        description:"Zip across the glacier lagoon in a small, fast inflatable boat — weaving between towering icebergs, getting right up to the glacier face. Hear ancient ice cracking. Seals swim alongside.",
+        costPerPerson:108, costDisplay:"~$108/person", costTier:"splurge", parkingCost:null, timeNeeded:"75 min on water (+prep)",
+        bookAhead:"2–4 weeks ahead", bookAheadLabel:"Book 2–4 weeks ahead", bookingUrl:"https://icelagoon.is", bookingSiteName:"icelagoon.is",
+        driveFromPrevious:"57 km / 45 min from Skaftafell via Route 1", redditScore:5, bookSoonFlag:true,
+        images:[{alt:"Zodiac boat among icebergs Jökulsárlón"},{alt:"Jökulsárlón glacier lagoon icebergs"},{alt:"Seal on ice Jökulsárlón"}] },
+      { id:"day6-jokulsarlon-amphibian", day:6, name:"Jökulsárlón Amphibian Boat Tour", category:"activity", tier:"must-decide",
+        description:"A larger, gentler boat that drives from land directly into the lagoon. Cruises among icebergs near the shore. 40 minutes on water. Family-friendly, budget option.",
+        costPerPerson:46, costDisplay:"~$46/person", costTier:"moderate", parkingCost:null, timeNeeded:"40 min on water",
+        bookAhead:"1–2 weeks ahead", bookAheadLabel:"Book 1–2 weeks ahead", bookingUrl:"https://icelagoon.is", bookingSiteName:"icelagoon.is",
+        driveFromPrevious:"Same location as Zodiac", redditScore:3, bookSoonFlag:false,
+        images:[{alt:"Amphibian boat Jökulsárlón"},{alt:"Icebergs from amphibian boat"}] },
+      { id:"day6-diamond-beach", day:6, name:"Diamond Beach", category:"sightseeing", tier:"core",
+        description:"Chunks of crystal-clear glacier ice — some the size of refrigerators — wash up on jet-black volcanic sand. They glitter like enormous diamonds, especially in golden hour light.",
+        costPerPerson:0, costDisplay:"Free", costTier:"free", parkingCost:null, timeNeeded:"20–45 min",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"0.5 km across the road from Jökulsárlón", redditScore:5, bookSoonFlag:false,
+        images:[{alt:"Diamond Beach ice chunks black sand"},{alt:"Diamond Beach golden hour"},{alt:"Diamond Beach ice crystal close-up"}] },
+      { id:"day6-humarhofnin", day:6, name:"Humarhöfnin", category:"restaurant", tier:"optional",
+        description:"Famous for Icelandic langoustine (lobster). Widely considered the best langoustine restaurant in Iceland. If you're anywhere near Höfn, this is a must. The langoustine soup alone is worth the stop.",
+        costPerPerson:52.5, costDisplay:"$40–65/person", costTier:"moderate", parkingCost:null, timeNeeded:"1–1.5 hours",
+        bookAhead:"2–3 days ahead", bookAheadLabel:"Book 2–3 days ahead", bookingUrl:null, bookingSiteName:"humarhofnin.is",
+        driveFromPrevious:"In Höfn, 80 km / 1 hr from Jökulsárlón", redditScore:5, bookSoonFlag:false,
+        images:[{alt:"Humarhöfnin langoustine plate"},{alt:"Humarhöfnin restaurant exterior Höfn"}] },
+
+      // ── Day 7 ──
+      { id:"day7-secret-lagoon", day:7, name:"Secret Lagoon (Gamla Laugin)", category:"activity", tier:"must-decide",
+        description:"Iceland's oldest geothermal pool in Flúðir. Much less touristy than the Blue Lagoon. Sit in naturally hot water surrounded by steaming vents and a small geyser that erupts nearby.",
+        costPerPerson:28, costDisplay:"~$28/person", costTier:"moderate", parkingCost:null, timeNeeded:"1–2 hours",
+        bookAhead:null, bookAheadLabel:"Same day OK", bookingUrl:"https://secretlagoon.is", bookingSiteName:"secretlagoon.is",
+        driveFromPrevious:"~2.5 hours from Höfn (on the way back to Reykjavik)", redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Secret Lagoon steaming water"},{alt:"Secret Lagoon natural setting"},{alt:"Small geyser at Secret Lagoon"}] },
+      { id:"day7-reykjadalur", day:7, name:"Reykjadalur Hot Spring River", category:"activity", tier:"must-decide",
+        description:"A ~3 km hike (45 min each way) to a geothermally heated river where you bathe in warm water winding through a valley of steaming hillsides. One of Iceland's best free hot spring experiences.",
+        costPerPerson:0, costDisplay:"Free", costTier:"free", parkingCost:null, timeNeeded:"2–3 hours round trip",
+        bookAhead:null, bookAheadLabel:"No booking needed", bookingUrl:null, bookingSiteName:null,
+        driveFromPrevious:"Near Hveragerði, ~45 min from Reykjavik", redditScore:5, bookSoonFlag:false,
+        images:[{alt:"Reykjadalur hot river bathing"},{alt:"Reykjadalur steaming valley hike"},{alt:"Reykjadalur river aerial"}] },
+
+      // ── Day 8 ──
+      { id:"day8-perlan", day:8, name:"Perlan Museum", category:"sightseeing", tier:"optional",
+        description:"A glass-domed building on a hilltop housing a nature exhibition with an indoor ice cave (made from real glacier ice), a planetarium, and exhibits on Icelandic geology and wildlife.",
+        costPerPerson:35, costDisplay:"~$35/person", costTier:"moderate", parkingCost:null, timeNeeded:"1.5–2 hours",
+        bookAhead:null, bookAheadLabel:"Same day OK", bookingUrl:"https://perlan.is", bookingSiteName:"perlan.is",
+        driveFromPrevious:"Bus or short drive from downtown Reykjavik", redditScore:3, bookSoonFlag:false,
+        images:[{alt:"Perlan building glass dome"},{alt:"Perlan indoor ice cave"},{alt:"Perlan observation deck view"}] },
+      { id:"day8-whale-watching", day:8, name:"Whale Watching", category:"activity", tier:"must-decide",
+        description:"3-hour boat tour from the Old Harbor with good chances of seeing humpback and minke whales, white-beaked dolphins, and harbor porpoises. Even if you don't spot whales, the boat ride is beautiful.",
+        costPerPerson:85, costDisplay:"$75–95/person", costTier:"splurge", parkingCost:null, timeNeeded:"3 hours",
+        bookAhead:"2–5 days ahead", bookAheadLabel:"Book 2–5 days ahead", bookingUrl:"https://elding.is", bookingSiteName:"elding.is",
+        driveFromPrevious:"Old Harbor, walkable from downtown", redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Whale watching boat Reykjavik harbor"},{alt:"Humpback whale tail Iceland"},{alt:"Whale watching with mountain backdrop"}] },
+      { id:"day8-dill", day:8, name:"Dill Restaurant", category:"restaurant", tier:"must-decide",
+        description:"Iceland's first Michelin-starred restaurant. Chef Gunnar Karl Gíslason takes you on a culinary journey through seasonal Icelandic ingredients — foraged herbs, Arctic fish, lamb with wild thyme.",
+        costPerPerson:205, costDisplay:"$180–230/person", costTier:"splurge", parkingCost:null, timeNeeded:"2.5–3 hours",
+        bookAhead:"1–3 months ahead", bookAheadLabel:"Book 1–3 months ahead", bookingUrl:"https://dillrestaurant.is", bookingSiteName:"dillrestaurant.is",
+        driveFromPrevious:"Downtown Reykjavik (walkable)", redditScore:5, bookSoonFlag:true,
+        images:[{alt:"Dill restaurant interior minimalist"},{alt:"Dill tasting menu dish plated"},{alt:"Dill restaurant bread course"}] },
+      { id:"day8-ox", day:8, name:"Óx", category:"restaurant", tier:"must-decide",
+        description:"Only 10 seats, hidden inside restaurant Sumac. Intimate counter-dining experience with Chef Thrainn's tasting menu — reindeer tartare, smoked Arctic char, dishes that feel like a personal conversation.",
+        costPerPerson:250, costDisplay:"$250+/person", costTier:"splurge", parkingCost:null, timeNeeded:"2.5–3 hours",
+        bookAhead:"2–4 months ahead", bookAheadLabel:"Book 2–4 months ahead", bookingUrl:null, bookingSiteName:"ox.sumac.is",
+        driveFromPrevious:"Downtown Reykjavik (walkable)", redditScore:4, bookSoonFlag:true,
+        images:[{alt:"Óx counter dining 10 seats"},{alt:"Óx tasting menu dish"}] },
+      { id:"day8-skal", day:8, name:"Skál!", category:"restaurant", tier:"optional",
+        description:"Modern Icelandic sharing plates in a vibrant, buzzy atmosphere. Open kitchen as the focal point. The lamb tartare with wild herbs is a standout.",
+        costPerPerson:57.5, costDisplay:"$45–70/person", costTier:"moderate", parkingCost:null, timeNeeded:"1.5–2 hours",
+        bookAhead:"1–2 weeks ahead", bookAheadLabel:"Book 1–2 weeks ahead", bookingUrl:null, bookingSiteName:"skalrvk.is",
+        driveFromPrevious:"Downtown Reykjavik (walkable)", redditScore:4, bookSoonFlag:false,
+        images:[{alt:"Skál restaurant open kitchen"},{alt:"Lamb tartare at Skál"}] },
+    ];
+
+    // ═══════════════════════════════════════════
+    // UTILITIES
+    // ═══════════════════════════════════════════
+
+    const IMAGE_URLS = {
+      "day1-blue-lagoon": [
+        {url:"https://images.unsplash.com/photo-1592961091248-a2b407825a3e?w=600&h=375&fit=crop&q=75&auto=format", alt:"Blue Lagoon milky blue geothermal water"},
+        {url:"https://images.unsplash.com/photo-1576410683781-b19cf2447f13?w=600&h=375&fit=crop&q=75&auto=format", alt:"People bathing in Blue Lagoon"},
+        {url:"https://images.unsplash.com/photo-1707319110895-da61ef9a4dee?w=600&h=375&fit=crop&q=75&auto=format", alt:"Blue Lagoon geothermal water"},
+      ],
+      "day1-sky-lagoon": [
+        {url:"https://images.unsplash.com/photo-1695051794339-6b4f99e1170a?w=600&h=375&fit=crop&q=75&auto=format", alt:"Sky Lagoon ocean view"},
+        {url:"https://images.unsplash.com/photo-1694820376749-ba6d2e11f1ef?w=600&h=375&fit=crop&q=75&auto=format", alt:"Sky Lagoon between rock formations"},
+        {url:"https://images.unsplash.com/photo-1632868957222-6b4954c7ef16?w=600&h=375&fit=crop&q=75&auto=format", alt:"Geothermal lagoon on misty morning"},
+      ],
+      "day1-hallgrimskirkja": [
+        {url:"https://images.unsplash.com/photo-1596920070143-4b817f5f2537?w=600&h=375&fit=crop&q=75&auto=format", alt:"Hallgrímskirkja church front view"},
+        {url:"https://images.unsplash.com/photo-1678348566820-81f71e66c6ce?w=600&h=375&fit=crop&q=75&auto=format", alt:"Hallgrímskirkja at dusk"},
+        {url:"https://images.unsplash.com/photo-1606130503037-6a8ef67c9d2d?w=600&h=375&fit=crop&q=75&auto=format", alt:"Aerial view of Reykjavik"},
+      ],
+      "day1-baejarins-beztu": [
+        {url:"https://images.unsplash.com/photo-1740403024947-3b2faacd888f?w=600&h=375&fit=crop&q=75&auto=format", alt:"Icelandic hot dog stand at night"},
+        {url:"https://images.unsplash.com/photo-1644783179196-8abddcb193bf?w=600&h=375&fit=crop&q=75&auto=format", alt:"Icelandic hot dogs with toppings"},
+      ],
+      "day2-thingvellir": [
+        {url:"https://images.unsplash.com/photo-1620026040690-3fd11e7b1f00?w=600&h=375&fit=crop&q=75&auto=format", alt:"Þingvellir National Park landscape"},
+        {url:"https://images.unsplash.com/photo-1610380215229-a84d20ef234e?w=600&h=375&fit=crop&q=75&auto=format", alt:"Þingvellir National Park"},
+        {url:"https://images.unsplash.com/photo-1680026602957-44a26e949f09?w=600&h=375&fit=crop&q=75&auto=format", alt:"Þingvellir tectonic rift with clear water"},
+      ],
+      "day2-silfra": [
+        {url:"https://images.unsplash.com/photo-1678016315458-3806831fe7fc?w=600&h=375&fit=crop&q=75&auto=format", alt:"Silfra crystal clear underwater snorkeling"},
+        {url:"https://images.unsplash.com/photo-1620026040690-3fd11e7b1f00?w=600&h=375&fit=crop&q=75&auto=format", alt:"Silfra fissure in Þingvellir"},
+        {url:"https://images.unsplash.com/photo-1680026602957-44a26e949f09?w=600&h=375&fit=crop&q=75&auto=format", alt:"Clear water between tectonic plates"},
+      ],
+      "day2-geysir": [
+        {url:"https://images.unsplash.com/photo-1704216969275-0d34bbfffe1d?w=600&h=375&fit=crop&q=75&auto=format", alt:"Strokkur geyser erupting"},
+        {url:"https://images.unsplash.com/photo-1754597051265-ccd86d052dfe?w=600&h=375&fit=crop&q=75&auto=format", alt:"Geysir hot spring turquoise water"},
+        {url:"https://images.unsplash.com/photo-1741660419426-2484a4cd736f?w=600&h=375&fit=crop&q=75&auto=format", alt:"Strokkur eruption with onlookers"},
+      ],
+      "day2-gullfoss": [
+        {url:"https://images.unsplash.com/photo-1670594394284-fb1cb0bf765f?w=600&h=375&fit=crop&q=75&auto=format", alt:"Gullfoss waterfall cascading into canyon"},
+        {url:"https://images.unsplash.com/photo-1705956659563-e21cbc9c5510?w=600&h=375&fit=crop&q=75&auto=format", alt:"Gullfoss waterfall close-up"},
+        {url:"https://images.unsplash.com/photo-1627731079485-eee3de9def71?w=600&h=375&fit=crop&q=75&auto=format", alt:"Gullfoss misty canyon view"},
+      ],
+      "day2-kerid": [
+        {url:"https://images.unsplash.com/photo-1649781918293-fae5f43387c6?w=600&h=375&fit=crop&q=75&auto=format", alt:"Kerið crater with blue lake and red slopes"},
+        {url:"https://images.unsplash.com/photo-1664768653395-dbe899ef4f32?w=600&h=375&fit=crop&q=75&auto=format", alt:"Kerið crater lake surrounded by green hills"},
+      ],
+      "day3-ytri-tunga": [
+        {url:"https://images.unsplash.com/photo-1754573423758-99d2b45d6cca?w=600&h=375&fit=crop&q=75&auto=format", alt:"Seal at Ytri-Tunga beach"},
+        {url:"https://images.unsplash.com/photo-1752673929584-79836162e71a?w=600&h=375&fit=crop&q=75&auto=format", alt:"Seal on a rock at Ytri-Tunga"},
+        {url:"https://images.unsplash.com/photo-1656382647570-2002d43781a9?w=600&h=375&fit=crop&q=75&auto=format", alt:"Seals on beach"},
+      ],
+      "day3-budakirkja": [
+        {url:"https://images.unsplash.com/photo-1654086041929-ff0947441f94?w=600&h=375&fit=crop&q=75&auto=format", alt:"Búðakirkja black church"},
+        {url:"https://images.unsplash.com/photo-1754172111686-89a5782b18c6?w=600&h=375&fit=crop&q=75&auto=format", alt:"Dark church in Iceland field"},
+        {url:"https://images.unsplash.com/photo-1517147763025-9aedcd945208?w=600&h=375&fit=crop&q=75&auto=format", alt:"Black church under northern lights"},
+      ],
+      "day3-arnarstapi": [
+        {url:"https://images.unsplash.com/photo-1597740992238-6a0a40bf2085?w=600&h=375&fit=crop&q=75&auto=format", alt:"Rock formation at Arnarstapi"},
+        {url:"https://images.unsplash.com/photo-1576662734840-0668c0072391?w=600&h=375&fit=crop&q=75&auto=format", alt:"Landscape at Arnarstapi"},
+        {url:"https://images.unsplash.com/photo-1583923569087-f3019fb975e5?w=600&h=375&fit=crop&q=75&auto=format", alt:"Coastal rock formation, Snæfellsnes"},
+      ],
+      "day3-djupalonssandur": [
+        {url:"https://images.unsplash.com/photo-1526655805340-274e69922288?w=600&h=375&fit=crop&q=75&auto=format", alt:"Djúpalónssandur black sand beach"},
+        {url:"https://images.unsplash.com/photo-1750251646182-4cd3caaf80a4?w=600&h=375&fit=crop&q=75&auto=format", alt:"Basalt rock formation on cliff"},
+        {url:"https://images.unsplash.com/photo-1515105030-467275c7e306?w=600&h=375&fit=crop&q=75&auto=format", alt:"Snæfellsnes peninsula landscape"},
+      ],
+      "day3-londrangar": [
+        {url:"https://images.unsplash.com/photo-1515007969325-9dc3b67f3f6f?w=600&h=375&fit=crop&q=75&auto=format", alt:"Lóndrangar basalt cliffs aerial"},
+        {url:"https://images.unsplash.com/photo-1663697396689-80737163fb8f?w=600&h=375&fit=crop&q=75&auto=format", alt:"Mountain with fog near Lóndrangar"},
+        {url:"https://images.unsplash.com/photo-1764276266750-4d6316e972e0?w=600&h=375&fit=crop&q=75&auto=format", alt:"Dramatic coastal mountains at sunrise"},
+      ],
+      "day3-kirkjufell": [
+        {url:"https://images.unsplash.com/photo-1508923567004-3a6b8004f3d7?w=600&h=375&fit=crop&q=75&auto=format", alt:"Kirkjufell mountain"},
+        {url:"https://images.unsplash.com/photo-1680466257600-86e0aa02cc64?w=600&h=375&fit=crop&q=75&auto=format", alt:"Kirkjufell with waterfall"},
+        {url:"https://images.unsplash.com/photo-1519304959535-9f9d85a6ead7?w=600&h=375&fit=crop&q=75&auto=format", alt:"Kirkjufell in winter snow"},
+      ],
+      "day4-seljalandsfoss": [
+        {url:"https://images.unsplash.com/photo-1497045259452-eae56671c63d?w=600&h=375&fit=crop&q=75&auto=format", alt:"Seljalandsfoss waterfall close-up"},
+        {url:"https://images.unsplash.com/photo-1449322252144-6eec9f238da8?w=600&h=375&fit=crop&q=75&auto=format", alt:"Seljalandsfoss from above"},
+        {url:"https://images.unsplash.com/photo-1596920332775-cadd09e3a035?w=600&h=375&fit=crop&q=75&auto=format", alt:"Seljalandsfoss on green field"},
+      ],
+      "day4-gljufrabui": [
+        {url:"https://images.unsplash.com/photo-1502172203436-34609ce34340?w=600&h=375&fit=crop&q=75&auto=format", alt:"Gljúfrabúi waterfall"},
+        {url:"https://images.unsplash.com/photo-1732938228316-ea9ff8caf4e5?w=600&h=375&fit=crop&q=75&auto=format", alt:"Frozen waterfall near Gljúfrabúi"},
+      ],
+      "day4-skogafoss": [
+        {url:"https://images.unsplash.com/photo-1529515244555-c2d86b8fad59?w=600&h=375&fit=crop&q=75&auto=format", alt:"Skógafoss waterfall"},
+        {url:"https://images.unsplash.com/photo-1508407728267-5dda0f8e9085?w=600&h=375&fit=crop&q=75&auto=format", alt:"Skógafoss waterfall full view"},
+        {url:"https://images.unsplash.com/photo-1541438133868-6ecd78b3508e?w=600&h=375&fit=crop&q=75&auto=format", alt:"Skógafoss with rainbow"},
+      ],
+      "day4-plane-wreck": [
+        {url:"https://images.unsplash.com/photo-1518565756759-98c6cbc5fa33?w=600&h=375&fit=crop&q=75&auto=format", alt:"DC-3 plane wreck on black sand"},
+        {url:"https://images.unsplash.com/photo-1471907011145-66713aa5749a?w=600&h=375&fit=crop&q=75&auto=format", alt:"Plane wreck at Sólheimasandur"},
+        {url:"https://images.unsplash.com/photo-1463836930182-e3214ec86167?w=600&h=375&fit=crop&q=75&auto=format", alt:"Plane wreck on grey surface"},
+      ],
+      "day4-dyrholaey": [
+        {url:"https://images.unsplash.com/photo-1684330049164-a61589059586?w=600&h=375&fit=crop&q=75&auto=format", alt:"Cliff overlooking ocean at Dyrhólaey"},
+        {url:"https://images.unsplash.com/photo-1640768240304-1a83e324bb18?w=600&h=375&fit=crop&q=75&auto=format", alt:"View near Dyrhólaey"},
+        {url:"https://images.unsplash.com/photo-1682954901566-e13cf2830a31?w=600&h=375&fit=crop&q=75&auto=format", alt:"Dyrhólaey rock arch"},
+      ],
+      "day4-reynisfjara": [
+        {url:"https://images.unsplash.com/photo-1624346043040-66fb20edd2c2?w=600&h=375&fit=crop&q=75&auto=format", alt:"Waves on black sand at Reynisfjara"},
+        {url:"https://images.unsplash.com/photo-1751989802391-c3f8d586d851?w=600&h=375&fit=crop&q=75&auto=format", alt:"Black sand beach rock formations"},
+        {url:"https://images.unsplash.com/photo-1707581884601-99264d8e231f?w=600&h=375&fit=crop&q=75&auto=format", alt:"Aerial view of Reynisfjara"},
+      ],
+      "day5-ferry": [
+        {url:"https://images.unsplash.com/photo-1516102800706-18d2e163f89a?w=600&h=375&fit=crop&q=75&auto=format", alt:"Boat near Vestmannaeyjar"},
+        {url:"https://images.unsplash.com/photo-1565520741210-13b493fbebd1?w=600&h=375&fit=crop&q=75&auto=format", alt:"Sun over water at Westman Islands"},
+      ],
+      "day5-eldfell": [
+        {url:"https://images.unsplash.com/photo-1636280797502-674f50053eac?w=600&h=375&fit=crop&q=75&auto=format", alt:"Volcanic lava close-up, Iceland"},
+        {url:"https://images.unsplash.com/photo-1519986918269-2b5d41fb1830?w=600&h=375&fit=crop&q=75&auto=format", alt:"Aerial view of volcanic crater"},
+        {url:"https://images.unsplash.com/photo-1681754109530-0875eb85dac9?w=600&h=375&fit=crop&q=75&auto=format", alt:"Volcanic terrain with trail"},
+      ],
+      "day5-eldheimar": [
+        {url:"https://images.unsplash.com/photo-1608468716860-5566b7671ea3?w=600&h=375&fit=crop&q=75&auto=format", alt:"Colorful houses, Iceland"},
+        {url:"https://images.unsplash.com/photo-1650876702975-33f2a95f0396?w=600&h=375&fit=crop&q=75&auto=format", alt:"Harbor in Iceland"},
+      ],
+      "day5-rib-tour": [
+        {url:"https://images.unsplash.com/photo-1542869781-b86bf228f781?w=600&h=375&fit=crop&q=75&auto=format", alt:"Rocky cliff island aerial view"},
+        {url:"https://images.unsplash.com/photo-1491487306293-cd1f777dfa8c?w=600&h=375&fit=crop&q=75&auto=format", alt:"Dramatic sea cliffs, southern Iceland"},
+      ],
+      "day5-storhofdi": [
+        {url:"https://images.unsplash.com/photo-1569579933032-9e16447c50e3?w=600&h=375&fit=crop&q=75&auto=format", alt:"Three Atlantic puffins"},
+        {url:"https://images.unsplash.com/photo-1546200042-f8412348ffac?w=600&h=375&fit=crop&q=75&auto=format", alt:"Two puffins on grass field"},
+        {url:"https://images.unsplash.com/photo-1750797490751-1fc372fdcf88?w=600&h=375&fit=crop&q=75&auto=format", alt:"Close-up of a puffin"},
+      ],
+      "day6-fjadrargljufur": [
+        {url:"https://images.unsplash.com/photo-1741807062634-845711b69934?w=600&h=375&fit=crop&q=75&auto=format", alt:"Green canyon at Fjaðrárgljúfur"},
+        {url:"https://images.unsplash.com/photo-1741808045701-16fbab329169?w=600&h=375&fit=crop&q=75&auto=format", alt:"River through Fjaðrárgljúfur canyon"},
+        {url:"https://images.unsplash.com/photo-1506703024218-3d93b306b482?w=600&h=375&fit=crop&q=75&auto=format", alt:"Valley with river at Fjaðrárgljúfur"},
+      ],
+      "day6-glacier-hike": [
+        {url:"https://images.unsplash.com/photo-1531070315771-c8130f146e2a?w=600&h=375&fit=crop&q=75&auto=format", alt:"Hikers at Svínafellsjökull glacier"},
+        {url:"https://images.unsplash.com/photo-1482778090591-caf9a0149412?w=600&h=375&fit=crop&q=75&auto=format", alt:"Hikers on glacier in Iceland"},
+        {url:"https://images.unsplash.com/photo-1573041724453-b742a223cf3f?w=600&h=375&fit=crop&q=75&auto=format", alt:"Blue glaciers in Iceland"},
+      ],
+      "day6-svartifoss": [
+        {url:"https://images.unsplash.com/photo-1696709699529-683fe6172436?w=600&h=375&fit=crop&q=75&auto=format", alt:"Svartifoss waterfall from cliff side"},
+        {url:"https://images.unsplash.com/photo-1498337687573-7d92b5614e4b?w=600&h=375&fit=crop&q=75&auto=format", alt:"Svartifoss with basalt columns"},
+        {url:"https://images.unsplash.com/photo-1654000555742-f4daeb7b34a9?w=600&h=375&fit=crop&q=75&auto=format", alt:"Svartifoss waterfall and greenery"},
+      ],
+      "day6-jokulsarlon-zodiac": [
+        {url:"https://images.unsplash.com/photo-1576000576731-3b99e36d81bc?w=600&h=375&fit=crop&q=75&auto=format", alt:"Icebergs in Jökulsárlón lagoon"},
+        {url:"https://images.unsplash.com/photo-1521115034998-825ba1ea72f4?w=600&h=375&fit=crop&q=75&auto=format", alt:"Ice stacks at Jökulsárlón"},
+        {url:"https://images.unsplash.com/photo-1537255439072-8b7f411e6212?w=600&h=375&fit=crop&q=75&auto=format", alt:"Jökulsárlón glacier lagoon view"},
+      ],
+      "day6-jokulsarlon-amphibian": [
+        {url:"https://images.unsplash.com/photo-1576000576731-3b99e36d81bc?w=600&h=375&fit=crop&q=75&auto=format", alt:"Icebergs in Jökulsárlón lagoon"},
+        {url:"https://images.unsplash.com/photo-1537255439072-8b7f411e6212?w=600&h=375&fit=crop&q=75&auto=format", alt:"Jökulsárlón glacier lagoon"},
+      ],
+      "day6-diamond-beach": [
+        {url:"https://images.unsplash.com/photo-1525541715650-dfcbfb7c2905?w=600&h=375&fit=crop&q=75&auto=format", alt:"Iceberg on Diamond Beach black sand"},
+        {url:"https://images.unsplash.com/photo-1750779940886-edfa73b5c5c6?w=600&h=375&fit=crop&q=75&auto=format", alt:"Icebergs on dark beach"},
+        {url:"https://images.unsplash.com/photo-1542382853-7dc1393efd3a?w=600&h=375&fit=crop&q=75&auto=format", alt:"Glacial ice on black sand"},
+      ],
+      "day7-secret-lagoon": [
+        {url:"https://images.unsplash.com/photo-1415226556993-1404e0c6e727?w=600&h=375&fit=crop&q=75&auto=format", alt:"Hot spring swimming in Iceland"},
+        {url:"https://images.unsplash.com/photo-1502882603487-1b05da741a96?w=600&h=375&fit=crop&q=75&auto=format", alt:"Geothermal hot spring between rocks"},
+      ],
+      "day7-reykjadalur": [
+        {url:"https://images.unsplash.com/photo-1748680297712-414f21781a0f?w=600&h=375&fit=crop&q=75&auto=format", alt:"Geothermal steam rising in Iceland"},
+        {url:"https://images.unsplash.com/photo-1542811937-34c19149d195?w=600&h=375&fit=crop&q=75&auto=format", alt:"River between mountains in Iceland"},
+        {url:"https://images.unsplash.com/photo-1739692317419-3e0dc0f228da?w=600&h=375&fit=crop&q=75&auto=format", alt:"Hot spring with rising steam"},
+      ],
+      "day8-perlan": [
+        {url:"https://images.unsplash.com/photo-1678105496055-dc5a6997af9f?w=600&h=375&fit=crop&q=75&auto=format", alt:"Glass dome building in Reykjavik"},
+        {url:"https://images.unsplash.com/photo-1605956093065-da539902deb9?w=600&h=375&fit=crop&q=75&auto=format", alt:"Harpa glass building, Reykjavik"},
+      ],
+      "day8-whale-watching": [
+        {url:"https://images.unsplash.com/photo-1752180211062-bebd302c43f1?w=600&h=375&fit=crop&q=75&auto=format", alt:"Whale tail in Reykjavik waters"},
+        {url:"https://images.unsplash.com/photo-1490821687411-720740003fa3?w=600&h=375&fit=crop&q=75&auto=format", alt:"Humpback whale tail"},
+      ],
+      // ── Local images for cards missing from Unsplash ──
+      "day1-mat-bar": [
+        {url:"images/day1-mat-bar/1.jpg", alt:"Mat Bar interior"},
+        {url:"images/day1-mat-bar/2.jpg", alt:"Mat Bar dishes"},
+        {url:"images/day1-mat-bar/3.jpg", alt:"Mat Bar food plating"},
+        {url:"images/day1-mat-bar/4.jpg", alt:"Mat Bar wine bar"},
+        {url:"images/day1-mat-bar/5.jpg", alt:"Mat Bar small plates"},
+      ],
+      "day1-matur-og-drykkur": [
+        {url:"images/day1-matur-og-drykkur/1.jpg", alt:"Matur og Drykkur exterior by the harbor"},
+        {url:"images/day1-matur-og-drykkur/2.jpg", alt:"Matur og Drykkur interior"},
+        {url:"images/day1-matur-og-drykkur/3.jpg", alt:"Matur og Drykkur tasting platter"},
+        {url:"images/day1-matur-og-drykkur/4.jpg", alt:"Matur og Drykkur lamb course"},
+        {url:"images/day1-matur-og-drykkur/5.jpg", alt:"Matur og Drykkur halibut soup"},
+      ],
+      "day2-grillmarkadurinn": [
+        {url:"images/day2-grillmarkadurinn/1.jpg", alt:"Grillmarkaðurinn interior"},
+        {url:"images/day2-grillmarkadurinn/2.jpg", alt:"Grillmarkaðurinn lamb dish"},
+        {url:"images/day2-grillmarkadurinn/3.jpg", alt:"Grillmarkaðurinn menu presentation"},
+        {url:"images/day2-grillmarkadurinn/4.jpg", alt:"Grillmarkaðurinn plated course"},
+      ],
+      "day2-fiskfelagid": [
+        {url:"images/day2-fiskfelagid/1.jpg", alt:"Fiskfélagið seafood presentation"},
+        {url:"images/day2-fiskfelagid/2.jpg", alt:"Fiskfélagið restaurant interior"},
+        {url:"images/day2-fiskfelagid/3.jpg", alt:"Fiskfélagið tasting dish"},
+        {url:"images/day2-fiskfelagid/4.jpg", alt:"Fiskfélagið dining atmosphere"},
+        {url:"images/day2-fiskfelagid/5.jpg", alt:"Fiskfélagið plated seafood"},
+      ],
+      "day4-smidjan": [
+        {url:"images/day4-smidjan/1.jpg", alt:"Smiðjan Brugghús burger"},
+        {url:"images/day4-smidjan/2.jpg", alt:"Smiðjan Brugghús craft beer"},
+        {url:"images/day4-smidjan/3.jpg", alt:"Smiðjan Brugghús beer selection"},
+      ],
+      "day4-black-crust": [
+        {url:"images/day4-black-crust/1.jpg", alt:"Black Crust Pizzeria black dough pizza"},
+        {url:"images/day4-black-crust/2.jpg", alt:"Black Crust Pizzeria pizza close-up"},
+      ],
+      "day5-beluga": [
+        {url:"images/day5-beluga/1.jpg", alt:"Beluga whale at sanctuary"},
+        {url:"images/day5-beluga/2.jpg", alt:"SEA LIFE Trust sanctuary facility"},
+        {url:"images/day5-beluga/3.jpg", alt:"Beluga whale sanctuary Heimaey"},
+        {url:"images/day5-beluga/4.jpg", alt:"Beluga whale underwater"},
+      ],
+      "day5-slippurinn": [
+        {url:"images/day5-slippurinn/1.jpg", alt:"Slippurinn restaurant exterior"},
+        {url:"images/day5-slippurinn/2.jpg", alt:"Slippurinn tasting dish"},
+        {url:"images/day5-slippurinn/3.jpg", alt:"Slippurinn seasonal plate"},
+        {url:"images/day5-slippurinn/4.jpg", alt:"Slippurinn dining room"},
+        {url:"images/day5-slippurinn/5.jpg", alt:"Slippurinn Westman Islands setting"},
+      ],
+      "day6-humarhofnin": [
+        {url:"images/day6-humarhofnin/1.jpg", alt:"Humarhöfnin restaurant in Höfn"},
+        {url:"images/day6-humarhofnin/2.jpg", alt:"Humarhöfnin langoustine tails"},
+        {url:"images/day6-humarhofnin/3.jpg", alt:"Humarhöfnin appetizer"},
+      ],
+      "day8-dill": [
+        {url:"images/day8-dill/1.jpg", alt:"Dill Restaurant interior"},
+        {url:"images/day8-dill/2.jpg", alt:"Dill Restaurant dining room"},
+        {url:"images/day8-dill/3.jpg", alt:"Dill tasting menu course"},
+        {url:"images/day8-dill/4.jpg", alt:"Dill seasonal dish"},
+        {url:"images/day8-dill/5.jpg", alt:"Dill plated dessert"},
+      ],
+      "day8-ox": [
+        {url:"images/day8-ox/1.jpg", alt:"Óx restaurant entrance"},
+        {url:"images/day8-ox/2.jpg", alt:"Óx counter dining experience"},
+        {url:"images/day8-ox/3.jpg", alt:"Óx lamb tartare"},
+        {url:"images/day8-ox/4.jpg", alt:"Óx dry-aged ribeye"},
+        {url:"images/day8-ox/5.jpg", alt:"Óx blueberry dessert"},
+      ],
+      "day8-skal": [
+        {url:"images/day8-skal/1.jpg", alt:"Skál! restaurant interior"},
+        {url:"images/day8-skal/2.jpg", alt:"Skál! sharing plates"},
+      ],
+    };
+
+    const GRADIENT_PALETTES = [
+      ['#0c4a6e','#0284c7'], ['#134e4a','#0d9488'], ['#3b0764','#7c3aed'],
+      ['#78350f','#d97706'], ['#1e3a5f','#3b82f6'], ['#701a75','#c026d3'],
+      ['#14532d','#16a34a'], ['#7c2d12','#ea580c'], ['#1e1b4b','#6366f1'],
+      ['#164e63','#06b6d4'], ['#4a1d96','#8b5cf6'], ['#92400e','#f59e0b'],
+      ['#083344','#0891b2'], ['#365314','#65a30d'], ['#4c0519','#e11d48'],
+    ];
+
+    function hashStr(s) {
+      let h = 0;
+      for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+      return Math.abs(h);
+    }
+
+    function getGradient(cardId, idx) {
+      const h = hashStr(cardId + idx);
+      const p = GRADIENT_PALETTES[h % GRADIENT_PALETTES.length];
+      const angle = 135 + (idx * 40);
+      return `linear-gradient(${angle}deg, ${p[0]} 0%, ${p[1]} 100%)`;
+    }
+
+    function getCostTierStyle(tier) {
+      if (tier === 'free') return { bg: 'bg-green-100 text-green-800', dot: '#3B8A5A' };
+      if (tier === 'moderate') return { bg: 'bg-amber-100 text-amber-800', dot: '#D4A530' };
+      return { bg: 'bg-red-100 text-red-800', dot: '#C4544A' };
+    }
+
+    function getCostTierLabel(tier) {
+      if (tier === 'free') return '🟢';
+      if (tier === 'moderate') return '🟡';
+      return '🔴';
+    }
+
+    function getTierBadge(tier) {
+      if (tier === 'core') return { label: 'Core Stop', cls: 'bg-teal-50 text-teal border border-teal/20' };
+      if (tier === 'must-decide') return { label: 'Must Decide', cls: 'bg-amber-50 text-amber-700 border border-amber-200' };
+      return { label: 'Optional', cls: 'bg-gray-100 text-gray-600 border border-gray-200' };
+    }
+
+    function getCategoryIcon(cat) {
+      if (cat === 'sightseeing') return '🏔️';
+      if (cat === 'activity') return '🎯';
+      if (cat === 'restaurant') return '🍽️';
+      return '🏠';
+    }
+
+    function formatRelativeTime(ts) {
+      const diff = Date.now() - new Date(ts).getTime();
+      const mins = Math.floor(diff / 60000);
+      if (mins < 1) return 'just now';
+      if (mins < 60) return `${mins}m ago`;
+      const hrs = Math.floor(mins / 60);
+      if (hrs < 24) return `${hrs}h ago`;
+      const days = Math.floor(hrs / 24);
+      return `${days}d ago`;
+    }
+
+    function getNetScore(cardId, votes) {
+      let up = 0, down = 0;
+      Object.entries(votes).forEach(([k, v]) => {
+        if (k.startsWith(cardId + ':')) {
+          if (v === 'up') up++;
+          else if (v === 'down') down++;
+        }
+      });
+      return { up, down, net: up - down };
+    }
+
+    function getVoters(cardId, votes) {
+      const upVoters = [], downVoters = [];
+      Object.entries(votes).forEach(([k, v]) => {
+        if (k.startsWith(cardId + ':')) {
+          const name = k.split(':').pop();
+          if (v === 'up') upVoters.push(name);
+          else if (v === 'down') downVoters.push(name);
+        }
+      });
+      return { upVoters, downVoters };
+    }
+
+    // ═══════════════════════════════════════════
+    // COMPONENTS
+    // ═══════════════════════════════════════════
+
+    function UserSelector({ onSelect }) {
+      return (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+            <h2 className="font-display text-3xl text-center mb-2 text-[#1A1A1A]">Welcome to Iceland 2026</h2>
+            <p className="text-center text-gray-500 mb-6">Who are you?</p>
+            <div className="grid grid-cols-2 gap-3">
+              {FAMILY.map(name => (
+                <button key={name} onClick={() => onSelect(name)}
+                  className="py-4 px-6 rounded-xl text-lg font-semibold transition-all duration-200
+                    bg-teal-50 text-teal hover:bg-teal hover:text-white hover:shadow-lg hover:-translate-y-0.5
+                    border border-teal/20 hover:border-teal">
+                  {name}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function TutorialModal({ onDismiss }) {
+      return (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+            <div className="text-center mb-6">
+              <span className="text-5xl block mb-3">🇮🇸</span>
+              <h2 className="font-display text-2xl font-bold text-[#1A1A1A]">Welcome to the Trip Planner!</h2>
+              <p className="text-gray-500 mt-1 text-sm">Here's how it works</p>
+            </div>
+            <div className="space-y-4 mb-6">
+              <div className="flex items-start gap-3">
+                <span className="text-xl shrink-0 mt-0.5">👍👎</span>
+                <div>
+                  <p className="font-semibold text-sm text-[#1A1A1A]">Vote on activities</p>
+                  <p className="text-xs text-gray-500">Upvote what excites you, downvote what doesn't. Everyone's votes are visible.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-xl shrink-0 mt-0.5">💬</span>
+                <div>
+                  <p className="font-semibold text-sm text-[#1A1A1A]">Leave comments</p>
+                  <p className="text-xs text-gray-500">Share thoughts, ask questions, or add tips on any card.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-xl shrink-0 mt-0.5">💡</span>
+                <div>
+                  <p className="font-semibold text-sm text-[#1A1A1A]">Suggest new activities</p>
+                  <p className="text-xs text-gray-500">Found something cool? Hit the orange "Add a Suggestion" button.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-xl shrink-0 mt-0.5">🏆</span>
+                <div>
+                  <p className="font-semibold text-sm text-[#1A1A1A]">Check the Leaderboard</p>
+                  <p className="text-xs text-gray-500">See which activities the family agrees on and estimated costs.</p>
+                </div>
+              </div>
+            </div>
+            <button onClick={onDismiss}
+              className="w-full py-3 rounded-xl text-base font-semibold bg-teal text-white hover:bg-teal-dark transition-colors">
+              Got it!
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    function Header({ currentUser, onSwitchUser, stats, onOpenHomeBase }) {
+      const [showSwitch, setShowSwitch] = useState(false);
+      return (
+        <header className="bg-transparent">
+          <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <h1 className="font-display text-2xl font-bold text-teal">Iceland 2026</h1>
+              <span className="text-sm text-gray-400 hidden sm:inline">Aug 28 – Sep 5</span>
+            </div>
+            <div className="relative flex items-center gap-3">
+              <span className="text-sm text-gray-500">{stats.cards} cards · {stats.votes} votes</span>
+              <button onClick={onOpenHomeBase}
+                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-teal-50 text-gray-500 hover:text-teal flex items-center justify-center transition-colors"
+                title="Set home base">🏠</button>
+              <button onClick={() => setShowSwitch(!showSwitch)}
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-teal text-white text-sm font-medium hover:bg-teal-dark transition-colors">
+                <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold">
+                  {currentUser[0]}
+                </span>
+                {currentUser}
+              </button>
+              {showSwitch && (
+                <div className="absolute right-0 top-full mt-2 bg-white rounded-xl shadow-xl border border-gray-100 py-2 min-w-[160px]">
+                  {FAMILY.filter(n => n !== currentUser).map(name => (
+                    <button key={name} onClick={() => { onSwitchUser(name); setShowSwitch(false); }}
+                      className="w-full text-left px-4 py-2 hover:bg-teal-50 text-sm transition-colors">
+                      Switch to {name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </header>
+      );
+    }
+
+    function HeroSection({ cards, votes, suggestions }) {
+      const totalVotes = Object.keys(votes).length;
+      const voterCounts = {};
+      FAMILY.forEach(n => { voterCounts[n] = 0; });
+      Object.keys(votes).forEach(k => {
+        const name = k.split(':').pop();
+        if (voterCounts[name] !== undefined) voterCounts[name]++;
+      });
+
+      return (
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+            <div className="flex flex-wrap items-start justify-between gap-6">
+              <div>
+                <h2 className="font-display text-4xl font-bold text-[#1A1A1A] mb-1">Iceland 2026</h2>
+                <p className="text-lg text-gray-500 mb-4">August 28 – September 5 · 9 days</p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {FAMILY.map(name => (
+                    <span key={name} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-teal-50 text-sm">
+                      <span className="font-semibold text-teal">{name}</span>
+                      <span className="text-gray-400">({voterCounts[name]} votes)</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="flex gap-6 text-sm text-gray-500">
+                  <div><span className="block text-2xl font-bold text-teal">{cards.length + suggestions.length}</span>cards</div>
+                  <div><span className="block text-2xl font-bold text-terracotta">{totalVotes}</span>votes</div>
+                  <div><span className="block text-2xl font-bold text-amber-600">{suggestions.length}</span>suggestions</div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <p className="text-sm text-gray-500 flex flex-wrap items-center gap-1">
+                <span className="font-medium text-gray-700">Route:</span>
+                {['Reykjavik','Golden Circle','Snæfellsnes','South Coast','Westman Islands','Glaciers & Jökulsárlón','Reykjavik'].map((stop, i, arr) => (
+                  <span key={i} className="inline-flex items-center gap-1">
+                    <span>{stop}</span>
+                    {i < arr.length - 1 && <span className="text-teal">→</span>}
+                  </span>
+                ))}
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function FilterBar({ activeFilter, onFilterChange, advancedFilters, onAdvancedChange }) {
+      const [showAdvanced, setShowAdvanced] = useState(false);
+      const filters = [
+        { id: 'all', label: 'All Days' },
+        { id: 'must-decide', label: 'Must-Decide' },
+        { id: 'restaurants', label: 'Restaurants' },
+        { id: 'suggestions', label: 'Family Suggestions' },
+        { id: 'leaderboard', label: 'Leaderboard' },
+      ];
+      const categoryOptions = [
+        { id: 'all', label: 'All Types', icon: '📋' },
+        { id: 'sightseeing', label: 'Sightseeing', icon: '🏔️' },
+        { id: 'activity', label: 'Activities', icon: '🎯' },
+        { id: 'restaurant', label: 'Restaurants', icon: '🍽️' },
+      ];
+      const costOptions = [
+        { id: 'all', label: 'Any Cost', icon: '💰' },
+        { id: 'free', label: 'Free / Cheap', icon: '🟢' },
+        { id: 'moderate', label: 'Moderate', icon: '🟡' },
+        { id: 'splurge', label: 'Splurge', icon: '🔴' },
+      ];
+      const bookingOptions = [
+        { id: 'all', label: 'Any Booking', icon: '📅' },
+        { id: 'none', label: 'No booking needed', icon: '✅' },
+        { id: 'soon', label: 'Book weeks ahead', icon: '🔥' },
+        { id: 'months', label: 'Book months ahead', icon: '⏰' },
+      ];
+      const hasAdvanced = advancedFilters.category !== 'all' || advancedFilters.cost !== 'all' || advancedFilters.booking !== 'all';
+      const FilterPills = ({ options, value, filterKey }) => (
+        <div className="flex flex-wrap gap-1.5">
+          {options.map(o => (
+            <button key={o.id} onClick={() => onAdvancedChange({ ...advancedFilters, [filterKey]: o.id })}
+              className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                value === o.id
+                  ? 'bg-teal text-white shadow-sm'
+                  : 'bg-white text-gray-500 hover:bg-teal-50 hover:text-teal border border-gray-200'
+              }`}>
+              {o.icon} {o.label}
+            </button>
+          ))}
+        </div>
+      );
+      return (
+        <div className="border-t border-gray-100">
+          <div className="max-w-7xl mx-auto px-6 py-3">
+            <div className="flex flex-wrap items-center gap-2">
+              {filters.map(f => (
+                <button key={f.id} onClick={() => onFilterChange(f.id)}
+                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    activeFilter === f.id
+                      ? 'bg-teal text-white shadow-md'
+                      : 'bg-white text-gray-600 hover:bg-teal-50 hover:text-teal border border-gray-200'
+                  }`}>
+                  {f.label}
+                </button>
+              ))}
+              <div className="w-px h-6 bg-gray-200 mx-1 hidden sm:block"></div>
+              <button onClick={() => setShowAdvanced(!showAdvanced)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 relative ${
+                  showAdvanced || hasAdvanced
+                    ? 'bg-terracotta text-white shadow-md'
+                    : 'bg-white text-gray-600 hover:bg-terracotta-light/10 hover:text-terracotta border border-gray-200'
+                }`}>
+                ⚙️ Filters {hasAdvanced && !showAdvanced && <span className="absolute -top-1 -right-1 w-3 h-3 bg-terracotta rounded-full border-2 border-[#FAFAF7]"></span>}
+              </button>
+              {hasAdvanced && (
+                <button onClick={() => onAdvancedChange({ category: 'all', cost: 'all', booking: 'all' })}
+                  className="text-xs text-terracotta hover:underline ml-1">Clear filters</button>
+              )}
+            </div>
+          </div>
+          {showAdvanced && (
+            <div className="max-w-7xl mx-auto px-6 pb-3 space-y-2" style={{ animation: 'fadeInUp 0.15s ease-out' }}>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide w-12 shrink-0">Type</span>
+                <FilterPills options={categoryOptions} value={advancedFilters.category} filterKey="category" />
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide w-12 shrink-0">Cost</span>
+                <FilterPills options={costOptions} value={advancedFilters.cost} filterKey="cost" />
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide w-12 shrink-0">Book</span>
+                <FilterPills options={bookingOptions} value={advancedFilters.booking} filterKey="booking" />
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    function DayNavigator({ activeDay }) {
+      const handleClick = (day) => {
+        const el = document.getElementById('day-section-' + day);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      };
+      return (
+        <div className="day-nav">
+          {DAYS.map(d => (
+            <div key={d.day}
+              className={`day-nav-dot ${activeDay === d.day ? 'active' : ''}`}
+              onClick={() => handleClick(d.day)}
+              title={`Day ${d.day} — ${d.title}`}>
+              {d.day}
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    function DayHeader({ dayData, homeBase, stickyTop }) {
+      const baseLabel = homeBase || 'Reykjavik';
+      const topPx = stickyTop || 120;
+
+      return (
+        <div className="sticky z-20 bg-[#FAFAF7]/95 backdrop-blur-md py-2 mt-6 mb-4 border-b border-transparent"
+          id={`day-section-${dayData.day}`}
+          style={{ top: `${topPx}px`, scrollMarginTop: `${topPx + 16}px` }}>
+          <div className="flex items-center gap-3 flex-wrap">
+            <h2 className="font-display text-lg font-bold text-[#1A1A1A] shrink-0">
+              Day {dayData.day} — {dayData.date}
+            </h2>
+            <span className="text-sm text-gray-500">{dayData.title}</span>
+            {dayData.distFromPrev && (
+              <span className="text-[11px] text-gray-400 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gray-50 border border-gray-100">
+                🚗 {dayData.distFromPrev}
+              </span>
+            )}
+            {dayData.distFromBase && dayData.distFromBase !== "0 km" && (
+              <span className="text-[11px] text-teal inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-teal-50 border border-teal/10">
+                🏠 {dayData.distFromBase} from {baseLabel}
+              </span>
+            )}
+            <span className="text-[11px] text-blue-600 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-50">
+              🌤️ {dayData.weather}
+            </span>
+            {dayData.flight && (
+              <span className="text-[11px] text-amber-600 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 border border-amber-100">
+                ✈️ {dayData.flight}
+              </span>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    function ImageCarousel({ images, cardId }) {
+      const realImages = IMAGE_URLS[cardId] || images;
+      const [idx, setIdx] = useState(0);
+      const [imgError, setImgError] = useState({});
+      if (!realImages || realImages.length === 0) return null;
+      const img = realImages[idx];
+      const hasUrl = img.url && !imgError[idx];
+      const prev = () => setIdx((idx - 1 + realImages.length) % realImages.length);
+      const next = () => setIdx((idx + 1) % realImages.length);
+      const handleKey = (e) => {
+        if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+      };
+
+      return (
+        <div className="relative h-48 overflow-hidden rounded-t-xl select-none outline-none"
+          tabIndex={0} onKeyDown={handleKey}
+          style={hasUrl ? {} : { background: getGradient(cardId, idx) }}>
+          {hasUrl ? (
+            <img src={img.url} alt={img.alt} className="w-full h-full object-cover"
+              onError={() => setImgError(prev => ({...prev, [idx]: true}))} loading="lazy" />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center p-6" style={{ background: getGradient(cardId, idx) }}>
+              <p className="text-white/90 text-sm font-medium text-center leading-relaxed drop-shadow-lg">
+                {img.alt}
+              </p>
+            </div>
+          )}
+          {realImages.length > 1 && (
+            <>
+              <div onClick={(e) => { e.stopPropagation(); prev(); }}
+                className="absolute left-0 top-0 w-1/2 h-full cursor-pointer flex items-center justify-start pl-2 group">
+                <span className="w-7 h-7 rounded-full bg-black/20 group-hover:bg-black/50 text-white flex items-center justify-center text-sm transition-colors">‹</span>
+              </div>
+              <div onClick={(e) => { e.stopPropagation(); next(); }}
+                className="absolute right-0 top-0 w-1/2 h-full cursor-pointer flex items-center justify-end pr-2 group">
+                <span className="w-7 h-7 rounded-full bg-black/20 group-hover:bg-black/50 text-white flex items-center justify-center text-sm transition-colors">›</span>
+              </div>
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 pointer-events-none">
+                {realImages.map((_, i) => (
+                  <span key={i} className={`w-1.5 h-1.5 rounded-full transition-colors ${i === idx ? 'bg-white' : 'bg-white/40'}`} />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      );
+    }
+
+    function StarRating({ score }) {
+      if (score === null || score === undefined) return null;
+      return (
+        <div className="flex items-center gap-1" title={`Reddit rating: ${score}/5`}>
+          {[1,2,3,4,5].map(i => (
+            <span key={i} className={`text-xs ${i <= score ? 'text-amber-400' : 'text-gray-300'}`}>★</span>
+          ))}
+          <span className="text-[10px] text-gray-400 ml-0.5">Reddit</span>
+        </div>
+      );
+    }
+
+    function VoteButtons({ cardId, currentUser, votes, onVote }) {
+      const { upVoters, downVoters } = getVoters(cardId, votes);
+      const myVote = votes[`${cardId}:${currentUser}`] || null;
+
+      const handleVote = (type) => {
+        if (myVote === type) {
+          onVote(cardId, currentUser, null);
+        } else {
+          onVote(cardId, currentUser, type);
+        }
+      };
+
+      return (
+        <div className="pt-3 border-t border-gray-100">
+          <div className="flex items-start gap-4 mb-2 min-h-[20px]">
+            {upVoters.length > 0 && (
+              <div className="flex items-center gap-1 text-xs text-gray-500 flex-wrap">
+                <span className="text-green-600">👍</span>
+                {upVoters.map((n, i) => (
+                  <span key={n} className={n === currentUser ? 'font-bold text-green-700' : ''}>
+                    {n}{i < upVoters.length - 1 ? ',' : ''}
+                  </span>
+                ))}
+              </div>
+            )}
+            {downVoters.length > 0 && (
+              <div className="flex items-center gap-1 text-xs text-gray-500 flex-wrap">
+                <span className="text-red-500">👎</span>
+                {downVoters.map((n, i) => (
+                  <span key={n} className={n === currentUser ? 'font-bold text-red-600' : ''}>
+                    {n}{i < downVoters.length - 1 ? ',' : ''}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="flex gap-2">
+            <button onClick={() => handleVote('up')}
+              className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all duration-200 active:scale-95
+                ${myVote === 'up'
+                  ? 'bg-green-600 text-white shadow-sm'
+                  : 'bg-gray-50 text-gray-600 hover:bg-green-50 hover:text-green-700 border border-gray-200'}`}>
+              👍 Upvote
+            </button>
+            <button onClick={() => handleVote('down')}
+              className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all duration-200 active:scale-95
+                ${myVote === 'down'
+                  ? 'bg-red-500 text-white shadow-sm'
+                  : 'bg-gray-50 text-gray-600 hover:bg-red-50 hover:text-red-600 border border-gray-200'}`}>
+              👎 Downvote
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    function CommentSection({ cardId, currentUser, comments, onAddComment }) {
+      const [expanded, setExpanded] = useState(false);
+      const [text, setText] = useState('');
+      const [replyTo, setReplyTo] = useState(null); // index of comment being replied to
+      const [replyText, setReplyText] = useState('');
+      const cardComments = comments[cardId] || [];
+
+      const totalCount = cardComments.reduce((sum, c) => sum + 1 + (c.replies ? c.replies.length : 0), 0);
+
+      const handleSubmit = () => {
+        if (!text.trim()) return;
+        onAddComment(cardId, { author: currentUser, text: text.trim(), timestamp: new Date().toISOString(), replies: [] });
+        setText('');
+      };
+
+      const handleReply = (commentIdx) => {
+        if (!replyText.trim()) return;
+        const updated = [...cardComments];
+        const comment = { ...updated[commentIdx] };
+        comment.replies = [...(comment.replies || []), { author: currentUser, text: replyText.trim(), timestamp: new Date().toISOString() }];
+        updated[commentIdx] = comment;
+        onAddComment(cardId, null, updated);
+        setReplyText('');
+        setReplyTo(null);
+      };
+
+      return (
+        <div className="pt-3 border-t border-gray-100">
+          <button onClick={() => setExpanded(!expanded)}
+            className="text-sm text-gray-500 hover:text-teal transition-colors flex items-center gap-1">
+            💬 {totalCount} comment{totalCount !== 1 ? 's' : ''}
+            <span className="text-xs">{expanded ? '▲' : '▼'}</span>
+          </button>
+          {expanded && (
+            <div className="mt-2 space-y-2">
+              {cardComments.map((c, i) => (
+                <div key={i}>
+                  <div className="bg-gray-50 rounded-lg px-3 py-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-semibold text-teal">{c.author}</span>
+                        <span className="text-[10px] text-gray-400">{formatRelativeTime(c.timestamp)}</span>
+                      </div>
+                      <button onClick={() => { setReplyTo(replyTo === i ? null : i); setReplyText(''); }}
+                        className="text-[10px] text-gray-400 hover:text-teal transition-colors">
+                        ↩ Reply
+                      </button>
+                    </div>
+                    <p className="text-sm text-gray-700 mt-0.5">{c.text}</p>
+                  </div>
+                  {/* Replies */}
+                  {c.replies && c.replies.length > 0 && (
+                    <div className="ml-4 mt-1 space-y-1 border-l-2 border-teal-100 pl-3">
+                      {c.replies.map((r, ri) => (
+                        <div key={ri} className="bg-teal-50/50 rounded-lg px-3 py-1.5">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[11px] font-semibold text-teal">{r.author}</span>
+                            <span className="text-[10px] text-gray-400">{formatRelativeTime(r.timestamp)}</span>
+                          </div>
+                          <p className="text-[13px] text-gray-700 mt-0.5">{r.text}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {/* Reply input */}
+                  {replyTo === i && (
+                    <div className="ml-4 mt-1 pl-3 border-l-2 border-teal-100">
+                      <div className="flex gap-2">
+                        <input type="text" value={replyText} onChange={e => setReplyText(e.target.value.slice(0, 280))}
+                          onKeyDown={e => e.key === 'Enter' && handleReply(i)}
+                          placeholder={`Reply to ${c.author}...`} autoFocus
+                          className="flex-1 text-xs px-3 py-1.5 rounded-lg border border-gray-200 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal/20" />
+                        <button onClick={() => handleReply(i)} disabled={!replyText.trim()}
+                          className="px-3 py-1.5 text-xs font-medium rounded-lg bg-teal text-white hover:bg-teal-dark disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
+                          Reply
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+              <div className="flex gap-2 mt-2">
+                <input type="text" value={text} onChange={e => setText(e.target.value.slice(0, 280))}
+                  onKeyDown={e => e.key === 'Enter' && handleSubmit()}
+                  placeholder="Add a comment..."
+                  className="flex-1 text-sm px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal/20" />
+                <button onClick={handleSubmit} disabled={!text.trim()}
+                  className="px-4 py-2 text-sm font-medium rounded-lg bg-teal text-white hover:bg-teal-dark disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
+                  Post
+                </button>
+              </div>
+              <div className="text-[10px] text-gray-400 text-right">{text.length}/280</div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    function CardComponent({ card, currentUser, votes, comments, onVote, onAddComment, delay, onDeleteSuggestion }) {
+      const tierBadge = getTierBadge(card.tier);
+      const costStyle = getCostTierStyle(card.costTier);
+      const isSuggestion = card.isUserSubmitted;
+
+      return (
+        <div className={`card-enter bg-white rounded-xl shadow-sm border overflow-hidden flex flex-col
+          ${isSuggestion ? 'suggestion-card' : 'border-gray-100'}`}
+          style={{ animationDelay: `${delay * 60}ms` }}>
+
+          {/* Image */}
+          {isSuggestion ? (
+            <div className="h-32 bg-gradient-to-br from-teal-50 to-blue-50 flex flex-col items-center justify-center gap-2 relative">
+              <span className="text-4xl">{getCategoryIcon(card.category)}</span>
+              <span className="text-xs font-medium text-teal bg-white/80 px-3 py-1 rounded-full">
+                💡 Suggested by {card.submittedBy}
+              </span>
+              {onDeleteSuggestion && card.submittedBy === currentUser && (
+                <button onClick={() => onDeleteSuggestion(card.id)}
+                  className="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-100 hover:bg-red-200 text-red-600 flex items-center justify-center text-xs transition-colors"
+                  title="Delete suggestion">✕</button>
+              )}
+            </div>
+          ) : (
+            <ImageCarousel images={card.images} cardId={card.id} />
+          )}
+
+          {/* Meta bar */}
+          <div className="px-4 pt-3 flex items-center justify-between gap-2 flex-wrap">
+            <div className="flex items-center gap-2">
+              <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${costStyle.bg}`}>
+                {getCostTierLabel(card.costTier)} {card.costDisplay}
+              </span>
+            </div>
+            {card.driveFromPrevious && (
+              <span className="text-[11px] text-gray-400 truncate max-w-[180px]" title={card.driveFromPrevious}>
+                📍 {card.driveFromPrevious}
+              </span>
+            )}
+          </div>
+
+          {/* Reddit + Book Soon */}
+          <div className="px-4 pt-1 flex items-center justify-between gap-2">
+            <StarRating score={card.redditScore} />
+            {card.bookSoonFlag && (
+              <span className="text-[11px] font-semibold text-red-600 bg-red-50 px-2 py-0.5 rounded-full animate-pulse">
+                🔥 {card.bookAhead || 'Book soon'}
+              </span>
+            )}
+          </div>
+
+          {/* Name + Tier */}
+          <div className="px-4 pt-2">
+            <h3 className="font-display text-lg font-bold text-[#1A1A1A] leading-tight">{card.name}</h3>
+            <div className="flex items-center gap-2 mt-1">
+              <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${tierBadge.cls}`}>{tierBadge.label}</span>
+              <span className="text-[11px] text-gray-400">{getCategoryIcon(card.category)} {card.category}</span>
+            </div>
+          </div>
+
+          {/* Description */}
+          <div className="px-4 pt-2 flex-1">
+            <p className="text-sm text-gray-600 leading-relaxed">{card.description}</p>
+          </div>
+
+          {/* Details */}
+          <div className="px-4 pt-3 space-y-1 text-xs text-gray-500">
+            <div className="flex flex-wrap gap-x-4 gap-y-1">
+              <span>⏱ {card.timeNeeded}</span>
+              {card.parkingCost && <span>🅿️ {card.parkingCost}</span>}
+            </div>
+            {card.bookAheadLabel && <div>📅 {card.bookAheadLabel}</div>}
+            {(card.bookingUrl || card.bookingSiteName) && (
+              <div>
+                {card.bookingUrl ? (
+                  <a href={card.bookingUrl} target="_blank" rel="noopener noreferrer"
+                    className="text-teal hover:underline">
+                    🔗 Book at {card.bookingSiteName || card.bookingUrl}
+                  </a>
+                ) : (
+                  <span className="text-gray-400">🔗 {card.bookingSiteName}</span>
+                )}
+              </div>
+            )}
+            {card.link && (
+              <div>
+                <a href={card.link} target="_blank" rel="noopener noreferrer"
+                  className="text-teal hover:underline">🔗 {card.link}</a>
+              </div>
+            )}
+            <div className="flex items-center gap-3 pt-1">
+              <a href={`https://www.google.com/search?q=${encodeURIComponent(card.name + ' Iceland')}`}
+                target="_blank" rel="noopener noreferrer"
+                className="text-teal hover:underline inline-flex items-center gap-1">
+                🔍 Google
+              </a>
+              <a href={`https://www.google.com/search?q=${encodeURIComponent(card.name + ' Iceland reddit')}`}
+                target="_blank" rel="noopener noreferrer"
+                className="text-terracotta hover:underline inline-flex items-center gap-1">
+                💬 Reddit
+              </a>
+            </div>
+          </div>
+
+          {/* Votes + Comments */}
+          <div className="px-4 py-3 mt-auto space-y-2">
+            <VoteButtons cardId={card.id} currentUser={currentUser} votes={votes} onVote={onVote} />
+            <CommentSection cardId={card.id} currentUser={currentUser} comments={comments} onAddComment={onAddComment} />
+          </div>
+        </div>
+      );
+    }
+
+    function SuggestionModal({ currentUser, onSubmit, onClose }) {
+      const [name, setName] = useState('');
+      const [day, setDay] = useState(0);
+      const [category, setCategory] = useState('sightseeing');
+      const [description, setDescription] = useState('');
+      const [link, setLink] = useState('');
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!name.trim() || !description.trim()) return;
+        onSubmit({
+          id: 'user-suggestion-' + Date.now(),
+          day: day,
+          name: name.trim(),
+          category,
+          tier: 'optional',
+          description: description.trim(),
+          costPerPerson: 0,
+          costDisplay: 'TBD',
+          costTier: 'free',
+          parkingCost: null,
+          timeNeeded: 'TBD',
+          bookAhead: null,
+          bookAheadLabel: null,
+          bookingUrl: null,
+          bookingSiteName: null,
+          driveFromPrevious: null,
+          redditScore: null,
+          bookSoonFlag: false,
+          images: [],
+          link: link.trim() || null,
+          isUserSubmitted: true,
+          submittedBy: currentUser,
+          timestamp: new Date().toISOString(),
+        });
+        onClose();
+      };
+
+      return (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm" onClick={onClose}>
+          <div className="bg-white rounded-2xl p-6 max-w-lg w-full mx-4 shadow-2xl" onClick={e => e.stopPropagation()}>
+            <h2 className="font-display text-2xl font-bold mb-4">Add a Suggestion</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">What is it? *</label>
+                <input type="text" value={name} onChange={e => setName(e.target.value.slice(0, 100))}
+                  className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal/20"
+                  placeholder="e.g., Secret hot spring near Vík" required />
+                <span className="text-[10px] text-gray-400">{name.length}/100</span>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Which day?</label>
+                  <select value={day} onChange={e => setDay(Number(e.target.value))}
+                    className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-teal">
+                    <option value={0}>Flexible / Any Day</option>
+                    {DAYS.map(d => <option key={d.day} value={d.day}>Day {d.day} — {d.date}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                  <select value={category} onChange={e => setCategory(e.target.value)}
+                    className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-teal">
+                    <option value="sightseeing">🏔️ Sightseeing</option>
+                    <option value="activity">🎯 Activity</option>
+                    <option value="restaurant">🍽️ Restaurant</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Why should we do this? *</label>
+                <textarea value={description} onChange={e => setDescription(e.target.value.slice(0, 280))}
+                  className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal/20 h-20 resize-none"
+                  placeholder="My coworker said this was the best part of their trip..." required />
+                <span className="text-[10px] text-gray-400">{description.length}/280</span>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Link (optional)</label>
+                <input type="url" value={link} onChange={e => setLink(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal/20"
+                  placeholder="https://..." />
+              </div>
+              <div className="text-sm text-gray-500">
+                Submitted by: <span className="font-semibold text-teal">{currentUser}</span>
+              </div>
+              <div className="flex gap-3 pt-2">
+                <button type="button" onClick={onClose}
+                  className="flex-1 py-2.5 rounded-xl text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors">
+                  Cancel
+                </button>
+                <button type="submit"
+                  className="flex-1 py-2.5 rounded-xl text-sm font-medium bg-teal text-white hover:bg-teal-dark transition-colors disabled:opacity-40"
+                  disabled={!name.trim() || !description.trim()}>
+                  Add Suggestion
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      );
+    }
+
+    function LeaderboardView({ allCards, votes, currentUser, comments, onVote, onAddComment }) {
+      const ranked = useMemo(() => {
+        return allCards.map(card => ({
+          ...card,
+          ...getNetScore(card.id, votes),
+          voters: getVoters(card.id, votes),
+        })).sort((a, b) => b.net - a.net);
+      }, [allCards, votes]);
+
+      const favorites = ranked.filter(c => c.net >= 2);
+      const mixed = ranked.filter(c => c.net >= 0 && c.net < 2);
+      const skip = ranked.filter(c => c.net < 0);
+
+      const estimatedCost = favorites.reduce((sum, c) => sum + (c.costPerPerson || 0), 0);
+
+      const Section = ({ title, emoji, cards, bg }) => (
+        cards.length > 0 && (
+          <div className="mb-8">
+            <h3 className="font-display text-xl font-bold mb-4">{emoji} {title}</h3>
+            <div className="space-y-3">
+              {cards.map(card => {
+                const tierBadge = getTierBadge(card.tier);
+                return (
+                  <div key={card.id} className={`${bg} rounded-xl p-4 border border-gray-100`}>
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h4 className="font-display font-bold text-[#1A1A1A]">{card.name}</h4>
+                          <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${tierBadge.cls}`}>{tierBadge.label}</span>
+                          <span className="text-[10px] text-gray-400">{getCategoryIcon(card.category)} {card.category}</span>
+                          {card.isUserSubmitted && <span className="text-[10px] text-teal">💡 by {card.submittedBy}</span>}
+                        </div>
+                        <div className="flex items-center gap-3 mt-1 text-xs text-gray-500">
+                          <span>Day {card.day || '?'} · {card.costDisplay}</span>
+                          <StarRating score={card.redditScore} />
+                        </div>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <div className={`text-2xl font-bold ${card.net > 0 ? 'text-green-600' : card.net < 0 ? 'text-red-500' : 'text-gray-400'}`}>
+                          {card.net > 0 ? '+' : ''}{card.net}
+                        </div>
+                        <div className="text-[10px] text-gray-400">net score</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 mt-2 text-xs text-gray-500">
+                      {card.voters.upVoters.length > 0 && (
+                        <span>👍 {card.voters.upVoters.join(', ')}</span>
+                      )}
+                      {card.voters.downVoters.length > 0 && (
+                        <span>👎 {card.voters.downVoters.join(', ')}</span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )
+      );
+
+      return (
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="bg-gradient-to-r from-teal to-teal-light rounded-2xl p-6 text-white mb-8">
+            <h2 className="font-display text-2xl font-bold mb-1">Trip Leaderboard</h2>
+            <p className="text-white/80 text-sm mb-3">Cards ranked by family consensus (upvotes minus downvotes)</p>
+            <div className="bg-white/20 rounded-xl p-4">
+              <p className="text-lg font-semibold">
+                If you do everything with 2+ net votes: <span className="text-2xl font-bold">${Math.round(estimatedCost)}/person</span>
+              </p>
+              <p className="text-white/70 text-xs mt-1">
+                Based on {favorites.length} activities/restaurants with group consensus
+              </p>
+            </div>
+          </div>
+
+          <Section title="Group Favorites" emoji="🏆" cards={favorites} bg="bg-green-50/50" />
+          <Section title="Mixed Feelings" emoji="🤔" cards={mixed} bg="bg-white" />
+          <Section title="Probably Skip" emoji="👋" cards={skip} bg="bg-red-50/30" />
+        </div>
+      );
+    }
+
+    // ═══════════════════════════════════════════
+    // MAIN APP
+    // ═══════════════════════════════════════════
+
+    function App() {
+      const [currentUser, setCurrentUser] = useState(null);
+      const [votes, setVotes] = useState({});
+      const [comments, setComments] = useState({});
+      const [suggestions, setSuggestions] = useState([]);
+      const [activeFilter, setActiveFilter] = useState('all');
+      const [showSuggestionModal, setShowSuggestionModal] = useState(false);
+      const [showTutorial, setShowTutorial] = useState(false);
+      const [homeBase, setHomeBase] = useState('Reykjavik');
+      const [showHomeBaseModal, setShowHomeBaseModal] = useState(false);
+      const [activeDay, setActiveDay] = useState(1);
+      const [advancedFilters, setAdvancedFilters] = useState({ category: 'all', cost: 'all', booking: 'all' });
+      const [stickyHeight, setStickyHeight] = useState(100);
+      const stickyRef = useRef(null);
+      const [loading, setLoading] = useState(true);
+
+      // Load all data on mount
+      useEffect(() => {
+        (async () => {
+          try {
+            // Load current user
+            const user = await window.storage.get('currentUser', false);
+            if (user) setCurrentUser(user);
+
+            // Load votes
+            const voteEntries = await window.storage.list('vote:');
+            const voteMap = {};
+            voteEntries.forEach(({ key, value }) => {
+              const parts = key.replace('vote:', '');
+              voteMap[parts] = value;
+            });
+            setVotes(voteMap);
+
+            // Load comments
+            const commentEntries = await window.storage.list('comments:');
+            const commentMap = {};
+            for (const { key, value } of commentEntries) {
+              const cardId = key.replace('comments:', '');
+              try { commentMap[cardId] = JSON.parse(value); } catch { commentMap[cardId] = []; }
+            }
+            setComments(commentMap);
+
+            // Load suggestions
+            const suggestionsRaw = await window.storage.get('suggestions', true);
+            if (suggestionsRaw) {
+              try { setSuggestions(JSON.parse(suggestionsRaw)); } catch {}
+            }
+
+            // Load home base
+            const hb = await window.storage.get('homeBase', true);
+            if (hb) setHomeBase(hb);
+          } catch (e) {
+            console.error('Failed to load data:', e);
+          }
+          setLoading(false);
+        })();
+      }, []);
+
+      // Track sticky header height
+      useEffect(() => {
+        if (!stickyRef.current) return;
+        const ro = new ResizeObserver(([entry]) => setStickyHeight(Math.ceil(entry.contentRect.height)));
+        ro.observe(stickyRef.current);
+        return () => ro.disconnect();
+      }, [currentUser]);
+
+      // Scroll tracking for day navigator
+      useEffect(() => {
+        const handleScroll = () => {
+          let current = 1;
+          for (const d of DAYS) {
+            const el = document.getElementById('day-section-' + d.day);
+            if (el) {
+              const rect = el.getBoundingClientRect();
+              if (rect.top <= 150) current = d.day;
+            }
+          }
+          setActiveDay(current);
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
+
+      const handleSelectUser = async (name) => {
+        const wasNull = currentUser === null;
+        setCurrentUser(name);
+        await window.storage.set('currentUser', name, false);
+        if (wasNull) {
+          const seen = await window.storage.get('tutorialSeen', false);
+          if (!seen) setShowTutorial(true);
+        }
+      };
+
+      const handleDismissTutorial = async () => {
+        setShowTutorial(false);
+        await window.storage.set('tutorialSeen', 'true', false);
+      };
+
+      const handleSetHomeBase = async (value) => {
+        setHomeBase(value);
+        await window.storage.set('homeBase', value, true);
+        setShowHomeBaseModal(false);
+      };
+
+      const handleVote = async (cardId, voter, type) => {
+        const key = `${cardId}:${voter}`;
+        const newVotes = { ...votes };
+        if (type === null) {
+          delete newVotes[key];
+          await window.storage.delete(`vote:${key}`, true);
+        } else {
+          newVotes[key] = type;
+          await window.storage.set(`vote:${key}`, type, true);
+        }
+        setVotes(newVotes);
+      };
+
+      const handleAddComment = async (cardId, comment, replaceAll) => {
+        let updated;
+        if (replaceAll) {
+          // Replace entire comments array (used for replies)
+          updated = replaceAll;
+        } else {
+          const existing = comments[cardId] || [];
+          updated = [...existing, comment];
+        }
+        const newComments = { ...comments, [cardId]: updated };
+        setComments(newComments);
+        await window.storage.set(`comments:${cardId}`, JSON.stringify(updated), true);
+      };
+
+      const handleAddSuggestion = async (suggestion) => {
+        const updated = [...suggestions, suggestion];
+        setSuggestions(updated);
+        await window.storage.set('suggestions', JSON.stringify(updated), true);
+      };
+
+      const handleDeleteSuggestion = async (id) => {
+        const updated = suggestions.filter(s => s.id !== id);
+        setSuggestions(updated);
+        await window.storage.set('suggestions', JSON.stringify(updated), true);
+      };
+
+      // Combine pre-loaded cards with suggestions
+      const allCards = useMemo(() => {
+        return [...CARDS, ...suggestions.map(s => ({ ...s, isUserSubmitted: true }))];
+      }, [suggestions]);
+
+      // Filter cards
+      const filteredCards = useMemo(() => {
+        let cards = allCards;
+        if (activeFilter === 'must-decide') cards = cards.filter(c => c.tier === 'must-decide');
+        else if (activeFilter === 'restaurants') cards = cards.filter(c => c.category === 'restaurant');
+        else if (activeFilter === 'suggestions') cards = cards.filter(c => c.isUserSubmitted);
+
+        // Advanced filters
+        if (advancedFilters.category !== 'all') {
+          cards = cards.filter(c => c.category === advancedFilters.category);
+        }
+        if (advancedFilters.cost !== 'all') {
+          cards = cards.filter(c => c.costTier === advancedFilters.cost);
+        }
+        if (advancedFilters.booking !== 'all') {
+          if (advancedFilters.booking === 'none') {
+            cards = cards.filter(c => !c.bookAhead);
+          } else if (advancedFilters.booking === 'soon') {
+            cards = cards.filter(c => c.bookAhead && !c.bookAhead.toLowerCase().includes('month'));
+          } else if (advancedFilters.booking === 'months') {
+            cards = cards.filter(c => c.bookAhead && c.bookAhead.toLowerCase().includes('month'));
+          }
+        }
+        return cards;
+      }, [allCards, activeFilter, advancedFilters]);
+
+      // Group by day
+      const cardsByDay = useMemo(() => {
+        const grouped = {};
+        filteredCards.forEach(c => {
+          const d = c.day || 0;
+          if (!grouped[d]) grouped[d] = [];
+          grouped[d].push(c);
+        });
+        return grouped;
+      }, [filteredCards]);
+
+      const stats = useMemo(() => ({
+        cards: allCards.length,
+        votes: Object.keys(votes).length,
+      }), [allCards, votes]);
+
+      if (loading) {
+        return (
+          <div className="min-h-screen flex items-center justify-center">
+            <div className="text-center">
+              <div className="text-4xl mb-4">🇮🇸</div>
+              <p className="text-gray-500 font-medium">Loading trip planner...</p>
+            </div>
+          </div>
+        );
+      }
+
+      if (!currentUser) {
+        return <UserSelector onSelect={handleSelectUser} />;
+      }
+
+      return (
+        <div className="min-h-screen pb-24">
+          <div ref={stickyRef} className="sticky top-0 z-40 bg-[#FAFAF7]/95 backdrop-blur-md shadow-sm">
+            <Header currentUser={currentUser} onSwitchUser={handleSelectUser} stats={stats} onOpenHomeBase={() => setShowHomeBaseModal(true)} />
+            <FilterBar activeFilter={activeFilter} onFilterChange={setActiveFilter}
+              advancedFilters={advancedFilters} onAdvancedChange={setAdvancedFilters} />
+          </div>
+          <HeroSection cards={CARDS} votes={votes} suggestions={suggestions} />
+
+          {activeFilter === 'all' && <DayNavigator activeDay={activeDay} />}
+
+          {activeFilter === 'leaderboard' ? (
+            <LeaderboardView allCards={allCards} votes={votes} currentUser={currentUser}
+              comments={comments} onVote={handleVote} onAddComment={handleAddComment} />
+          ) : (
+            <div className="max-w-7xl mx-auto px-6">
+              {DAYS.map(dayData => {
+                const dayCards = cardsByDay[dayData.day];
+                if (!dayCards || dayCards.length === 0) {
+                  if (activeFilter !== 'all') return null;
+                  if (dayData.day === 9) {
+                    return (
+                      <div key={dayData.day}>
+                        <DayHeader dayData={dayData} homeBase={homeBase} stickyTop={stickyHeight} />
+                        <div className="bg-white rounded-xl border border-gray-100 p-8 text-center text-gray-400">
+                          <span className="text-3xl mb-2 block">✈️</span>
+                          <p className="font-medium">Departure day — safe travels!</p>
+                          <p className="text-sm mt-1">Add a suggestion if there's something to squeeze in before the flight</p>
+                        </div>
+                      </div>
+                    );
+                  }
+                  return null;
+                }
+                return (
+                  <div key={dayData.day}>
+                    <DayHeader dayData={dayData} homeBase={homeBase} stickyTop={stickyHeight} />
+                    <div className="card-grid mb-8">
+                      {dayCards.map((card, i) => (
+                        <CardComponent key={card.id} card={card} currentUser={currentUser}
+                          votes={votes} comments={comments} onVote={handleVote}
+                          onAddComment={handleAddComment} delay={i}
+                          onDeleteSuggestion={card.isUserSubmitted ? handleDeleteSuggestion : undefined} />
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+              {/* Flexible day suggestions */}
+              {cardsByDay[0] && cardsByDay[0].length > 0 && (
+                <div>
+                  <div className="mb-6 mt-10">
+                    <h2 className="font-display text-2xl font-bold text-[#1A1A1A]">Flexible / Any Day</h2>
+                  </div>
+                  <div className="card-grid mb-8">
+                    {cardsByDay[0].map((card, i) => (
+                      <CardComponent key={card.id} card={card} currentUser={currentUser}
+                        votes={votes} comments={comments} onVote={handleVote}
+                        onAddComment={handleAddComment} delay={i}
+                        onDeleteSuggestion={card.isUserSubmitted ? handleDeleteSuggestion : undefined} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Floating Add Suggestion Button */}
+          <button onClick={() => setShowSuggestionModal(true)}
+            className="fixed bottom-6 right-6 z-30 flex items-center gap-2 px-5 py-3 rounded-full bg-terracotta text-white shadow-lg
+              hover:bg-terracotta-dark hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5 group">
+            <span className="text-lg">➕</span>
+            <span className="font-medium text-sm">Add a Suggestion</span>
+          </button>
+
+          {showSuggestionModal && (
+            <SuggestionModal currentUser={currentUser}
+              onSubmit={handleAddSuggestion} onClose={() => setShowSuggestionModal(false)} />
+          )}
+
+          {showTutorial && <TutorialModal onDismiss={handleDismissTutorial} />}
+
+          {showHomeBaseModal && (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm" onClick={() => setShowHomeBaseModal(false)}>
+              <div className="bg-white rounded-2xl p-6 max-w-sm w-full mx-4 shadow-2xl" onClick={e => e.stopPropagation()}>
+                <h3 className="font-display text-xl font-bold mb-3">Set Home Base</h3>
+                <p className="text-sm text-gray-500 mb-4">Day headers will show distance from this location.</p>
+                <input type="text" defaultValue={homeBase} id="homeBaseInput"
+                  className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal/20 mb-4"
+                  placeholder="e.g., Reykjavik or Airbnb address" />
+                <div className="flex gap-3">
+                  <button onClick={() => setShowHomeBaseModal(false)}
+                    className="flex-1 py-2.5 rounded-xl text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors">Cancel</button>
+                  <button onClick={() => handleSetHomeBase(document.getElementById('homeBaseInput').value.trim() || 'Reykjavik')}
+                    className="flex-1 py-2.5 rounded-xl text-sm font-medium bg-teal text-white hover:bg-teal-dark transition-colors">Save</button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ═══════════════════════════════════════════
+    // RENDER
+    // ═══════════════════════════════════════════
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
