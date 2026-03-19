@@ -1703,9 +1703,11 @@
             }
           }
           setActiveDay(current);
-          // Show floating bar once first day header scrolls above the sticky header
-          const firstDay = document.getElementById('day-section-1');
-          setShowFloatingDay(anyPinned && firstDay && firstDay.getBoundingClientRect().top < 0);
+          // Show floating bar only when current day's in-page header is fully behind the sticky header
+          const currentDayEl = document.getElementById('day-section-' + current);
+          const headerH = stickyRef.current ? stickyRef.current.offsetHeight : 100;
+          const dayTop = currentDayEl ? currentDayEl.getBoundingClientRect().top : 999;
+          setShowFloatingDay(dayTop < headerH - 40);
         };
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
