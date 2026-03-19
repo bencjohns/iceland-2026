@@ -751,6 +751,42 @@
     // COMPONENTS
     // ═══════════════════════════════════════════
 
+    function PasswordGate({ onSuccess }) {
+      const [pw, setPw] = useState('');
+      const [error, setError] = useState(false);
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        if (pw.toLowerCase().trim() === 'ingeborg') {
+          onSuccess();
+        } else {
+          setError(true);
+          setTimeout(() => setError(false), 1500);
+        }
+      };
+      return (
+        <div className="fixed inset-0 bg-[#FAFAF7] flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl text-center">
+            <span className="text-5xl block mb-4">🇮🇸</span>
+            <h2 className="font-display text-3xl font-bold text-[#1A1A1A] mb-2">Iceland 2026</h2>
+            <p className="text-gray-500 mb-6">Enter the family password to continue</p>
+            <form onSubmit={handleSubmit}>
+              <input type="password" value={pw} onChange={e => { setPw(e.target.value); setError(false); }}
+                placeholder="Password"
+                autoFocus
+                className={`w-full px-4 py-3 rounded-xl text-center text-lg border-2 focus:outline-none transition-colors mb-4 ${
+                  error ? 'border-red-400 bg-red-50' : 'border-gray-200 focus:border-teal focus:ring-2 focus:ring-teal/20'
+                }`} />
+              {error && <p className="text-red-500 text-sm mb-3">Incorrect password</p>}
+              <button type="submit"
+                className="w-full py-3 rounded-xl text-base font-semibold bg-teal text-white hover:bg-teal-dark transition-colors">
+                Enter
+              </button>
+            </form>
+          </div>
+        </div>
+      );
+    }
+
     function UserSelector({ onSelect }) {
       return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm">
@@ -1582,6 +1618,7 @@
       const [advancedFilters, setAdvancedFilters] = useState({ category: 'all', cost: 'all', booking: 'all' });
       const [stickyHeight, setStickyHeight] = useState(100);
       const stickyRef = useRef(null);
+      const [authenticated, setAuthenticated] = useState(() => localStorage.getItem('icp_auth') === 'true');
       const [loading, setLoading] = useState(true);
 
       // Load personal data from localStorage, shared data from Firebase (real-time)
@@ -1761,6 +1798,10 @@
             </div>
           </div>
         );
+      }
+
+      if (!authenticated) {
+        return <PasswordGate onSuccess={() => { setAuthenticated(true); localStorage.setItem('icp_auth', 'true'); }} />;
       }
 
       if (!currentUser) {
