@@ -502,6 +502,17 @@
       { name: 'KEF Airport', lat: 63.985, lng: -22.605 },
     ];
 
+    function getRegionForCard(cardId) {
+      const c = CARD_COORDS[cardId];
+      if (!c) return 'Other';
+      let best = 'Other', bestDist = Infinity;
+      REGION_CENTROIDS.forEach(r => {
+        const d = Math.pow(c.lat - r.lat, 2) + Math.pow(c.lng - r.lng, 2);
+        if (d < bestDist) { bestDist = d; best = r.name; }
+      });
+      return best;
+    }
+
     function getRegionForStops(stopIds) {
       const coords = stopIds.map(id => CARD_COORDS[id]).filter(Boolean);
       if (coords.length === 0) return null;
@@ -2417,45 +2428,68 @@
             {/* Scrollable content */}
             <div className="flex-1 overflow-y-auto px-4 py-3 space-y-4">
 
-              {/* Liked but unplanned */}
-              {likedUnplanned.length > 0 && (
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Liked — not yet planned</span>
-                    <span className="text-[10px] text-gray-400">({likedUnplanned.length})</span>
-                  </div>
-                  <div className="space-y-1">
-                    {likedUnplanned.map(card => {
-                      const img = (IMAGE_URLS[card.id] || [])[0];
-                      return (
-                        <div key={card.id} className="panel-stop flex items-center gap-2 p-2 rounded-lg border border-gray-100">
-                          <div className="flex items-center gap-2 flex-1 min-w-0 cursor-pointer" onClick={() => setExpandedCard(card)}>
-                            {img && <img src={img.url} alt={card.name} className="w-8 h-8 rounded object-cover shrink-0" loading="lazy" />}
-                            <span className="text-sm shrink-0">{getCategoryIcon(card.category)}</span>
-                            <div className="flex-1 min-w-0">
-                              <div className="font-medium text-xs text-[#1A1A1A] truncate hover:text-teal transition-colors">{card.name}</div>
-                            </div>
+              {/* Liked but unplanned — grouped by region */}
+              {likedUnplanned.length > 0 && (() => {
+                const grouped = {};
+                likedUnplanned.forEach(card => {
+                  const region = getRegionForCard(card.id);
+                  if (!grouped[region]) grouped[region] = [];
+                  grouped[region].push(card);
+                });
+                // Sort regions to match the trip route order
+                const regionOrder = REGION_CENTROIDS.map(r => r.name);
+                const sortedRegions = Object.keys(grouped).sort((a, b) => {
+                  const ai = regionOrder.indexOf(a), bi = regionOrder.indexOf(b);
+                  return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+                });
+                return (
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Liked — not yet planned</span>
+                      <span className="text-[10px] text-gray-400">({likedUnplanned.length})</span>
+                    </div>
+                    <div className="space-y-3">
+                      {sortedRegions.map(region => (
+                        <div key={region}>
+                          <div className="text-[10px] font-semibold text-gray-400 uppercase tracking-wide mb-1 flex items-center gap-1">
+                            <span>📍</span> {region}
                           </div>
-                          {panelDayCount <= 1 ? (
-                            <button onClick={() => addStop(1, card.id)}
-                              className="text-teal text-xs font-bold px-2 py-1 rounded hover:bg-teal-50 shrink-0">
-                              + Day 1
-                            </button>
-                          ) : (
-                            <select onChange={(e) => { if (e.target.value) { addStop(parseInt(e.target.value), card.id); e.target.value = ''; } }}
-                              defaultValue="" className="text-xs text-teal font-medium bg-transparent border border-teal/30 rounded px-1.5 py-1 cursor-pointer shrink-0">
-                              <option value="" disabled>+ Day...</option>
-                              {Array.from({ length: panelDayCount }, (_, i) => i + 1).map(d => (
-                                <option key={d} value={d}>Day {d}</option>
-                              ))}
-                            </select>
-                          )}
+                          <div className="space-y-1">
+                            {grouped[region].map(card => {
+                              const img = (IMAGE_URLS[card.id] || [])[0];
+                              return (
+                                <div key={card.id} className="panel-stop flex items-center gap-2 p-2 rounded-lg border border-gray-100">
+                                  <div className="flex items-center gap-2 flex-1 min-w-0 cursor-pointer" onClick={() => setExpandedCard(card)}>
+                                    {img && <img src={img.url} alt={card.name} className="w-8 h-8 rounded object-cover shrink-0" loading="lazy" />}
+                                    <span className="text-sm shrink-0">{getCategoryIcon(card.category)}</span>
+                                    <div className="flex-1 min-w-0">
+                                      <div className="font-medium text-xs text-[#1A1A1A] truncate hover:text-teal transition-colors">{card.name}</div>
+                                    </div>
+                                  </div>
+                                  {panelDayCount <= 1 ? (
+                                    <button onClick={() => addStop(1, card.id)}
+                                      className="text-teal text-xs font-bold px-2 py-1 rounded hover:bg-teal-50 shrink-0">
+                                      + Day 1
+                                    </button>
+                                  ) : (
+                                    <select onChange={(e) => { if (e.target.value) { addStop(parseInt(e.target.value), card.id); e.target.value = ''; } }}
+                                      defaultValue="" className="text-xs text-teal font-medium bg-transparent border border-teal/30 rounded px-1.5 py-1 cursor-pointer shrink-0">
+                                      <option value="" disabled>+ Day...</option>
+                                      {Array.from({ length: panelDayCount }, (_, i) => i + 1).map(d => (
+                                        <option key={d} value={d}>Day {d}</option>
+                                      ))}
+                                    </select>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
                         </div>
-                      );
-                    })}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                );
+              })()}
 
               {/* Days */}
               {Array.from({ length: panelDayCount }, (_, i) => i + 1).map(dayNum => {
