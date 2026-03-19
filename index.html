@@ -88,24 +88,25 @@
 
     const FAMILY = ['Murray', 'Laurel', 'Claire', 'Mati', 'Ben', 'Cade'];
 
+    const APP_VERSION = "2";
+    const APP_UPDATE_NOTES = "New dates! Trip is now Sep 4–12. Added real-time sync — votes & comments now sync across all devices. Plus new filters, sticky navigation, and reply-to-comments.";
+
     const DAYS = [
-      { day: 1, date: "Sat Aug 29", title: "Arrive & Reykjavik", weather: "~12°C / 54°F · 16 hrs daylight",
-        flight: "Depart Denver Fri 8:10 PM MT → Land Sat morning", distFromPrev: null, distFromBase: null, region: "Reykjavik" },
-      { day: 2, date: "Sun Aug 30", title: "Golden Circle", weather: "~11°C / 52°F · 16 hrs daylight",
+      { day: 1, date: "Sat Sep 5", title: "Arrive & Reykjavik", weather: "~10°C / 50°F · 14 hrs daylight",
+        flight: "Depart Denver Thu 8:10 PM MT → Land Fri morning", distFromPrev: null, distFromBase: null, region: "Reykjavik" },
+      { day: 2, date: "Sun Sep 6", title: "Golden Circle", weather: "~10°C / 50°F · 13.5 hrs daylight",
         distFromPrev: null, distFromBase: "100 km", region: "Golden Circle" },
-      { day: 3, date: "Mon Aug 31", title: "Snæfellsnes Peninsula", weather: "~11°C / 52°F · 15.5 hrs daylight",
+      { day: 3, date: "Mon Sep 7", title: "Snæfellsnes Peninsula", weather: "~10°C / 50°F · 13.5 hrs daylight",
         distFromPrev: "200 km from Golden Circle", distFromBase: "175 km", region: "Snæfellsnes" },
-      { day: 4, date: "Tue Sep 1", title: "South Coast — Waterfalls & Vík", weather: "~11°C / 52°F · 15.5 hrs daylight",
+      { day: 4, date: "Tue Sep 8", title: "South Coast — Waterfalls & Vík", weather: "~10°C / 50°F · 13 hrs daylight",
         distFromPrev: "270 km from Snæfellsnes", distFromBase: "185 km", region: "South Coast" },
-      { day: 5, date: "Wed Sep 2", title: "Westman Islands Day Trip", weather: "~11°C / 52°F · 15 hrs daylight",
+      { day: 5, date: "Wed Sep 9", title: "Westman Islands Day Trip", weather: "~9°C / 48°F · 13 hrs daylight",
         distFromPrev: "35 km from Vík", distFromBase: "130 km", region: "Westman Islands" },
-      { day: 6, date: "Thu Sep 3", title: "Glaciers & Jökulsárlón", weather: "~10°C / 50°F · 15 hrs daylight",
+      { day: 6, date: "Thu Sep 10", title: "Glaciers & Jökulsárlón", weather: "~9°C / 48°F · 12.5 hrs daylight",
         distFromPrev: "265 km from Westman Islands", distFromBase: "380 km", region: "Southeast" },
-      { day: 7, date: "Fri Sep 4", title: "Return West & Relax", weather: "~10°C / 50°F · 14.5 hrs daylight",
-        distFromPrev: "280 km from Jökulsárlón", distFromBase: "100 km", region: "South / Flúðir" },
-      { day: 8, date: "Sat Sep 5", title: "Reykjavik Day", weather: "~10°C / 50°F · 14 hrs daylight",
-        distFromPrev: "100 km from Flúðir", distFromBase: "0 km", region: "Reykjavik" },
-      { day: 9, date: "Sun Sep 6", title: "Departure ✈️", weather: "~10°C / 50°F · 13.5 hrs daylight",
+      { day: 7, date: "Fri Sep 11", title: "Return West & Reykjavik", weather: "~9°C / 48°F · 12.5 hrs daylight",
+        distFromPrev: "380 km from Jökulsárlón", distFromBase: "0 km", region: "Reykjavik" },
+      { day: 8, date: "Sat Sep 12", title: "Departure ✈️", weather: "~9°C / 48°F · 12 hrs daylight",
         distFromPrev: null, distFromBase: "50 km", region: "KEF Airport" },
     ];
 
@@ -383,31 +384,31 @@
         images:[{alt:"Reykjadalur hot river bathing"},{alt:"Reykjadalur steaming valley hike"},{alt:"Reykjadalur river aerial"}] },
 
       // ── Day 8 ──
-      { id:"day8-perlan", day:8, name:"Perlan Museum", category:"sightseeing", tier:"optional",
+      { id:"day8-perlan", day:7, name:"Perlan Museum", category:"sightseeing", tier:"optional",
         description:"A glass-domed building on a hilltop housing a nature exhibition with an indoor ice cave (made from real glacier ice), a planetarium, and exhibits on Icelandic geology and wildlife.",
         costPerPerson:35, costDisplay:"~$35/person", costTier:"moderate", parkingCost:null, timeNeeded:"1.5–2 hours",
         bookAhead:null, bookAheadLabel:"Same day OK", bookingUrl:"https://perlan.is", bookingSiteName:"perlan.is",
         driveFromPrevious:"Bus or short drive from downtown Reykjavik", redditScore:3, bookSoonFlag:false,
         images:[{alt:"Perlan building glass dome"},{alt:"Perlan indoor ice cave"},{alt:"Perlan observation deck view"}] },
-      { id:"day8-whale-watching", day:8, name:"Whale Watching", category:"activity", tier:"must-decide",
+      { id:"day8-whale-watching", day:7, name:"Whale Watching", category:"activity", tier:"must-decide",
         description:"3-hour boat tour from the Old Harbor with good chances of seeing humpback and minke whales, white-beaked dolphins, and harbor porpoises. Even if you don't spot whales, the boat ride is beautiful.",
         costPerPerson:85, costDisplay:"$75–95/person", costTier:"splurge", parkingCost:null, timeNeeded:"3 hours",
         bookAhead:"2–5 days ahead", bookAheadLabel:"Book 2–5 days ahead", bookingUrl:"https://elding.is", bookingSiteName:"elding.is",
         driveFromPrevious:"Old Harbor, walkable from downtown", redditScore:4, bookSoonFlag:false,
         images:[{alt:"Whale watching boat Reykjavik harbor"},{alt:"Humpback whale tail Iceland"},{alt:"Whale watching with mountain backdrop"}] },
-      { id:"day8-dill", day:8, name:"Dill Restaurant", category:"restaurant", tier:"must-decide",
+      { id:"day8-dill", day:7, name:"Dill Restaurant", category:"restaurant", tier:"must-decide",
         description:"Iceland's first Michelin-starred restaurant. Chef Gunnar Karl Gíslason takes you on a culinary journey through seasonal Icelandic ingredients — foraged herbs, Arctic fish, lamb with wild thyme.",
         costPerPerson:205, costDisplay:"$180–230/person", costTier:"splurge", parkingCost:null, timeNeeded:"2.5–3 hours",
         bookAhead:"1–3 months ahead", bookAheadLabel:"Book 1–3 months ahead", bookingUrl:"https://dillrestaurant.is", bookingSiteName:"dillrestaurant.is",
         driveFromPrevious:"Downtown Reykjavik (walkable)", redditScore:5, bookSoonFlag:true,
         images:[{alt:"Dill restaurant interior minimalist"},{alt:"Dill tasting menu dish plated"},{alt:"Dill restaurant bread course"}] },
-      { id:"day8-ox", day:8, name:"Óx", category:"restaurant", tier:"must-decide",
+      { id:"day8-ox", day:7, name:"Óx", category:"restaurant", tier:"must-decide",
         description:"Only 10 seats, hidden inside restaurant Sumac. Intimate counter-dining experience with Chef Thrainn's tasting menu — reindeer tartare, smoked Arctic char, dishes that feel like a personal conversation.",
         costPerPerson:250, costDisplay:"$250+/person", costTier:"splurge", parkingCost:null, timeNeeded:"2.5–3 hours",
         bookAhead:"2–4 months ahead", bookAheadLabel:"Book 2–4 months ahead", bookingUrl:null, bookingSiteName:"ox.sumac.is",
         driveFromPrevious:"Downtown Reykjavik (walkable)", redditScore:4, bookSoonFlag:true,
         images:[{alt:"Óx counter dining 10 seats"},{alt:"Óx tasting menu dish"}] },
-      { id:"day8-skal", day:8, name:"Skál!", category:"restaurant", tier:"optional",
+      { id:"day8-skal", day:7, name:"Skál!", category:"restaurant", tier:"optional",
         description:"Modern Icelandic sharing plates in a vibrant, buzzy atmosphere. Open kitchen as the focal point. The lamb tartare with wild herbs is a standout.",
         costPerPerson:57.5, costDisplay:"$45–70/person", costTier:"moderate", parkingCost:null, timeNeeded:"1.5–2 hours",
         bookAhead:"1–2 weeks ahead", bookAheadLabel:"Book 1–2 weeks ahead", bookingUrl:null, bookingSiteName:"skalrvk.is",
@@ -861,7 +862,7 @@
           <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <h1 className="font-display text-2xl font-bold text-teal">Iceland 2026</h1>
-              <span className="text-sm text-gray-400 hidden sm:inline">Aug 29 – Sep 6</span>
+              <span className="text-sm text-gray-400 hidden sm:inline">Sep 4 – Sep 12</span>
             </div>
             <div className="relative flex items-center gap-3">
               <span className="text-sm text-gray-500">{stats.cards} cards · {stats.votes} votes</span>
@@ -906,7 +907,7 @@
             <div className="flex flex-wrap items-start justify-between gap-6">
               <div>
                 <h2 className="font-display text-4xl font-bold text-[#1A1A1A] mb-1">Iceland 2026</h2>
-                <p className="text-lg text-gray-500 mb-4">August 29 – September 6 · 9 days</p>
+                <p className="text-lg text-gray-500 mb-4">September 4 – 12 · 8 days</p>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {FAMILY.map(name => (
                     <span key={name} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-teal-50 text-sm">
@@ -1617,6 +1618,7 @@
       const [stickyHeight, setStickyHeight] = useState(100);
       const stickyRef = useRef(null);
       const [authenticated, setAuthenticated] = useState(() => localStorage.getItem('icp_auth') === 'true');
+      const [hasUpdate, setHasUpdate] = useState(() => localStorage.getItem('icp_version') !== APP_VERSION);
       const [loading, setLoading] = useState(true);
 
       // Load personal data from localStorage, shared data from Firebase (real-time)
@@ -1826,7 +1828,7 @@
                 const dayCards = cardsByDay[dayData.day];
                 if (!dayCards || dayCards.length === 0) {
                   if (activeFilter !== 'all') return null;
-                  if (dayData.day === 9) {
+                  if (dayData.day === 8) {
                     return (
                       <div key={dayData.day}>
                         <DayHeader dayData={dayData} homeBase={homeBase} stickyTop={stickyHeight} />
@@ -1871,6 +1873,23 @@
                 </div>
               )}
             </div>
+          )}
+
+          {/* Update notification */}
+          {hasUpdate && (
+            <button onClick={() => { setHasUpdate(false); localStorage.setItem('icp_version', APP_VERSION); }}
+              className="fixed bottom-20 right-6 z-30 flex items-center gap-2 px-5 py-3 rounded-2xl bg-blue-600 text-white shadow-lg
+                hover:bg-blue-700 hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5 max-w-xs text-left"
+              style={{ animation: 'fadeInUp 0.4s ease-out' }}>
+              <div>
+                <div className="flex items-center gap-2 mb-0.5">
+                  <span className="text-base">🆕</span>
+                  <span className="font-semibold text-sm">What's New</span>
+                </div>
+                <p className="text-xs text-white/80 leading-snug">{APP_UPDATE_NOTES}</p>
+              </div>
+              <span className="text-white/60 text-lg shrink-0 ml-1">✕</span>
+            </button>
           )}
 
           {/* Floating Add Suggestion Button */}
