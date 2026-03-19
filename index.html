@@ -3060,22 +3060,20 @@
           )}
 
           {/* Floating My Trip Button */}
-          {activeFilter !== 'itineraries' && (
-            <button onClick={() => setSidePanelOpen(true)}
-              className="fixed bottom-[5.5rem] right-6 z-30 flex items-center gap-2 px-5 py-3 rounded-full bg-teal text-white shadow-lg
-                hover:bg-teal-dark hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5">
-              <span className="text-lg">📋</span>
-              <span className="font-medium text-sm">My Trip</span>
-              {(() => {
-                const userDays = (itineraries[currentUser] && itineraries[currentUser].days) || {};
-                let count = 0;
-                for (let d = 1; d <= panelDayCount; d++) count += ((userDays[d] && userDays[d].stops) || []).length;
-                return count > 0 ? (
-                  <span className="ml-0.5 w-5 h-5 rounded-full bg-white text-teal text-[11px] font-bold flex items-center justify-center">{count}</span>
-                ) : null;
-              })()}
-            </button>
-          )}
+          <button onClick={() => setSidePanelOpen(true)}
+            className="fixed bottom-[5.5rem] right-6 z-30 flex items-center gap-2 px-5 py-3 rounded-full bg-teal text-white shadow-lg
+              hover:bg-teal-dark hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5">
+            <span className="text-lg">📋</span>
+            <span className="font-medium text-sm">My Trip</span>
+            {(() => {
+              const userDays = (itineraries[currentUser] && itineraries[currentUser].days) || {};
+              let count = 0;
+              for (let d = 1; d <= panelDayCount; d++) count += ((userDays[d] && userDays[d].stops) || []).length;
+              return count > 0 ? (
+                <span className="ml-0.5 w-5 h-5 rounded-full bg-white text-teal text-[11px] font-bold flex items-center justify-center">{count}</span>
+              ) : null;
+            })()}
+          </button>
 
           {/* Floating Add Suggestion Button */}
           <button onClick={() => setShowSuggestionModal(true)}
