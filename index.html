@@ -1766,7 +1766,7 @@
           redditScore: null,
           bookSoonFlag: false,
           images: [],
-          link: link.trim() || null,
+          link: link.trim() ? (link.trim().match(/^https?:\/\//) ? link.trim() : 'https://' + link.trim()) : null,
           isUserSubmitted: true,
           submittedBy: currentUser,
           timestamp: new Date().toISOString(),
@@ -1814,9 +1814,9 @@
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Link (optional)</label>
-                <input type="url" value={link} onChange={e => setLink(e.target.value)}
+                <input type="text" value={link} onChange={e => setLink(e.target.value)}
                   className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal/20"
-                  placeholder="https://..." />
+                  placeholder="google.com, https://..., etc." />
               </div>
               <div className="text-sm text-gray-500">
                 Submitted by: <span className="font-semibold text-teal">{currentUser}</span>
@@ -1930,6 +1930,286 @@
       );
     }
 
+    // ═══════════════════════════════════════════
+    // DRAFT COMPARE VIEW (side-by-side)
+    // ═══════════════════════════════════════════
+
+    function DraftCompareView({ tripDrafts, allCards, currentUser, votes, cardComments, onVote, onAddCardComment }) {
+      const [expandedStops, setExpandedStops] = useState({});
+      const [allExpanded, setAllExpanded] = useState(false);
+
+      const findCard = (id) => allCards.find(c => c.id === id) || CARDS.find(c => c.id === id);
+
+      // Collect all non-empty drafts across all family members
+      const columns = [];
+      FAMILY.forEach(name => {
+        const ud = tripDrafts[name] || {};
+        Object.entries(ud).forEach(([k, v]) => {
+          if (k !== 'activeDraftId' && typeof v === 'object' && v !== null) {
+            let stopCount = 0;
+            const days = v.days || {};
+            Object.values(days).forEach(d => { stopCount += ((d && d.stops) || []).length; });
+            if (stopCount > 0) columns.push({ name, draftId: k, draft: v, stopCount });
+          }
+        });
+      });
+
+      // Max day count across all drafts (so rows align)
+      const maxDays = columns.length > 0
+        ? Math.max(...columns.map(c => c.draft.dayCount || Object.keys(c.draft.days || {}).length || 1))
+        : 1;
+
+      // Stop frequency: how many drafts contain each card
+      const stopFreq = {};
+      columns.forEach(col => {
+        const seen = new Set();
+        const days = col.draft.days || {};
+        Object.values(days).forEach(d => {
+          ((d && d.stops) || []).forEach(id => {
+            if (!seen.has(id)) { seen.add(id); stopFreq[id] = (stopFreq[id] || 0) + 1; }
+          });
+        });
+      });
+
+      // Collect all stop IDs across all columns for expand/collapse all
+      const allStopIds = useMemo(() => {
+        const ids = new Set();
+        columns.forEach(col => {
+          const days = col.draft.days || {};
+          Object.values(days).forEach(d => {
+            ((d && d.stops) || []).forEach(id => ids.add(col.draftId + '__' + id));
+          });
+        });
+        return ids;
+      }, [columns]);
+
+      const toggleExpandAll = () => {
+        if (allExpanded) {
+          setExpandedStops({});
+          setAllExpanded(false);
+        } else {
+          const all = {};
+          allStopIds.forEach(key => { all[key] = true; });
+          setExpandedStops(all);
+          setAllExpanded(true);
+        }
+      };
+
+      // Use composite key (draftId + cardId) so the same card in different drafts expands independently
+      const isStopExpanded = (draftId, cardId) => !!expandedStops[draftId + '__' + cardId];
+      const toggleStop = (draftId, cardId) => {
+        setExpandedStops(prev => ({ ...prev, [draftId + '__' + cardId]: !prev[draftId + '__' + cardId] }));
+      };
+
+      // Which drafts include a given card
+      const getDraftsForCard = (cardId) => columns.filter(col => {
+        const days = col.draft.days || {};
+        return Object.values(days).some(d => ((d && d.stops) || []).includes(cardId));
+      });
+
+      if (columns.length === 0) {
+        return (
+          <div className="text-center py-12">
+            <div className="text-gray-400 text-sm">No drafts with stops yet</div>
+            <div className="text-gray-300 text-xs mt-1">Open My Trip to start planning!</div>
+          </div>
+        );
+      }
+
+      return (
+        <div>
+          {/* Legend + Expand All */}
+          <div className="flex flex-wrap items-center gap-4 mb-4 text-xs text-gray-500">
+            <span className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded bg-teal-50 border border-teal/30 inline-block"></span>
+              Appears in 2+ drafts
+            </span>
+            <span>{columns.length} draft{columns.length !== 1 ? 's' : ''} with stops</span>
+            <button onClick={toggleExpandAll}
+              className="ml-auto px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-200 text-gray-500 hover:bg-teal-50 hover:text-teal hover:border-teal/30 transition-all">
+              {allExpanded ? '⊟ Collapse All' : '⊞ Expand All'}
+            </button>
+          </div>
+
+          {/* Scrollable grid */}
+          <div className="overflow-x-auto -mx-6 px-6 pb-4">
+            <div className="flex gap-3" style={{ minWidth: columns.length * 380 }}>
+              {columns.map(col => {
+                const isCurrentUser = col.name === currentUser;
+                return (
+                  <div key={col.name + '__' + col.draftId} className="min-w-[360px] max-w-[440px] flex-1">
+                    {/* Column header */}
+                    <div className={`rounded-xl p-3 mb-3 border ${isCurrentUser ? 'border-teal/30 bg-teal-50/30' : 'border-gray-200 bg-white'}`}>
+                      <div className="flex items-center gap-2">
+                        <span className="w-7 h-7 rounded-full bg-teal text-white flex items-center justify-center text-xs font-bold shrink-0">
+                          {col.name[0]}
+                        </span>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-display font-bold text-sm text-[#1A1A1A] truncate">{col.name}</span>
+                            {isCurrentUser && <span className="text-[10px] text-teal font-medium">(you)</span>}
+                          </div>
+                          <div className="text-[11px] text-gray-400 truncate">
+                            {col.draft.title || 'Untitled'} · {col.stopCount} stop{col.stopCount !== 1 ? 's' : ''}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Day rows */}
+                    <div className="space-y-2">
+                      {Array.from({ length: maxDays }, (_, i) => i + 1).map(dayNum => {
+                        const dayStops = (col.draft.days && col.draft.days[dayNum] && col.draft.days[dayNum].stops) || [];
+                        const dayRegion = dayStops.length > 0 ? getRegionForStops(dayStops) : null;
+                        // Day summary
+                        let totalDrive = 0, totalCost = 0;
+                        dayStops.forEach((id, i) => {
+                          const card = findCard(id);
+                          if (card) totalCost += card.costPerPerson || 0;
+                          if (i > 0) {
+                            const info = getDriveInfo(dayStops[i - 1], id);
+                            if (info) totalDrive += info.minutes;
+                          }
+                        });
+                        return (
+                          <div key={dayNum} className="bg-white rounded-lg border border-gray-100 overflow-hidden">
+                            {/* Day header */}
+                            <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-50/80 border-b border-gray-100">
+                              <span className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0"
+                                style={{ background: DAY_COLORS[(dayNum - 1) % DAY_COLORS.length] }}>
+                                {dayNum}
+                              </span>
+                              <span className="font-display font-bold text-xs">Day {dayNum}</span>
+                              {dayRegion && <span className="text-[10px] text-gray-400 truncate ml-auto">📍 {dayRegion}</span>}
+                            </div>
+                            {/* Day summary stats */}
+                            {dayStops.length > 0 && (
+                              <div className="flex gap-3 px-3 py-1 text-[10px] text-gray-400 border-b border-gray-50">
+                                <span>{dayStops.length} stop{dayStops.length !== 1 ? 's' : ''}</span>
+                                {totalDrive > 0 && <span>🚗 {totalDrive >= 60 ? `${Math.floor(totalDrive/60)}h${totalDrive%60 > 0 ? ` ${totalDrive%60}m` : ''}` : `${totalDrive}m`}</span>}
+                                {totalCost > 0 && <span>${Math.round(totalCost)}/pp</span>}
+                              </div>
+                            )}
+                            {/* Stops */}
+                            {dayStops.length === 0 ? (
+                              <div className="px-3 py-2 text-[11px] text-gray-300 italic">No stops</div>
+                            ) : (
+                              <div className="divide-y divide-gray-50">
+                                {dayStops.map((cardId, idx) => {
+                                  const card = findCard(cardId);
+                                  if (!card) return null;
+                                  const img = (IMAGE_URLS[card.id] || [])[0];
+                                  const isConsensus = (stopFreq[cardId] || 0) >= 2;
+                                  const expanded = isStopExpanded(col.draftId, cardId);
+                                  const inDrafts = isConsensus ? getDraftsForCard(cardId) : [];
+                                  return (
+                                    <div key={cardId}>
+                                      <div className={`rounded-lg border ${expanded ? 'border-teal/30 shadow-sm bg-white' : 'border-transparent'} transition-all`}>
+                                        <div
+                                          className={`flex items-center gap-2 px-3 py-1.5 cursor-pointer hover:bg-gray-50 transition-colors ${isConsensus && !expanded ? 'bg-teal-50/50' : ''}`}
+                                          onClick={() => toggleStop(col.draftId, cardId)}>
+                                          {img ? (
+                                            <img src={img.url} alt={card.name} className="w-8 h-8 rounded object-cover shrink-0" loading="lazy" />
+                                          ) : (
+                                            <span className="w-8 h-8 rounded bg-gray-100 flex items-center justify-center text-sm shrink-0">
+                                              {getCategoryIcon(card.category)}
+                                            </span>
+                                          )}
+                                          <div className="flex-1 min-w-0">
+                                            <div className="text-xs font-medium text-[#1A1A1A] truncate">{card.name}</div>
+                                            <div className="text-[10px] text-gray-400">{card.costDisplay}</div>
+                                          </div>
+                                          {isConsensus && (
+                                            <span className="text-[10px] text-teal font-semibold shrink-0 bg-teal-50 px-1.5 py-0.5 rounded-full">
+                                              {stopFreq[cardId]}×
+                                            </span>
+                                          )}
+                                          <span className={`text-gray-400 text-xs transition-transform shrink-0 ${expanded ? 'rotate-90' : ''}`}>▶</span>
+                                        </div>
+                                        {/* Expanded card details — horizontal layout */}
+                                        {expanded && (
+                                          <div className="px-3 pb-3 pt-2 border-t border-gray-100" style={{ animation: 'fadeInUp 0.2s ease-out' }}>
+                                            {/* Consensus pills */}
+                                            {inDrafts.length >= 2 && (
+                                              <div className="flex flex-wrap gap-1 mb-2">
+                                                {inDrafts.map(d => (
+                                                  <span key={d.name + d.draftId}
+                                                    className="text-[10px] bg-teal-50 text-teal px-1.5 py-0.5 rounded-full font-medium">
+                                                    {d.name}
+                                                  </span>
+                                                ))}
+                                              </div>
+                                            )}
+                                            {/* Image left + details right */}
+                                            <div className="flex gap-3">
+                                              <div className="w-[120px] shrink-0">
+                                                <ImageCarousel images={card.images} cardId={card.id} />
+                                              </div>
+                                              <div className="flex-1 min-w-0 space-y-1 text-xs text-gray-500">
+                                                <p className="text-xs text-gray-600 leading-relaxed line-clamp-3">{card.description}</p>
+                                                <div className="flex flex-wrap items-center gap-1.5">
+                                                  <span className={`font-medium px-1.5 py-0.5 rounded-full text-[10px] ${getCostTierStyle(card.costTier).bg}`}>
+                                                    {getCostTierLabel(card.costTier)} {card.costDisplay}
+                                                  </span>
+                                                  <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${getTierBadge(card.tier).cls}`}>{getTierBadge(card.tier).label}</span>
+                                                </div>
+                                                <div className="flex flex-wrap gap-x-3 gap-y-0.5 text-[11px]">
+                                                  <span>⏱ {card.timeNeeded}</span>
+                                                  {card.driveFromPrevious && <span>📍 {card.driveFromPrevious}</span>}
+                                                  {card.bookAheadLabel && <span>📅 {card.bookAheadLabel}</span>}
+                                                </div>
+                                                <div className="flex items-center gap-2 text-[11px]">
+                                                  <a href={`https://www.google.com/search?q=${encodeURIComponent(card.name + ' Iceland')}`}
+                                                    target="_blank" rel="noopener noreferrer" className="text-teal hover:underline">🔍 Google</a>
+                                                  <a href={`https://www.google.com/search?q=${encodeURIComponent(card.name + ' Iceland reddit')}`}
+                                                    target="_blank" rel="noopener noreferrer" className="text-terracotta hover:underline">💬 Reddit</a>
+                                                  {card.bookingUrl && (
+                                                    <a href={card.bookingUrl} target="_blank" rel="noopener noreferrer"
+                                                      className="text-teal hover:underline">🔗 Book</a>
+                                                  )}
+                                                </div>
+                                                <StarRating score={card.redditScore} />
+                                              </div>
+                                            </div>
+                                            {/* Votes + comments below */}
+                                            <div className="mt-2 pt-2 border-t border-gray-100 space-y-2">
+                                              <VoteButtons cardId={card.id} currentUser={currentUser} votes={votes} onVote={onVote} />
+                                              <CommentSection cardId={card.id} currentUser={currentUser} comments={cardComments} onAddComment={onAddCardComment} />
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                      {/* Drive connector */}
+                                      {idx < dayStops.length - 1 && (() => {
+                                        const info = getDriveInfo(dayStops[idx], dayStops[idx + 1]);
+                                        return info && info.km > 0 ? (
+                                          <div className="flex items-center justify-center py-0.5">
+                                            <span className="text-[9px] text-gray-300">🚗 {info.label}</span>
+                                          </div>
+                                        ) : null;
+                                      })()}
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ═══════════════════════════════════════════
+    // ITINERARY VIEW
+    // ═══════════════════════════════════════════
+
     function ItineraryView({ currentUser, itineraries, itineraryComments, onSetDay, onAddComment, allCards, votes, cardComments, onVote, onAddCardComment,
         tripDrafts, onCreateDraft, onDeleteDraft, onRenameDraft, onSetActiveDraft }) {
       const [viewingName, setViewingName] = useState(null);
@@ -2038,6 +2318,10 @@
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                     subTab === 'trip-drafts' ? 'bg-teal text-white shadow-md' : 'bg-white text-gray-600 hover:bg-teal-50 hover:text-teal border border-gray-200'
                   }`}>Trip Drafts</button>
+                <button onClick={() => { setSubTab('compare'); setViewingName(null); setViewingDraftsFor(null); }}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                    subTab === 'compare' ? 'bg-teal text-white shadow-md' : 'bg-white text-gray-600 hover:bg-teal-50 hover:text-teal border border-gray-200'
+                  }`}>Compare</button>
               </div>
             </div>
 
@@ -2084,6 +2368,16 @@
                   })}
                 </div>
               </>
+            ) : subTab === 'compare' ? (
+              <DraftCompareView
+                tripDrafts={tripDrafts}
+                allCards={allCards}
+                currentUser={currentUser}
+                votes={votes}
+                cardComments={cardComments}
+                onVote={onVote}
+                onAddCardComment={onAddCardComment}
+              />
             ) : (
               /* Trip Drafts sub-tab */
               viewingDraftsFor === null ? (
