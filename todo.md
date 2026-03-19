@@ -17,8 +17,8 @@ After the "Who are you?" user selection, show a brief welcome/tutorial modal exp
 - Compact/minimal design so it doesn't compete with the cards
 
 ## 3. Flight Departure Info — Day 1 Adjustment
-- Departing Denver on Aug 28 at 8:10 PM Mountain Time
-- This means arrival in Iceland is Aug 29 (morning)
+- Departing Denver on Sep 4 at 8:10 PM Mountain Time
+- This means arrival in Iceland is Sep 5 (morning)
 - If this effectively cuts off Day 1 as a full activity day, that's fine — adjust accordingly
 - Consider showing flight info in the Day 1 header or hero section
 
