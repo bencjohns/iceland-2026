@@ -13,6 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -59,6 +61,12 @@
     @media (max-width: 900px) { .day-nav { display: none; } }
     .day-header-bar { transition: background-color 0.3s, box-shadow 0.3s, backdrop-filter 0.3s; border-bottom: 1px solid transparent; }
     .sticky > .day-header-bar { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    .iceland-popup .leaflet-popup-content-wrapper { border-radius: 12px; padding: 0; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+    .iceland-popup .leaflet-popup-content { margin: 0; min-width: 240px; }
+    .iceland-popup .leaflet-popup-tip { background: white; }
+    .map-container .leaflet-control-zoom { border: none !important; box-shadow: 0 2px 8px rgba(0,0,0,0.12) !important; }
+    .map-container .leaflet-control-zoom a { background: #FAFAF7 !important; color: #1A1A1A !important; border: none !important; }
+    .map-container .leaflet-control-zoom a:hover { background: #E8F4F4 !important; }
   </style>
 </head>
 <body class="bg-[#FAFAF7] font-body text-[#1A1A1A] min-h-screen">
@@ -93,7 +101,7 @@
 
     const DAYS = [
       { day: 1, date: "Sat Sep 5", title: "Arrive & Reykjavik", weather: "~10°C / 50°F · 14 hrs daylight",
-        flight: "Depart Denver Thu 8:10 PM MT → Land Fri morning", distFromPrev: null, distFromBase: null, region: "Reykjavik" },
+        flight: "Depart Denver Fri 8:10 PM MT → Land Sat morning", distFromPrev: null, distFromBase: null, region: "Reykjavik" },
       { day: 2, date: "Sun Sep 6", title: "Golden Circle", weather: "~10°C / 50°F · 13.5 hrs daylight",
         distFromPrev: null, distFromBase: "100 km", region: "Golden Circle" },
       { day: 3, date: "Mon Sep 7", title: "Snæfellsnes Peninsula", weather: "~10°C / 50°F · 13.5 hrs daylight",
@@ -415,6 +423,66 @@
         driveFromPrevious:"Downtown Reykjavik (walkable)", redditScore:4, bookSoonFlag:false,
         images:[{alt:"Skál restaurant open kitchen"},{alt:"Lamb tartare at Skál"}] },
     ];
+
+    const CARD_COORDS = {
+      // Day 1 — Reykjavik
+      "day1-blue-lagoon":      { lat: 63.8803, lng: -22.4495 },
+      "day1-sky-lagoon":       { lat: 64.1215, lng: -21.9960 },
+      "day1-hallgrimskirkja":  { lat: 64.1417, lng: -21.9267 },
+      "day1-baejarins-beztu":  { lat: 64.1475, lng: -21.9342 },
+      "day1-mat-bar":          { lat: 64.1470, lng: -21.9310 },
+      "day1-matur-og-drykkur": { lat: 64.1510, lng: -21.9445 },
+      // Day 2 — Golden Circle
+      "day2-thingvellir":      { lat: 64.2559, lng: -21.1290 },
+      "day2-silfra":           { lat: 64.2558, lng: -21.1166 },
+      "day2-geysir":           { lat: 64.3103, lng: -20.3024 },
+      "day2-gullfoss":         { lat: 64.3271, lng: -20.1199 },
+      "day2-kerid":            { lat: 64.0412, lng: -20.8853 },
+      "day2-grillmarkadurinn": { lat: 64.1474, lng: -21.9335 },
+      "day2-fiskfelagid":      { lat: 64.1480, lng: -21.9380 },
+      // Day 3 — Snæfellsnes
+      "day3-ytri-tunga":       { lat: 64.7944, lng: -23.4953 },
+      "day3-budakirkja":       { lat: 64.8193, lng: -23.3851 },
+      "day3-arnarstapi":       { lat: 64.7660, lng: -23.6224 },
+      "day3-djupalonssandur":  { lat: 64.7522, lng: -23.8987 },
+      "day3-londrangar":       { lat: 64.7355, lng: -23.7792 },
+      "day3-kirkjufell":       { lat: 64.9426, lng: -23.3054 },
+      // Day 4 — South Coast
+      "day4-seljalandsfoss":   { lat: 63.6156, lng: -19.9886 },
+      "day4-gljufrabui":       { lat: 63.6210, lng: -19.9847 },
+      "day4-skogafoss":        { lat: 63.5321, lng: -19.5113 },
+      "day4-plane-wreck":      { lat: 63.4591, lng: -19.3647 },
+      "day4-dyrholaey":        { lat: 63.4003, lng: -19.1268 },
+      "day4-reynisfjara":      { lat: 63.4044, lng: -19.0714 },
+      "day4-smidjan":          { lat: 63.4186, lng: -19.0060 },
+      "day4-black-crust":      { lat: 63.4190, lng: -19.0100 },
+      // Day 5 — Westman Islands
+      "day5-ferry":            { lat: 63.4400, lng: -20.2700 },
+      "day5-eldfell":          { lat: 63.4305, lng: -20.2433 },
+      "day5-eldheimar":        { lat: 63.4400, lng: -20.2678 },
+      "day5-rib-tour":         { lat: 63.4420, lng: -20.2750 },
+      "day5-storhofdi":        { lat: 63.3964, lng: -20.2872 },
+      "day5-beluga":           { lat: 63.4424, lng: -20.2630 },
+      "day5-slippurinn":       { lat: 63.4410, lng: -20.2680 },
+      // Day 6 — Southeast / Glaciers
+      "day6-fjadrargljufur":   { lat: 63.7713, lng: -18.1716 },
+      "day6-glacier-hike":     { lat: 64.0146, lng: -16.9713 },
+      "day6-svartifoss":       { lat: 64.0277, lng: -16.9753 },
+      "day6-jokulsarlon-zodiac":    { lat: 64.0784, lng: -16.2306 },
+      "day6-jokulsarlon-amphibian": { lat: 64.0800, lng: -16.2250 },
+      "day6-diamond-beach":    { lat: 64.0770, lng: -16.2170 },
+      "day6-humarhofnin":      { lat: 64.2532, lng: -15.2076 },
+      // Day 7 — Return West
+      "day7-secret-lagoon":    { lat: 64.1362, lng: -20.3092 },
+      "day7-reykjadalur":      { lat: 64.0260, lng: -21.2023 },
+      "day8-perlan":           { lat: 64.1290, lng: -21.9180 },
+      "day8-whale-watching":   { lat: 64.1522, lng: -21.9509 },
+      "day8-dill":             { lat: 64.1476, lng: -21.9275 },
+      "day8-ox":               { lat: 64.1472, lng: -21.9310 },
+      "day8-skal":             { lat: 64.1468, lng: -21.9285 },
+    };
+
+    const DAY_COLORS = ['#2B6B6B','#0284c7','#7c3aed','#d97706','#3b82f6','#c026d3','#16a34a','#ea580c'];
 
     // ═══════════════════════════════════════════
     // UTILITIES
@@ -897,7 +965,7 @@
       const voterCounts = {};
       FAMILY.forEach(n => { voterCounts[n] = 0; });
       Object.keys(votes).forEach(k => {
-        const name = k.split(':').pop();
+        const name = k.split('__').pop();
         if (voterCounts[name] !== undefined) voterCounts[name]++;
       });
 
@@ -941,7 +1009,7 @@
       );
     }
 
-    function FilterBar({ activeFilter, onFilterChange, advancedFilters, onAdvancedChange }) {
+    function FilterBar({ activeFilter, onFilterChange, advancedFilters, onAdvancedChange, viewMode, onViewModeChange }) {
       const [showAdvanced, setShowAdvanced] = useState(false);
       const filters = [
         { id: 'all', label: 'All Days' },
@@ -972,7 +1040,7 @@
       const FilterPills = ({ options, value, filterKey }) => (
         <div className="flex flex-wrap gap-1.5">
           {options.map(o => (
-            <button key={o.id} onClick={() => onAdvancedChange({ ...advancedFilters, [filterKey]: o.id })}
+            <button key={o.id} onClick={() => onAdvancedChange({ ...advancedFilters, [filterKey]: value === o.id && o.id !== 'all' ? 'all' : o.id })}
               className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
                 value === o.id
                   ? 'bg-teal text-white shadow-sm'
@@ -1009,6 +1077,18 @@
               {hasAdvanced && (
                 <button onClick={() => onAdvancedChange({ category: 'all', cost: 'all', booking: 'all' })}
                   className="text-xs text-terracotta hover:underline ml-1">Clear filters</button>
+              )}
+              {activeFilter !== 'leaderboard' && (
+                <div className="ml-auto flex rounded-lg border border-gray-200 overflow-hidden">
+                  <button onClick={() => onViewModeChange('list')}
+                    className={`px-3 py-1.5 text-sm font-medium transition-all ${viewMode === 'list' ? 'bg-teal text-white' : 'bg-white text-gray-500 hover:bg-teal-50'}`}>
+                    ☰ List
+                  </button>
+                  <button onClick={() => onViewModeChange('map')}
+                    className={`px-3 py-1.5 text-sm font-medium transition-all ${viewMode === 'map' ? 'bg-teal text-white' : 'bg-white text-gray-500 hover:bg-teal-50'}`}>
+                    🗺 Map
+                  </button>
+                </div>
               )}
             </div>
           </div>
@@ -1047,6 +1127,136 @@
               {d.day}
             </div>
           ))}
+        </div>
+      );
+    }
+
+    function MapView({ filteredCards, currentUser, votes, comments, onVote, onAddComment, onDeleteSuggestion, stickyHeight }) {
+      const mapRef = useRef(null);
+      const mapInstanceRef = useRef(null);
+      const markersRef = useRef([]);
+      const [expandedCard, setExpandedCard] = useState(null);
+      const [mapDayFilter, setMapDayFilter] = useState(null);
+
+      const visibleCards = mapDayFilter ? filteredCards.filter(c => c.day === mapDayFilter) : filteredCards;
+
+      // Initialize Leaflet map
+      useEffect(() => {
+        if (!mapRef.current || mapInstanceRef.current) return;
+        const map = L.map(mapRef.current, {
+          center: [64.9, -18.5],
+          zoom: 6,
+          zoomControl: true,
+        });
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+          maxZoom: 18,
+        }).addTo(map);
+        mapInstanceRef.current = map;
+        return () => { map.remove(); mapInstanceRef.current = null; };
+      }, []);
+
+      // Update markers when filteredCards or votes change
+      useEffect(() => {
+        const map = mapInstanceRef.current;
+        if (!map) return;
+        markersRef.current.forEach(m => m.remove());
+        markersRef.current = [];
+
+        visibleCards.forEach(card => {
+          const coords = CARD_COORDS[card.id];
+          if (!coords) return;
+          const color = DAY_COLORS[(card.day - 1) % DAY_COLORS.length];
+          const icon = L.divIcon({
+            className: '',
+            html: '<div style="width:30px;height:30px;border-radius:50%;background:' + color +
+              ';color:white;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;' +
+              'border:2.5px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer;">' +
+              getCategoryIcon(card.category) + '</div>',
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+            popupAnchor: [0, -18],
+          });
+
+          const score = getNetScore(card.id, votes);
+          const img = (IMAGE_URLS[card.id] || [])[0];
+          const popupHTML = '<div style="font-family:DM Sans,sans-serif;min-width:220px">' +
+            (img ? '<img src="' + img.url + '" alt="' + (img.alt || card.name) + '" style="width:100%;height:110px;object-fit:cover;display:block"/>' : '') +
+            '<div style="padding:10px 12px">' +
+              '<div style="font-family:Playfair Display,serif;font-weight:700;font-size:14px;line-height:1.3">' + card.name + '</div>' +
+              '<div style="font-size:11px;color:#666;margin-top:3px">' + getCategoryIcon(card.category) + ' ' + card.category + ' &middot; Day ' + (card.day || '?') + ' &middot; ' + card.costDisplay + '</div>' +
+              '<div style="font-size:11px;color:#666;margin-top:2px">' + (card.timeNeeded || '') + ' &middot; ' + (score.up > 0 || score.down > 0 ? '👍' + score.up + ' 👎' + score.down : 'No votes yet') + '</div>' +
+              '<button class="expand-card-btn" data-card-id="' + card.id + '" style="margin-top:8px;width:100%;padding:7px;border-radius:8px;background:#2B6B6B;color:white;font-size:12px;font-weight:600;border:none;cursor:pointer">View Full Details</button>' +
+            '</div></div>';
+
+          const marker = L.marker([coords.lat, coords.lng], { icon })
+            .bindPopup(popupHTML, { maxWidth: 280, className: 'iceland-popup', closeButton: true })
+            .addTo(map);
+          markersRef.current.push(marker);
+        });
+      }, [visibleCards, votes]);
+
+      // Delegated click handler for popup expand buttons
+      useEffect(() => {
+        const container = mapRef.current;
+        if (!container) return;
+        const handler = (e) => {
+          const btn = e.target.closest('.expand-card-btn');
+          if (btn) {
+            const cardId = btn.dataset.cardId;
+            const card = visibleCards.find(c => c.id === cardId);
+            if (card) setExpandedCard(card);
+          }
+        };
+        container.addEventListener('click', handler);
+        return () => container.removeEventListener('click', handler);
+      }, [visibleCards]);
+
+      const unplottedCount = visibleCards.filter(c => !CARD_COORDS[c.id]).length;
+      const mapHeight = 'calc(100vh - ' + (stickyHeight || 140) + 'px)';
+
+      return (
+        <div className="relative">
+          <div ref={mapRef} className="map-container w-full" style={{ height: mapHeight }} />
+          {unplottedCount > 0 && (
+            <div className="absolute bottom-4 left-4 z-[1000] bg-white/95 backdrop-blur rounded-lg px-3 py-2 text-xs text-gray-500 shadow">
+              {unplottedCount} suggestion{unplottedCount > 1 ? 's' : ''} not shown (no location set)
+            </div>
+          )}
+          {/* Day filter legend */}
+          <div className="absolute top-4 right-4 z-[1000] bg-white/95 backdrop-blur rounded-xl px-3 py-2.5 shadow text-xs">
+            <button onClick={() => setMapDayFilter(null)}
+              className={`w-full text-left px-2 py-1 rounded-md mb-1 font-semibold transition-all ${!mapDayFilter ? 'bg-teal/10 text-teal' : 'text-gray-500 hover:bg-gray-100'}`}>
+              All Days
+            </button>
+            <div className="space-y-0.5">
+              {DAYS.filter(d => d.day <= 7).map(d => (
+                <button key={d.day} onClick={() => setMapDayFilter(mapDayFilter === d.day ? null : d.day)}
+                  className={`w-full text-left flex items-center gap-2 px-2 py-1 rounded-md transition-all ${mapDayFilter === d.day ? 'bg-teal/10 ring-1 ring-teal/30' : 'hover:bg-gray-50'}`}>
+                  <span style={{ width: 10, height: 10, borderRadius: '50%', background: DAY_COLORS[(d.day - 1) % DAY_COLORS.length], display: 'inline-block', opacity: !mapDayFilter || mapDayFilter === d.day ? 1 : 0.3 }} />
+                  <span className={!mapDayFilter || mapDayFilter === d.day ? 'text-gray-700' : 'text-gray-400'}>Day {d.day}</span>
+                  <span className={!mapDayFilter || mapDayFilter === d.day ? 'text-gray-500' : 'text-gray-300'}>{d.title}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          {/* Expanded card modal */}
+          {expandedCard && ReactDOM.createPortal(
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center backdrop-blur-sm"
+              style={{ zIndex: 10000 }}
+              onClick={() => setExpandedCard(null)}>
+              <div className="relative max-w-md w-full mx-4 max-h-[85vh] overflow-y-auto rounded-2xl shadow-2xl"
+                onClick={e => e.stopPropagation()}>
+                <button onClick={() => setExpandedCard(null)}
+                  className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/90 shadow flex items-center justify-center text-gray-600 hover:bg-white text-lg font-bold">✕</button>
+                <CardComponent card={expandedCard} currentUser={currentUser}
+                  votes={votes} comments={comments} onVote={onVote}
+                  onAddComment={onAddComment} delay={0}
+                  onDeleteSuggestion={expandedCard.isUserSubmitted ? onDeleteSuggestion : undefined} />
+              </div>
+            </div>,
+            document.body
+          )}
         </div>
       );
     }
@@ -1090,15 +1300,16 @@
       );
     }
 
-    function FloatingDayBar({ dayData, homeBase, stickyTop }) {
+    function FloatingDayBar({ dayData, homeBase, stickyTop, visible }) {
       if (!dayData) return null;
-      return (
-        <div className="fixed left-0 right-0 z-30 bg-[#FAFAF7]/95 backdrop-blur-md border-b border-gray-200/40 shadow-sm"
-          style={{ top: `${stickyTop || 100}px` }}>
+      return ReactDOM.createPortal(
+        <div className="fixed left-0 right-0 z-[45] bg-[#FAFAF7]/95 backdrop-blur-md border-b border-gray-200/40 shadow-sm"
+          style={{ top: `${stickyTop || 100}px`, opacity: visible ? 1 : 0, pointerEvents: visible ? 'auto' : 'none', transition: 'opacity 0.2s' }}>
           <div className="max-w-7xl mx-auto px-6 py-1.5">
             <DayHeaderContent dayData={dayData} homeBase={homeBase} compact />
           </div>
-        </div>
+        </div>,
+        document.body
       );
     }
 
@@ -1556,7 +1767,14 @@
                 const tierBadge = getTierBadge(card.tier);
                 return (
                   <div key={card.id} className={`${bg} rounded-xl p-4 border border-gray-100`}>
-                    <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-start gap-4">
+                      {(() => {
+                        const imgs = IMAGE_URLS[card.id] || card.images;
+                        const img = imgs && imgs[0];
+                        return img && img.url ? (
+                          <img src={img.url} alt={img.alt || card.name} className="w-20 h-20 rounded-lg object-cover shrink-0" loading="lazy" />
+                        ) : null;
+                      })()}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
                           <h4 className="font-display font-bold text-[#1A1A1A]">{card.name}</h4>
@@ -1568,6 +1786,17 @@
                           <span>Day {card.day || '?'} · {card.costDisplay}</span>
                           <StarRating score={card.redditScore} />
                         </div>
+                        {card.description && (
+                          <p className="text-xs text-gray-500 mt-1.5 line-clamp-2">{card.description}</p>
+                        )}
+                        <div className="flex items-center gap-3 mt-2 text-xs text-gray-500">
+                          {card.voters.upVoters.length > 0 && (
+                            <span>👍 {card.voters.upVoters.join(', ')}</span>
+                          )}
+                          {card.voters.downVoters.length > 0 && (
+                            <span>👎 {card.voters.downVoters.join(', ')}</span>
+                          )}
+                        </div>
                       </div>
                       <div className="text-right shrink-0">
                         <div className={`text-2xl font-bold ${card.net > 0 ? 'text-green-600' : card.net < 0 ? 'text-red-500' : 'text-gray-400'}`}>
@@ -1575,14 +1804,6 @@
                         </div>
                         <div className="text-[10px] text-gray-400">net score</div>
                       </div>
-                    </div>
-                    <div className="flex items-center gap-3 mt-2 text-xs text-gray-500">
-                      {card.voters.upVoters.length > 0 && (
-                        <span>👍 {card.voters.upVoters.join(', ')}</span>
-                      )}
-                      {card.voters.downVoters.length > 0 && (
-                        <span>👎 {card.voters.downVoters.join(', ')}</span>
-                      )}
                     </div>
                   </div>
                 );
@@ -1632,6 +1853,7 @@
       const [showFloatingDay, setShowFloatingDay] = useState(false);
       const [advancedFilters, setAdvancedFilters] = useState({ category: 'all', cost: 'all', booking: 'all' });
       const [stickyHeight, setStickyHeight] = useState(100);
+      const [viewMode, setViewMode] = useState('list');
       const stickyRef = useRef(null);
       const [authenticated, setAuthenticated] = useState(() => localStorage.getItem('icp_auth') === 'true');
       const [hasUpdate, setHasUpdate] = useState(() => localStorage.getItem('icp_version') !== APP_VERSION);
@@ -1693,23 +1915,25 @@
       // Scroll tracking for day navigator
       useEffect(() => {
         const handleScroll = () => {
+          const headerH = stickyRef.current ? stickyRef.current.offsetHeight : 100;
           let current = 1;
-          let anyPinned = false;
           for (const d of DAYS) {
             const el = document.getElementById('day-section-' + d.day);
-            if (el) {
-              const rect = el.getBoundingClientRect();
-              if (rect.top <= 150) { current = d.day; anyPinned = true; }
+            if (el && el.getBoundingClientRect().top <= headerH + 20) {
+              current = d.day;
             }
           }
           setActiveDay(current);
-          // Show floating bar only when current day's in-page header is fully behind the sticky header
+          // Show floating bar when current day's header is behind the sticky header
           const currentDayEl = document.getElementById('day-section-' + current);
-          const headerH = stickyRef.current ? stickyRef.current.offsetHeight : 100;
           const dayTop = currentDayEl ? currentDayEl.getBoundingClientRect().top : 999;
-          setShowFloatingDay(dayTop < headerH - 40);
+          const show = dayTop < headerH - 10;
+          setShowFloatingDay(show);
+          // Keep stickyHeight in sync for FloatingDayBar positioning
+          if (stickyRef.current) setStickyHeight(headerH);
         };
         window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll(); // run once immediately
         return () => window.removeEventListener('scroll', handleScroll);
       }, []);
 
@@ -1835,18 +2059,24 @@
           <div ref={stickyRef} className="sticky top-0 z-40 bg-[#FAFAF7]/95 backdrop-blur-md shadow-sm">
             <Header currentUser={currentUser} onSwitchUser={handleSelectUser} stats={stats} onOpenHomeBase={() => setShowHomeBaseModal(true)} />
             <FilterBar activeFilter={activeFilter} onFilterChange={setActiveFilter}
-              advancedFilters={advancedFilters} onAdvancedChange={setAdvancedFilters} />
+              advancedFilters={advancedFilters} onAdvancedChange={setAdvancedFilters}
+              viewMode={viewMode} onViewModeChange={setViewMode} />
           </div>
-          <HeroSection cards={CARDS} votes={votes} suggestions={suggestions} />
+          {viewMode !== 'map' && <HeroSection cards={CARDS} votes={votes} suggestions={suggestions} />}
 
-          {activeFilter === 'all' && <DayNavigator activeDay={activeDay} />}
-          {activeFilter === 'all' && showFloatingDay && (
-            <FloatingDayBar dayData={DAYS.find(d => d.day === activeDay)} homeBase={homeBase} stickyTop={stickyHeight} />
+          {viewMode === 'list' && activeFilter === 'all' && <DayNavigator activeDay={activeDay} />}
+          {viewMode === 'list' && activeFilter === 'all' && (
+            <FloatingDayBar dayData={DAYS.find(d => d.day === activeDay)} homeBase={homeBase} stickyTop={stickyHeight} visible={showFloatingDay} />
           )}
 
           {activeFilter === 'leaderboard' ? (
             <LeaderboardView allCards={allCards} votes={votes} currentUser={currentUser}
               comments={comments} onVote={handleVote} onAddComment={handleAddComment} />
+          ) : viewMode === 'map' ? (
+            <MapView filteredCards={filteredCards} currentUser={currentUser}
+              votes={votes} comments={comments} onVote={handleVote}
+              onAddComment={handleAddComment} onDeleteSuggestion={handleDeleteSuggestion}
+              stickyHeight={stickyHeight} />
           ) : (
             <div className="max-w-7xl mx-auto px-6">
               {DAYS.map(dayData => {
