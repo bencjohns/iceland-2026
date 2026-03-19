@@ -492,6 +492,36 @@
 
     const DAY_COLORS = ['#2B6B6B','#0284c7','#7c3aed','#d97706','#3b82f6','#c026d3','#16a34a','#ea580c'];
 
+    const REGION_CENTROIDS = [
+      { name: 'Reykjavik', lat: 64.145, lng: -21.930 },
+      { name: 'Golden Circle', lat: 64.230, lng: -20.590 },
+      { name: 'Snæfellsnes', lat: 64.800, lng: -23.550 },
+      { name: 'South Coast', lat: 63.480, lng: -19.350 },
+      { name: 'Westman Islands', lat: 63.430, lng: -20.270 },
+      { name: 'Southeast / Glaciers', lat: 64.020, lng: -16.800 },
+      { name: 'KEF Airport', lat: 63.985, lng: -22.605 },
+    ];
+
+    function getRegionForStops(stopIds) {
+      const coords = stopIds.map(id => CARD_COORDS[id]).filter(Boolean);
+      if (coords.length === 0) return null;
+      // Find which region each stop is nearest to
+      const regionCounts = {};
+      coords.forEach(c => {
+        let best = null, bestDist = Infinity;
+        REGION_CENTROIDS.forEach(r => {
+          const d = Math.pow(c.lat - r.lat, 2) + Math.pow(c.lng - r.lng, 2);
+          if (d < bestDist) { bestDist = d; best = r.name; }
+        });
+        if (best) regionCounts[best] = (regionCounts[best] || 0) + 1;
+      });
+      // Sort by count descending, return top 1-2 regions
+      const sorted = Object.entries(regionCounts).sort((a, b) => b[1] - a[1]);
+      if (sorted.length === 0) return null;
+      if (sorted.length === 1 || sorted[0][1] > sorted[1][1] * 2) return sorted[0][0];
+      return sorted[0][0] + ' & ' + sorted[1][0];
+    }
+
     // ═══════════════════════════════════════════
     // UTILITIES
     // ═══════════════════════════════════════════
@@ -1889,11 +1919,13 @@
       );
     }
 
-    function ItineraryView({ currentUser, itineraries, itineraryComments, onSetDay, onAddComment, allCards }) {
+    function ItineraryView({ currentUser, itineraries, itineraryComments, onSetDay, onAddComment, allCards, votes, cardComments, onVote, onAddCardComment }) {
       const [viewingName, setViewingName] = useState(null);
       const [pickerDay, setPickerDay] = useState(null);
       const [pickerSearch, setPickerSearch] = useState('');
       const [commentText, setCommentText] = useState('');
+      const [expandedStops, setExpandedStops] = useState({});
+      const [allExpanded, setAllExpanded] = useState(false);
 
       const isOwner = viewingName === currentUser;
       const itinerary = viewingName ? (itineraries[viewingName] || {}) : {};
@@ -2010,16 +2042,36 @@
           <div className="flex items-center gap-4 mb-6">
             <button onClick={() => setViewingName(null)}
               className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 text-sm font-bold">←</button>
-            <div>
+            <div className="flex-1">
               <h2 className="font-display text-2xl font-bold text-[#1A1A1A]">{viewingName}'s Itinerary</h2>
-              <p className="text-sm text-gray-400">{isOwner ? 'Tap + to add stops, arrows to reorder' : 'Viewing — leave comments below'}</p>
+              <p className="text-sm text-gray-400">{isOwner ? 'Tap + to add stops, click a stop to see details' : 'Click any stop for details — leave comments below'}</p>
             </div>
+            {(() => {
+              const totalStopCount = DAYS.filter(d => d.day <= 7).reduce((sum, d) => sum + getStops(d.day).length, 0);
+              return totalStopCount > 0 ? (
+                <button onClick={() => {
+                  if (allExpanded) {
+                    setExpandedStops({});
+                    setAllExpanded(false);
+                  } else {
+                    const all = {};
+                    DAYS.filter(d => d.day <= 7).forEach(d => getStops(d.day).forEach(id => { all[id] = true; }));
+                    setExpandedStops(all);
+                    setAllExpanded(true);
+                  }
+                }}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-200 text-gray-500 hover:bg-teal-50 hover:text-teal hover:border-teal/30 transition-all shrink-0">
+                  {allExpanded ? '⊟ Collapse All' : '⊞ Expand All'}
+                </button>
+              ) : null;
+            })()}
           </div>
 
           {/* Days */}
           {DAYS.filter(d => d.day <= 7).map(dayData => {
             const stops = getStops(dayData.day);
             const summary = getDaySummary(dayData.day);
+            const region = stops.length > 0 ? getRegionForStops(stops) : null;
             return (
               <div key={dayData.day} className="mb-6">
                 <div className="flex items-center justify-between mb-2">
@@ -2028,7 +2080,10 @@
                       style={{ background: DAY_COLORS[(dayData.day - 1) % DAY_COLORS.length] }}>
                       {dayData.day}
                     </span>
-                    <span className="font-display font-bold text-sm">{dayData.date} — {dayData.title}</span>
+                    <div>
+                      <span className="font-display font-bold text-sm">{dayData.date} — {dayData.title}</span>
+                      {region && <span className="text-[11px] text-gray-400 ml-2">📍 {region}</span>}
+                    </div>
                   </div>
                   {stops.length > 0 && (
                     <div className="text-[11px] text-gray-400 flex gap-3">
@@ -2052,23 +2107,67 @@
                       const card = findCard(cardId);
                       if (!card) return null;
                       const img = (IMAGE_URLS[card.id] || [])[0];
+                      const isExpanded = expandedStops[cardId];
                       return (
                         <div key={cardId}>
-                          <div className="itinerary-stop flex items-center gap-3 bg-white rounded-lg border border-gray-100 p-3">
-                            {img && <img src={img.url} alt={img.alt || card.name} className="w-12 h-12 rounded-lg object-cover shrink-0" loading="lazy" />}
-                            <span className="text-lg shrink-0">{getCategoryIcon(card.category)}</span>
-                            <div className="flex-1 min-w-0">
-                              <div className="font-semibold text-sm text-[#1A1A1A]">{card.name}</div>
-                              <div className="text-[11px] text-gray-400">{card.timeNeeded} · {card.costDisplay}</div>
+                          <div className={`itinerary-stop bg-white rounded-lg border p-3 ${isExpanded ? 'border-teal/30 shadow-sm' : 'border-gray-100'}`}>
+                            <div className="flex items-center gap-3 cursor-pointer"
+                              onClick={() => setExpandedStops(prev => ({ ...prev, [cardId]: !prev[cardId] }))}>
+                              {img && <img src={img.url} alt={img.alt || card.name} className="w-12 h-12 rounded-lg object-cover shrink-0" loading="lazy" />}
+                              <span className="text-lg shrink-0">{getCategoryIcon(card.category)}</span>
+                              <div className="flex-1 min-w-0">
+                                <div className="font-semibold text-sm text-[#1A1A1A] hover:text-teal transition-colors">{card.name}</div>
+                                <div className="text-[11px] text-gray-400">{card.timeNeeded} · {card.costDisplay}</div>
+                              </div>
+                              <span className={`text-gray-400 text-xs transition-transform shrink-0 mr-1 ${isExpanded ? 'rotate-90' : ''}`}>▶</span>
+                              {isOwner && (
+                                <div className="flex gap-1 shrink-0" onClick={e => e.stopPropagation()}>
+                                  <button onClick={() => moveStop(dayData.day, idx, -1)} disabled={idx === 0}
+                                    className="w-7 h-7 rounded bg-gray-100 hover:bg-teal-50 text-sm disabled:opacity-30">▲</button>
+                                  <button onClick={() => moveStop(dayData.day, idx, 1)} disabled={idx === stops.length - 1}
+                                    className="w-7 h-7 rounded bg-gray-100 hover:bg-teal-50 text-sm disabled:opacity-30">▼</button>
+                                  <button onClick={() => removeStop(dayData.day, idx)}
+                                    className="w-7 h-7 rounded bg-red-50 hover:bg-red-100 text-red-500 text-sm">✕</button>
+                                </div>
+                              )}
                             </div>
-                            {isOwner && (
-                              <div className="flex gap-1 shrink-0">
-                                <button onClick={() => moveStop(dayData.day, idx, -1)} disabled={idx === 0}
-                                  className="w-7 h-7 rounded bg-gray-100 hover:bg-teal-50 text-sm disabled:opacity-30">▲</button>
-                                <button onClick={() => moveStop(dayData.day, idx, 1)} disabled={idx === stops.length - 1}
-                                  className="w-7 h-7 rounded bg-gray-100 hover:bg-teal-50 text-sm disabled:opacity-30">▼</button>
-                                <button onClick={() => removeStop(dayData.day, idx)}
-                                  className="w-7 h-7 rounded bg-red-50 hover:bg-red-100 text-red-500 text-sm">✕</button>
+                            {/* Expanded card details */}
+                            {isExpanded && (
+                              <div className="mt-3 pt-3 border-t border-gray-100" style={{ animation: 'fadeInUp 0.2s ease-out' }}>
+                                {/* Image carousel */}
+                                <ImageCarousel images={card.images} cardId={card.id} />
+                                {/* Description */}
+                                <p className="text-sm text-gray-600 leading-relaxed mt-3">{card.description}</p>
+                                {/* Details */}
+                                <div className="mt-3 space-y-1 text-xs text-gray-500">
+                                  <div className="flex items-center gap-2">
+                                    <span className={`font-medium px-2 py-0.5 rounded-full ${getCostTierStyle(card.costTier).bg}`}>
+                                      {getCostTierLabel(card.costTier)} {card.costDisplay}
+                                    </span>
+                                    <span className={`px-2 py-0.5 rounded-full ${getTierBadge(card.tier).cls}`}>{getTierBadge(card.tier).label}</span>
+                                  </div>
+                                  <div className="flex flex-wrap gap-x-4 gap-y-1">
+                                    <span>⏱ {card.timeNeeded}</span>
+                                    {card.parkingCost && <span>🅿️ {card.parkingCost}</span>}
+                                    {card.driveFromPrevious && <span>📍 {card.driveFromPrevious}</span>}
+                                  </div>
+                                  {card.bookAheadLabel && <div>📅 {card.bookAheadLabel}</div>}
+                                  {card.bookingUrl && (
+                                    <div><a href={card.bookingUrl} target="_blank" rel="noopener noreferrer" className="text-teal hover:underline">🔗 Book at {card.bookingSiteName || card.bookingUrl}</a></div>
+                                  )}
+                                  <div className="flex items-center gap-3 pt-1">
+                                    <a href={`https://www.google.com/search?q=${encodeURIComponent(card.name + ' Iceland')}`}
+                                      target="_blank" rel="noopener noreferrer" className="text-teal hover:underline inline-flex items-center gap-1">🔍 Google</a>
+                                    <a href={`https://www.google.com/search?q=${encodeURIComponent(card.name + ' Iceland reddit')}`}
+                                      target="_blank" rel="noopener noreferrer" className="text-terracotta hover:underline inline-flex items-center gap-1">💬 Reddit</a>
+                                  </div>
+                                  <div className="pt-1"><StarRating score={card.redditScore} /></div>
+                                </div>
+                                {/* Votes + Comments */}
+                                <div className="mt-3 pt-3 border-t border-gray-100 space-y-2">
+                                  <VoteButtons cardId={card.id} currentUser={currentUser} votes={votes} onVote={onVote} />
+                                  <CommentSection cardId={card.id} currentUser={currentUser} comments={cardComments} onAddComment={onAddCardComment} />
+                                </div>
                               </div>
                             )}
                           </div>
@@ -2371,7 +2470,10 @@
                       <span className="w-6 h-6 rounded-full bg-teal text-white flex items-center justify-center text-[11px] font-bold shrink-0">
                         {dayNum}
                       </span>
-                      <span className="font-display font-bold text-sm flex-1">Day {dayNum}</span>
+                      <div className="flex-1 min-w-0">
+                        <span className="font-display font-bold text-sm">Day {dayNum}</span>
+                        {stops.length > 0 && (() => { const r = getRegionForStops(stops); return r ? <span className="text-[10px] text-gray-400 ml-1.5">📍 {r}</span> : null; })()}
+                      </div>
                       {stops.length > 0 && (
                         <div className="text-[10px] text-gray-400 flex gap-2">
                           <span>{summary.count} stop{summary.count !== 1 ? 's' : ''}</span>
@@ -2874,7 +2976,8 @@
           {activeFilter === 'itineraries' ? (
             <ItineraryView currentUser={currentUser} itineraries={itineraries}
               itineraryComments={itineraryComments} onSetDay={handleSetItineraryDay}
-              onAddComment={handleAddItineraryComment} allCards={allCards} />
+              onAddComment={handleAddItineraryComment} allCards={allCards}
+              votes={votes} cardComments={comments} onVote={handleVote} onAddCardComment={handleAddComment} />
           ) : activeFilter === 'leaderboard' ? (
             <LeaderboardView allCards={allCards} votes={votes} currentUser={currentUser}
               comments={comments} onVote={handleVote} onAddComment={handleAddComment} />
