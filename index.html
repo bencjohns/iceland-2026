@@ -1998,12 +1998,12 @@
                         <button onClick={() => setEditingComment(null)}
                           className="text-[11px] text-gray-400 hover:underline">Cancel</button>
                       </div>
-                    ) : (
+                    ) : (<>
                       <div className="bg-gray-100 rounded-2xl px-3 py-1.5 mt-0.5 inline-block max-w-full">
                         <p className="text-[13px] text-gray-800 break-words overflow-wrap-anywhere leading-snug"><Linkify>{c.text}</Linkify></p>
                       </div>
                       <ReactionBadges reactions={c.reactions} idx={i} />
-                    )}
+                    </>)}
                   </div>
                   {/* Action row: time · Like · Reply · Edit · Delete */}
                   <div className="flex items-center gap-2.5 ml-3 mt-0.5 mb-1">
@@ -2036,12 +2036,12 @@
                               <button onClick={() => setEditingComment(null)}
                                 className="text-[10px] text-gray-400 hover:underline">Cancel</button>
                             </div>
-                          ) : (
+                          ) : (<>
                             <div className="bg-gray-100 rounded-2xl px-3 py-1 mt-0.5 inline-block max-w-full">
                               <p className="text-[12px] text-gray-800 break-words overflow-wrap-anywhere leading-snug"><Linkify>{r.text}</Linkify></p>
                             </div>
                             <ReactionBadges reactions={r.reactions} idx={i} replyIdx={ri} />
-                          )}
+                          </>)}
                         </div>
                         {/* Reply action row */}
                         <div className="flex items-center gap-2.5 ml-3 mt-0.5 mb-1">
