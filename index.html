@@ -1930,7 +1930,7 @@
         const startHover = () => { clearTimeout(hoverRef.current); hoverRef.current = setTimeout(() => setShowReactions(rKey), 400); };
         const endHover = () => { clearTimeout(hoverRef.current); hoverRef.current = setTimeout(() => setShowReactions(prev => prev === rKey ? null : prev), 300); };
         return (
-          <div className="relative inline-block"
+          <div className="relative inline-flex items-center"
             onMouseEnter={startHover} onMouseLeave={endHover}>
             <button onClick={() => handleReaction(idx, replyIdx, '👍')}
               className={`text-[11px] font-semibold transition-colors ${
