@@ -1294,14 +1294,14 @@
       return <HowItWorksCarousel onClose={onDismiss} startSlide={0} />;
     }
 
-    function Header({ currentUser, onSwitchUser, stats, onOpenHomeBase }) {
+    function Header({ currentUser, onSwitchUser, stats, onOpenHomeBase, onTitleClick }) {
       const [showSwitch, setShowSwitch] = useState(false);
       const [showInfo, setShowInfo] = useState(false);
       return (
         <header className="bg-transparent">
           <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <h1 className="font-display text-2xl font-bold text-teal">Iceland 2026</h1>
+              <h1 className="font-display text-2xl font-bold text-teal cursor-pointer hover:opacity-80 transition-opacity" onClick={onTitleClick}>Iceland 2026</h1>
               <span className="text-sm text-gray-400 hidden sm:inline">Sep 4 – Sep 12</span>
             </div>
             <div className="relative flex items-center gap-3">
@@ -1523,7 +1523,7 @@
       );
     }
 
-    function MapView({ filteredCards, currentUser, votes, comments, onVote, onAddComment, onDeleteSuggestion, stickyHeight, onAddToTrip, panelDayCount, homeBase }) {
+    function MapView({ filteredCards, currentUser, votes, comments, onVote, onAddComment, onDeleteSuggestion, stickyHeight, onAddToTrip, panelDayCount, homeBase, activeDraft, showRoute, onToggleRoute }) {
       const mapRef = useRef(null);
       const mapInstanceRef = useRef(null);
       const markersRef = useRef([]);
@@ -1531,6 +1531,28 @@
       const [mapDayFilter, setMapDayFilter] = useState(null);
 
       const visibleCards = mapDayFilter ? filteredCards.filter(c => c.day === mapDayFilter) : filteredCards;
+
+      const routeVisible = showRoute;
+
+      const plannedStopIds = useMemo(() => {
+        const ids = new Set();
+        if (!activeDraft?.days) return ids;
+        Object.values(activeDraft.days).forEach(d => {
+          (d?.stops || []).forEach(id => ids.add(id));
+        });
+        return ids;
+      }, [activeDraft]);
+
+      const routesByDay = useMemo(() => {
+        if (!activeDraft?.days) return {};
+        const routes = {};
+        Object.entries(activeDraft.days).forEach(([dayNum, dayObj]) => {
+          if (!dayObj?.stops || dayObj.stops.length < 2) return;
+          const coords = dayObj.stops.map(id => CARD_COORDS[id]).filter(Boolean);
+          if (coords.length >= 2) routes[parseInt(dayNum)] = { coords: coords.map(c => [c.lat, c.lng]), stopIds: dayObj.stops };
+        });
+        return routes;
+      }, [activeDraft]);
 
       // Initialize Leaflet map
       useEffect(() => {
@@ -1555,19 +1577,34 @@
         markersRef.current.forEach(m => m.remove());
         markersRef.current = [];
 
+        // Build stop order lookup for numbered markers
+        const stopOrder = {};
+        if (routeVisible && activeDraft?.days) {
+          Object.entries(activeDraft.days).forEach(([dayNum, dayObj]) => {
+            (dayObj?.stops || []).forEach((id, idx) => { stopOrder[id] = idx + 1; });
+          });
+        }
+
         visibleCards.forEach(card => {
           const coords = CARD_COORDS[card.id];
           if (!coords) return;
-          const color = DAY_COLORS[(card.day - 1) % DAY_COLORS.length];
+          const isPlanned = routeVisible && plannedStopIds.has(card.id);
+          const isUnplanned = routeVisible && plannedStopIds.size > 0 && !isPlanned;
+          const color = isUnplanned ? '#94a3b8' : DAY_COLORS[(card.day - 1) % DAY_COLORS.length];
+          const size = isPlanned ? 34 : isUnplanned ? 22 : 30;
+          const border = isPlanned ? 3 : 2.5;
+          const opacity = isUnplanned ? 0.45 : 1;
+          const label = isPlanned ? (stopOrder[card.id] || getCategoryIcon(card.category)) : getCategoryIcon(card.category);
+          const fontSize = isPlanned ? 13 : isUnplanned ? 9 : 12;
           const icon = L.divIcon({
             className: '',
-            html: '<div style="width:30px;height:30px;border-radius:50%;background:' + color +
-              ';color:white;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;' +
-              'border:2.5px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer;">' +
-              getCategoryIcon(card.category) + '</div>',
-            iconSize: [30, 30],
-            iconAnchor: [15, 15],
-            popupAnchor: [0, -18],
+            html: '<div style="width:' + size + 'px;height:' + size + 'px;border-radius:50%;background:' + color +
+              ';color:white;font-size:' + fontSize + 'px;font-weight:700;display:flex;align-items:center;justify-content:center;' +
+              'border:' + border + 'px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer;opacity:' + opacity + ';">' +
+              label + '</div>',
+            iconSize: [size, size],
+            iconAnchor: [size/2, size/2],
+            popupAnchor: [0, -size/2 - 3],
           });
 
           const score = getNetScore(card.id, votes);
@@ -1586,7 +1623,51 @@
             .addTo(map);
           markersRef.current.push(marker);
         });
-      }, [visibleCards, votes]);
+      }, [visibleCards, votes, routeVisible, plannedStopIds, activeDraft]);
+
+      // Draw route polylines via OSRM driving directions
+      const polylinesRef = useRef([]);
+      const routeCacheRef = useRef({});
+      useEffect(() => {
+        const map = mapInstanceRef.current;
+        polylinesRef.current.forEach(p => p.remove());
+        polylinesRef.current = [];
+        if (!map || !routeVisible) return;
+        let cancelled = false;
+
+        const fetchRoute = async (coords) => {
+          const key = coords.map(c => c[0].toFixed(5) + ',' + c[1].toFixed(5)).join('|');
+          if (routeCacheRef.current[key]) return routeCacheRef.current[key];
+          const waypoints = coords.map(c => c[1] + ',' + c[0]).join(';');
+          try {
+            const res = await fetch('https://router.project-osrm.org/route/v1/driving/' + waypoints + '?overview=full&geometries=geojson');
+            const json = await res.json();
+            if (json.code === 'Ok' && json.routes?.[0]) {
+              const road = json.routes[0].geometry.coordinates.map(c => [c[1], c[0]]);
+              routeCacheRef.current[key] = road;
+              return road;
+            }
+          } catch (e) { /* fall back to straight lines */ }
+          return coords;
+        };
+
+        (async () => {
+          for (const [day, data] of Object.entries(routesByDay)) {
+            if (cancelled) return;
+            const dayNum = parseInt(day);
+            if (mapDayFilter && mapDayFilter !== dayNum) continue;
+            const road = await fetchRoute(data.coords);
+            if (cancelled) return;
+            const line = L.polyline(road, {
+              color: DAY_COLORS[(dayNum - 1) % DAY_COLORS.length],
+              weight: 4, opacity: 0.75
+            }).addTo(map);
+            polylinesRef.current.push(line);
+          }
+        })();
+
+        return () => { cancelled = true; };
+      }, [routesByDay, routeVisible, mapDayFilter]);
 
       // Delegated click handler for popup expand buttons
       useEffect(() => {
@@ -1604,6 +1685,7 @@
         return () => container.removeEventListener('click', handler);
       }, [visibleCards]);
 
+      const hasStops = plannedStopIds.size > 0;
       const unplottedCount = visibleCards.filter(c => !CARD_COORDS[c.id]).length;
       const mapHeight = 'calc(100vh - ' + (stickyHeight || 140) + 'px)';
 
@@ -1611,9 +1693,16 @@
         <div className="relative">
           <div ref={mapRef} className="map-container w-full" style={{ height: mapHeight }} />
           {unplottedCount > 0 && (
-            <div className="absolute bottom-4 left-4 z-[1000] bg-white/95 backdrop-blur rounded-lg px-3 py-2 text-xs text-gray-500 shadow">
+            <div className={`absolute bottom-4 left-4 z-[1000] bg-white/95 backdrop-blur rounded-lg px-3 py-2 text-xs text-gray-500 shadow`}
+              style={hasStops ? { bottom: '3.5rem' } : {}}>
               {unplottedCount} suggestion{unplottedCount > 1 ? 's' : ''} not shown (no location set)
             </div>
+          )}
+          {hasStops && (
+            <button onClick={onToggleRoute}
+              className={`absolute bottom-4 left-4 z-[1000] backdrop-blur rounded-lg px-3.5 py-2 text-xs font-semibold shadow transition-all ${routeVisible ? 'bg-teal text-white' : 'bg-white/95 text-gray-600 hover:bg-gray-50'}`}>
+              {routeVisible ? 'Hide Route' : 'Show Route'}
+            </button>
           )}
           {/* Day filter legend */}
           <div className="absolute top-4 right-4 z-[1000] bg-white/95 backdrop-blur rounded-xl px-3 py-2.5 shadow text-xs">
@@ -1628,6 +1717,9 @@
                   <span style={{ width: 10, height: 10, borderRadius: '50%', background: DAY_COLORS[(d.day - 1) % DAY_COLORS.length], display: 'inline-block', opacity: !mapDayFilter || mapDayFilter === d.day ? 1 : 0.3 }} />
                   <span className={!mapDayFilter || mapDayFilter === d.day ? 'text-gray-700' : 'text-gray-400'}>Day {d.day}</span>
                   <span className={!mapDayFilter || mapDayFilter === d.day ? 'text-gray-500' : 'text-gray-300'}>{d.title}</span>
+                  {routeVisible && routesByDay[d.day] && (
+                    <span style={{ width: 14, height: 3, borderRadius: 2, background: DAY_COLORS[(d.day - 1) % DAY_COLORS.length], display: 'inline-block', marginLeft: 'auto', opacity: !mapDayFilter || mapDayFilter === d.day ? 0.8 : 0.3 }} />
+                  )}
                 </button>
               ))}
             </div>
@@ -4022,12 +4114,16 @@
       const [itineraryComments, setItineraryComments] = useState({});
       const [viewMode, setViewMode] = useState('list');
       const [sidePanelOpen, setSidePanelOpen] = useState(false);
+      const [showRoute, setShowRoute] = useState(false);
       const [panelDayCount, setPanelDayCount] = useState(DAYS.length);
       const [tripDrafts, setTripDrafts] = useState({});
       const stickyRef = useRef(null);
       const [authenticated, setAuthenticated] = useState(() => localStorage.getItem('icp_auth') === 'true');
       const [hasUpdate, setHasUpdate] = useState(() => localStorage.getItem('icp_version') !== APP_VERSION);
       const [loading, setLoading] = useState(true);
+
+      // Auto-enable route visualization when side panel opens
+      useEffect(() => { if (sidePanelOpen) setShowRoute(true); }, [sidePanelOpen]);
 
       // Load personal data from localStorage, shared data from Firebase (real-time)
       useEffect(() => {
@@ -4365,7 +4461,8 @@
       return (
         <div className="min-h-screen pb-24">
           <div ref={stickyRef} className="sticky top-0 z-40 bg-[#FAFAF7]/95 backdrop-blur-md shadow-sm">
-            <Header currentUser={currentUser} onSwitchUser={handleSelectUser} stats={stats} onOpenHomeBase={() => setShowHomeBaseModal(true)} />
+            <Header currentUser={currentUser} onSwitchUser={handleSelectUser} stats={stats} onOpenHomeBase={() => setShowHomeBaseModal(true)}
+              onTitleClick={() => { setViewMode('list'); setActiveFilter('all'); }} />
             <FilterBar activeFilter={activeFilter} onFilterChange={setActiveFilter}
               advancedFilters={advancedFilters} onAdvancedChange={setAdvancedFilters}
               viewMode={viewMode} onViewModeChange={setViewMode} />
@@ -4392,7 +4489,8 @@
               votes={votes} comments={comments} onVote={handleVote}
               onAddComment={handleAddComment} onDeleteSuggestion={handleDeleteSuggestion}
               stickyHeight={stickyHeight}
-              onAddToTrip={handleAddToTrip} panelDayCount={activeDraftDayCount} homeBase={homeBase} />
+              onAddToTrip={handleAddToTrip} panelDayCount={activeDraftDayCount} homeBase={homeBase}
+              activeDraft={getActiveDraft()} showRoute={showRoute} onToggleRoute={() => setShowRoute(p => !p)} />
           ) : (
             <div className="max-w-7xl mx-auto px-6">
               {DAYS.map(dayData => {
