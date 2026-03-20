@@ -1877,6 +1877,20 @@
         setEditText('');
       };
 
+      const handleDelete = (idx, replyIdx) => {
+        const updated = [...cardComments];
+        if (replyIdx !== undefined) {
+          const comment = { ...updated[idx] };
+          comment.replies = [...(comment.replies || [])];
+          comment.replies.splice(replyIdx, 1);
+          updated[idx] = comment;
+        } else {
+          updated.splice(idx, 1);
+        }
+        onAddComment(cardId, null, updated);
+        setEditingComment(null);
+      };
+
       const handleReaction = (idx, replyIdx, emoji) => {
         const updated = [...cardComments];
         let target;
@@ -1949,10 +1963,12 @@
                       <span className="text-[10px] text-gray-400">{formatRelativeTime(c.timestamp)}{c.editedAt ? ' (edited)' : ''}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      {c.author === currentUser && !isEditing(i) && (
+                      {c.author === currentUser && !isEditing(i) && (<>
                         <button onClick={() => { setEditingComment({ idx: i }); setEditText(c.text); }}
-                          className="text-[10px] text-gray-400 hover:text-teal transition-colors">✏️</button>
-                      )}
+                          className="text-[10px] text-gray-400 hover:text-teal transition-colors" title="Edit">✏️</button>
+                        <button onClick={() => handleDelete(i)}
+                          className="text-[10px] text-gray-400 hover:text-red-500 transition-colors" title="Delete">🗑️</button>
+                      </>)}
                       <button onClick={() => { setReplyTo(replyTo === i ? null : i); setReplyText(''); }}
                         className="text-[10px] text-gray-400 hover:text-teal transition-colors">
                         ↩ Reply
@@ -1984,10 +2000,12 @@
                             <span className="text-[11px] font-semibold text-teal">{r.author}</span>
                             <span className="text-[10px] text-gray-400">{formatRelativeTime(r.timestamp)}{r.editedAt ? ' (edited)' : ''}</span>
                           </div>
-                          {r.author === currentUser && !isEditing(i, ri) && (
+                          {r.author === currentUser && !isEditing(i, ri) && (<>
                             <button onClick={() => { setEditingComment({ idx: i, replyIdx: ri }); setEditText(r.text); }}
-                              className="text-[10px] text-gray-400 hover:text-teal transition-colors">✏️</button>
-                          )}
+                              className="text-[10px] text-gray-400 hover:text-teal transition-colors" title="Edit">✏️</button>
+                            <button onClick={() => handleDelete(i, ri)}
+                              className="text-[10px] text-gray-400 hover:text-red-500 transition-colors" title="Delete">🗑️</button>
+                          </>)}
                         </div>
                         {isEditing(i, ri) ? (
                           <div className="mt-1 flex gap-2">
