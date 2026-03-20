@@ -1841,8 +1841,6 @@
       const [text, setText] = useState('');
       const [replyTo, setReplyTo] = useState(null);
       const [replyText, setReplyText] = useState('');
-      const [editingComment, setEditingComment] = useState(null); // { idx, replyIdx? }
-      const [editText, setEditText] = useState('');
       const [showReactions, setShowReactions] = useState(null); // "comment-{i}" or "reply-{i}-{ri}"
       const cardComments = comments[cardId] || [];
 
@@ -1865,22 +1863,6 @@
         setReplyTo(null);
       };
 
-      const handleEdit = (idx, replyIdx) => {
-        const updated = [...cardComments];
-        if (replyIdx !== undefined) {
-          const comment = { ...updated[idx] };
-          const replies = [...(comment.replies || [])];
-          replies[replyIdx] = { ...replies[replyIdx], text: editText.trim(), editedAt: new Date().toISOString() };
-          comment.replies = replies;
-          updated[idx] = comment;
-        } else {
-          updated[idx] = { ...updated[idx], text: editText.trim(), editedAt: new Date().toISOString() };
-        }
-        onAddComment(cardId, null, updated);
-        setEditingComment(null);
-        setEditText('');
-      };
-
       const handleDelete = (idx, replyIdx) => {
         const updated = [...cardComments];
         if (replyIdx !== undefined) {
@@ -1892,7 +1874,6 @@
           updated.splice(idx, 1);
         }
         onAddComment(cardId, null, updated);
-        setEditingComment(null);
       };
 
       const handleReaction = (idx, replyIdx, emoji) => {
@@ -1918,9 +1899,6 @@
         onAddComment(cardId, null, updated);
         setShowReactions(null);
       };
-
-      const isEditing = (idx, replyIdx) =>
-        editingComment && editingComment.idx === idx && editingComment.replyIdx === replyIdx;
 
       const ReactionBadges = ({ reactions, idx, replyIdx }) => {
         if (!reactions || Object.keys(reactions).length === 0) return null;
@@ -1986,37 +1964,21 @@
               <div key={i}>
                 {/* Comment */}
                 <div>
-                  <span className="text-[13px] font-bold text-gray-800">{c.author}</span>
-                  <div className="relative inline-block">
-                    {isEditing(i) ? (
-                      <div className="mt-0.5 flex gap-2 items-center">
-                        <input type="text" value={editText} onChange={e => setEditText(e.target.value.slice(0, 280))}
-                          onKeyDown={e => { if (e.key === 'Enter') handleEdit(i); if (e.key === 'Escape') setEditingComment(null); }}
-                          autoFocus className="flex-1 text-[13px] px-3 py-1.5 rounded-2xl bg-gray-100 border-0 focus:outline-none focus:ring-2 focus:ring-teal/30" />
-                        <button onClick={() => handleEdit(i)} disabled={!editText.trim()}
-                          className="text-[11px] text-teal font-semibold hover:underline disabled:opacity-40">Save</button>
-                        <button onClick={() => setEditingComment(null)}
-                          className="text-[11px] text-gray-400 hover:underline">Cancel</button>
-                      </div>
-                    ) : (<>
-                      <div className="bg-gray-100 rounded-2xl px-3 py-1.5 mt-0.5 inline-block max-w-full">
-                        <p className="text-[13px] text-gray-800 break-words overflow-wrap-anywhere leading-snug"><Linkify>{c.text}</Linkify></p>
-                      </div>
-                      <ReactionBadges reactions={c.reactions} idx={i} />
-                    </>)}
+                  <div className="bg-gray-100 rounded-2xl px-3 py-1.5 inline-block max-w-full">
+                    <span className="text-[13px] font-bold text-gray-800">{c.author}</span>
+                    <p className="text-[13px] text-gray-800 break-words overflow-wrap-anywhere leading-snug"><Linkify>{c.text}</Linkify></p>
                   </div>
-                  {/* Action row: time · Like · Reply · Edit · Delete */}
+                  <ReactionBadges reactions={c.reactions} idx={i} />
+                  {/* Action row: time · Like · Reply · Delete */}
                   <div className="flex items-center gap-2.5 ml-3 mt-0.5 mb-1">
-                    <span className="text-[11px] text-gray-400">{formatRelativeTime(c.timestamp)}{c.editedAt ? ' · edited' : ''}</span>
+                    <span className="text-[11px] text-gray-400">{formatRelativeTime(c.timestamp)}</span>
                     <LikeButton idx={i} reactions={c.reactions} />
                     <button onClick={() => { setReplyTo(replyTo === i ? null : i); setReplyText(''); }}
                       className="text-[11px] font-semibold text-gray-500 hover:text-teal hover:underline transition-colors">Reply</button>
-                    {c.author === currentUser && !isEditing(i) && (<>
-                      <button onClick={() => { setEditingComment({ idx: i }); setEditText(c.text); }}
-                        className="text-[11px] text-gray-400 hover:text-teal transition-colors" title="Edit">✏️</button>
+                    {c.author === currentUser && (
                       <button onClick={() => handleDelete(i)}
                         className="text-[11px] text-gray-400 hover:text-red-500 transition-colors" title="Delete">🗑️</button>
-                    </>)}
+                    )}
                   </div>
                 </div>
                 {/* Replies */}
@@ -2024,35 +1986,19 @@
                   <div className="ml-6 pl-3 border-l-2 border-gray-200 space-y-0.5">
                     {c.replies.map((r, ri) => (
                       <div key={ri}>
-                        <span className="text-[12px] font-bold text-gray-800">{r.author}</span>
-                        <div className="relative inline-block">
-                          {isEditing(i, ri) ? (
-                            <div className="mt-0.5 flex gap-2 items-center">
-                              <input type="text" value={editText} onChange={e => setEditText(e.target.value.slice(0, 280))}
-                                onKeyDown={e => { if (e.key === 'Enter') handleEdit(i, ri); if (e.key === 'Escape') setEditingComment(null); }}
-                                autoFocus className="flex-1 text-[12px] px-3 py-1 rounded-2xl bg-gray-100 border-0 focus:outline-none focus:ring-2 focus:ring-teal/30" />
-                              <button onClick={() => handleEdit(i, ri)} disabled={!editText.trim()}
-                                className="text-[10px] text-teal font-semibold hover:underline disabled:opacity-40">Save</button>
-                              <button onClick={() => setEditingComment(null)}
-                                className="text-[10px] text-gray-400 hover:underline">Cancel</button>
-                            </div>
-                          ) : (<>
-                            <div className="bg-gray-100 rounded-2xl px-3 py-1 mt-0.5 inline-block max-w-full">
-                              <p className="text-[12px] text-gray-800 break-words overflow-wrap-anywhere leading-snug"><Linkify>{r.text}</Linkify></p>
-                            </div>
-                            <ReactionBadges reactions={r.reactions} idx={i} replyIdx={ri} />
-                          </>)}
+                        <div className="bg-gray-100 rounded-2xl px-3 py-1 inline-block max-w-full">
+                          <span className="text-[12px] font-bold text-gray-800">{r.author}</span>
+                          <p className="text-[12px] text-gray-800 break-words overflow-wrap-anywhere leading-snug"><Linkify>{r.text}</Linkify></p>
                         </div>
+                        <ReactionBadges reactions={r.reactions} idx={i} replyIdx={ri} />
                         {/* Reply action row */}
                         <div className="flex items-center gap-2.5 ml-3 mt-0.5 mb-1">
-                          <span className="text-[10px] text-gray-400">{formatRelativeTime(r.timestamp)}{r.editedAt ? ' · edited' : ''}</span>
+                          <span className="text-[10px] text-gray-400">{formatRelativeTime(r.timestamp)}</span>
                           <LikeButton idx={i} replyIdx={ri} reactions={r.reactions} />
-                          {r.author === currentUser && !isEditing(i, ri) && (<>
-                            <button onClick={() => { setEditingComment({ idx: i, replyIdx: ri }); setEditText(r.text); }}
-                              className="text-[10px] text-gray-400 hover:text-teal transition-colors" title="Edit">✏️</button>
+                          {r.author === currentUser && (
                             <button onClick={() => handleDelete(i, ri)}
                               className="text-[10px] text-gray-400 hover:text-red-500 transition-colors" title="Delete">🗑️</button>
-                          </>)}
+                          )}
                         </div>
                       </div>
                     ))}
