@@ -40,6 +40,10 @@
       from { opacity: 0; transform: translateY(16px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    @keyframes reactionPopIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(6px) scale(0.9); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+    }
     @keyframes scaleClick {
       0% { transform: scale(1); }
       50% { transform: scale(0.92); }
@@ -1942,11 +1946,11 @@
         const userReaction = reactions ? Object.entries(reactions).find(([e, users]) => users.includes(currentUser)) : null;
         const hasLiked = !!userReaction;
         const likeEmoji = userReaction ? userReaction[0] : null;
-        let hoverTimer = null;
+        const hoverRef = useRef(null);
         return (
           <div className="relative inline-block"
-            onMouseEnter={() => { hoverTimer = setTimeout(() => setShowReactions(rKey), 400); }}
-            onMouseLeave={() => { clearTimeout(hoverTimer); setShowReactions(prev => prev === rKey ? null : prev); }}>
+            onMouseEnter={() => { hoverRef.current = setTimeout(() => setShowReactions(rKey), 400); }}
+            onMouseLeave={() => { clearTimeout(hoverRef.current); setTimeout(() => setShowReactions(prev => prev === rKey ? null : prev), 150); }}>
             <button onClick={() => handleReaction(idx, replyIdx, '👍')}
               className={`text-[11px] font-semibold transition-colors ${
                 hasLiked ? 'text-teal' : 'text-gray-500 hover:text-teal hover:underline'
@@ -1954,14 +1958,16 @@
               {hasLiked && likeEmoji ? likeEmoji + ' ' : ''}Like
             </button>
             {showReactions === rKey && (
-              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 flex gap-1 bg-white rounded-full shadow-lg border border-gray-200 px-2.5 py-1.5 z-10"
-                style={{ animation: 'fadeInUp 0.15s ease-out' }}
-                onMouseEnter={() => clearTimeout(hoverTimer)}
+              <div className="absolute left-1/2 bottom-full pb-2 z-10"
+                onMouseEnter={() => { clearTimeout(hoverRef.current); setShowReactions(rKey); }}
                 onMouseLeave={() => setShowReactions(null)}>
-                {COMMENT_REACTIONS.map(e => (
-                  <button key={e} onClick={() => handleReaction(idx, replyIdx, e)}
-                    className="hover:scale-[1.35] hover:-translate-y-1 transition-all duration-150 text-[18px] leading-none">{e}</button>
-                ))}
+                <div className="flex gap-1 bg-white rounded-full shadow-lg border border-gray-200 px-2.5 py-1.5"
+                  style={{ animation: 'reactionPopIn 0.2s ease-out both' }}>
+                  {COMMENT_REACTIONS.map(e => (
+                    <button key={e} onClick={() => handleReaction(idx, replyIdx, e)}
+                      className="hover:scale-[1.4] hover:-translate-y-1 transition-all duration-150 text-[18px] leading-none">{e}</button>
+                  ))}
+                </div>
               </div>
             )}
           </div>
