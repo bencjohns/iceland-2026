@@ -1936,16 +1936,34 @@
         );
       };
 
-      const ReactionPicker = ({ idx, replyIdx }) => {
+      // Like button with hover-to-expand reaction picker (FB-style)
+      const LikeButton = ({ idx, replyIdx, reactions }) => {
         const rKey = replyIdx !== undefined ? `reply-${idx}-${replyIdx}` : `comment-${idx}`;
-        if (showReactions !== rKey) return null;
+        const userReaction = reactions ? Object.entries(reactions).find(([e, users]) => users.includes(currentUser)) : null;
+        const hasLiked = !!userReaction;
+        const likeEmoji = userReaction ? userReaction[0] : null;
+        let hoverTimer = null;
         return (
-          <div className="absolute -top-8 left-0 flex gap-0.5 bg-white rounded-full shadow-lg border border-gray-200 px-2 py-1 z-10"
-            style={{ animation: 'fadeInUp 0.1s ease-out' }}>
-            {COMMENT_REACTIONS.map(e => (
-              <button key={e} onClick={() => handleReaction(idx, replyIdx, e)}
-                className="hover:scale-125 transition-transform text-[15px] px-0.5">{e}</button>
-            ))}
+          <div className="relative inline-block"
+            onMouseEnter={() => { hoverTimer = setTimeout(() => setShowReactions(rKey), 400); }}
+            onMouseLeave={() => { clearTimeout(hoverTimer); setShowReactions(prev => prev === rKey ? null : prev); }}>
+            <button onClick={() => handleReaction(idx, replyIdx, '👍')}
+              className={`text-[11px] font-semibold transition-colors ${
+                hasLiked ? 'text-teal' : 'text-gray-500 hover:text-teal hover:underline'
+              }`}>
+              {hasLiked && likeEmoji ? likeEmoji + ' ' : ''}Like
+            </button>
+            {showReactions === rKey && (
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 flex gap-1 bg-white rounded-full shadow-lg border border-gray-200 px-2.5 py-1.5 z-10"
+                style={{ animation: 'fadeInUp 0.15s ease-out' }}
+                onMouseEnter={() => clearTimeout(hoverTimer)}
+                onMouseLeave={() => setShowReactions(null)}>
+                {COMMENT_REACTIONS.map(e => (
+                  <button key={e} onClick={() => handleReaction(idx, replyIdx, e)}
+                    className="hover:scale-[1.35] hover:-translate-y-1 transition-all duration-150 text-[18px] leading-none">{e}</button>
+                ))}
+              </div>
+            )}
           </div>
         );
       };
@@ -1957,7 +1975,7 @@
           </div>
           <div className="space-y-1">
             {cardComments.map((c, i) => (
-              <div key={i} className="group/comment">
+              <div key={i}>
                 {/* Comment */}
                 <div>
                   <span className="text-[13px] font-bold text-gray-800">{c.author}</span>
@@ -1973,33 +1991,24 @@
                           className="text-[11px] text-gray-400 hover:underline">Cancel</button>
                       </div>
                     ) : (
-                      <div className={`bg-gray-100 rounded-2xl px-3 py-1.5 mt-0.5 inline-block max-w-full relative group/bubble ${c.reactions && Object.keys(c.reactions).length > 0 ? 'mb-3' : ''}`}>
+                      <div className={`bg-gray-100 rounded-2xl px-3 py-1.5 mt-0.5 inline-block max-w-full relative ${c.reactions && Object.keys(c.reactions).length > 0 ? 'mb-3' : ''}`}>
                         <p className="text-[13px] text-gray-800 break-words overflow-wrap-anywhere leading-snug"><Linkify>{c.text}</Linkify></p>
                         <ReactionBadges reactions={c.reactions} idx={i} />
-                        {/* Hover action row */}
-                        <div className="absolute -right-1 top-1/2 -translate-y-1/2 translate-x-full hidden group-hover/bubble:flex items-center gap-0.5 pl-1">
-                          <div className="relative">
-                            <button onClick={() => setShowReactions(showReactions === `comment-${i}` ? null : `comment-${i}`)}
-                              className="w-6 h-6 rounded-full hover:bg-gray-200 text-[12px] flex items-center justify-center text-gray-400 transition-colors" title="React">😊</button>
-                            <ReactionPicker idx={i} />
-                          </div>
-                          {c.author === currentUser && (
-                            <>
-                              <button onClick={() => { setEditingComment({ idx: i }); setEditText(c.text); }}
-                                className="w-6 h-6 rounded-full hover:bg-gray-200 text-[11px] flex items-center justify-center text-gray-400 transition-colors" title="Edit">✏️</button>
-                              <button onClick={() => handleDelete(i)}
-                                className="w-6 h-6 rounded-full hover:bg-gray-200 text-[11px] flex items-center justify-center text-gray-400 transition-colors" title="Delete">🗑️</button>
-                            </>
-                          )}
-                        </div>
                       </div>
                     )}
                   </div>
-                  {/* Action row: time · Reply */}
-                  <div className="flex items-center gap-2 ml-3 mt-0.5 mb-1">
+                  {/* Action row: time · Like · Reply · Edit · Delete */}
+                  <div className="flex items-center gap-2.5 ml-3 mt-0.5 mb-1">
                     <span className="text-[11px] text-gray-400">{formatRelativeTime(c.timestamp)}{c.editedAt ? ' · edited' : ''}</span>
+                    <LikeButton idx={i} reactions={c.reactions} />
                     <button onClick={() => { setReplyTo(replyTo === i ? null : i); setReplyText(''); }}
                       className="text-[11px] font-semibold text-gray-500 hover:text-teal hover:underline transition-colors">Reply</button>
+                    {c.author === currentUser && !isEditing(i) && (<>
+                      <button onClick={() => { setEditingComment({ idx: i }); setEditText(c.text); }}
+                        className="text-[11px] text-gray-400 hover:text-teal transition-colors" title="Edit">✏️</button>
+                      <button onClick={() => handleDelete(i)}
+                        className="text-[11px] text-gray-400 hover:text-red-500 transition-colors" title="Delete">🗑️</button>
+                    </>)}
                   </div>
                 </div>
                 {/* Replies */}
@@ -2020,29 +2029,22 @@
                                 className="text-[10px] text-gray-400 hover:underline">Cancel</button>
                             </div>
                           ) : (
-                            <div className={`bg-gray-100 rounded-2xl px-3 py-1 mt-0.5 inline-block max-w-full relative group/reply ${r.reactions && Object.keys(r.reactions).length > 0 ? 'mb-3' : ''}`}>
+                            <div className={`bg-gray-100 rounded-2xl px-3 py-1 mt-0.5 inline-block max-w-full relative ${r.reactions && Object.keys(r.reactions).length > 0 ? 'mb-3' : ''}`}>
                               <p className="text-[12px] text-gray-800 break-words overflow-wrap-anywhere leading-snug"><Linkify>{r.text}</Linkify></p>
                               <ReactionBadges reactions={r.reactions} idx={i} replyIdx={ri} />
-                              <div className="absolute -right-1 top-1/2 -translate-y-1/2 translate-x-full hidden group-hover/reply:flex items-center gap-0.5 pl-1">
-                                <div className="relative">
-                                  <button onClick={() => setShowReactions(showReactions === `reply-${i}-${ri}` ? null : `reply-${i}-${ri}`)}
-                                    className="w-5 h-5 rounded-full hover:bg-gray-200 text-[11px] flex items-center justify-center text-gray-400 transition-colors" title="React">😊</button>
-                                  <ReactionPicker idx={i} replyIdx={ri} />
-                                </div>
-                                {r.author === currentUser && (
-                                  <>
-                                    <button onClick={() => { setEditingComment({ idx: i, replyIdx: ri }); setEditText(r.text); }}
-                                      className="w-5 h-5 rounded-full hover:bg-gray-200 text-[10px] flex items-center justify-center text-gray-400 transition-colors" title="Edit">✏️</button>
-                                    <button onClick={() => handleDelete(i, ri)}
-                                      className="w-5 h-5 rounded-full hover:bg-gray-200 text-[10px] flex items-center justify-center text-gray-400 transition-colors" title="Delete">🗑️</button>
-                                  </>
-                                )}
-                              </div>
                             </div>
                           )}
                         </div>
-                        <div className="flex items-center gap-2 ml-3 mt-0.5 mb-1">
+                        {/* Reply action row */}
+                        <div className="flex items-center gap-2.5 ml-3 mt-0.5 mb-1">
                           <span className="text-[10px] text-gray-400">{formatRelativeTime(r.timestamp)}{r.editedAt ? ' · edited' : ''}</span>
+                          <LikeButton idx={i} replyIdx={ri} reactions={r.reactions} />
+                          {r.author === currentUser && !isEditing(i, ri) && (<>
+                            <button onClick={() => { setEditingComment({ idx: i, replyIdx: ri }); setEditText(r.text); }}
+                              className="text-[10px] text-gray-400 hover:text-teal transition-colors" title="Edit">✏️</button>
+                            <button onClick={() => handleDelete(i, ri)}
+                              className="text-[10px] text-gray-400 hover:text-red-500 transition-colors" title="Delete">🗑️</button>
+                          </>)}
                         </div>
                       </div>
                     ))}
