@@ -47,7 +47,8 @@
     }
     .card-enter { animation: fadeInUp 0.4s ease-out both; }
     .vote-click { animation: scaleClick 0.2s ease-out; }
-    .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; align-items: start; }
+    .overflow-wrap-anywhere { overflow-wrap: anywhere; }
     @media (max-width: 1100px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 700px) { .card-grid { grid-template-columns: 1fr; } }
     ::-webkit-scrollbar { width: 8px; }
@@ -1814,11 +1815,31 @@
       );
     }
 
+    // Linkify: turn URLs in text into clickable links
+    function Linkify({ children, className }) {
+      if (typeof children !== 'string') return <span className={className}>{children}</span>;
+      const urlRe = /(https?:\/\/[^\s<]+)/g;
+      const parts = [];
+      let last = 0, m;
+      while ((m = urlRe.exec(children)) !== null) {
+        if (m.index > last) parts.push(children.slice(last, m.index));
+        parts.push(<a key={m.index} href={m[0]} target="_blank" rel="noopener noreferrer"
+          className="text-teal hover:underline break-all">{m[0]}</a>);
+        last = urlRe.lastIndex;
+      }
+      if (last < children.length) parts.push(children.slice(last));
+      return <span className={className}>{parts}</span>;
+    }
+
+    const COMMENT_REACTIONS = ['👍', '❤️', '😂', '🔥', '👀'];
+
     function CommentSection({ cardId, currentUser, comments, onAddComment }) {
-      const [expanded, setExpanded] = useState(false);
       const [text, setText] = useState('');
-      const [replyTo, setReplyTo] = useState(null); // index of comment being replied to
+      const [replyTo, setReplyTo] = useState(null);
       const [replyText, setReplyText] = useState('');
+      const [editingComment, setEditingComment] = useState(null); // { idx, replyIdx? }
+      const [editText, setEditText] = useState('');
+      const [showReactions, setShowReactions] = useState(null); // "comment-{i}" or "reply-{i}-{ri}"
       const cardComments = comments[cardId] || [];
 
       const totalCount = cardComments.reduce((sum, c) => sum + 1 + (c.replies ? c.replies.length : 0), 0);
@@ -1840,74 +1861,181 @@
         setReplyTo(null);
       };
 
+      const handleEdit = (idx, replyIdx) => {
+        const updated = [...cardComments];
+        if (replyIdx !== undefined) {
+          const comment = { ...updated[idx] };
+          const replies = [...(comment.replies || [])];
+          replies[replyIdx] = { ...replies[replyIdx], text: editText.trim(), editedAt: new Date().toISOString() };
+          comment.replies = replies;
+          updated[idx] = comment;
+        } else {
+          updated[idx] = { ...updated[idx], text: editText.trim(), editedAt: new Date().toISOString() };
+        }
+        onAddComment(cardId, null, updated);
+        setEditingComment(null);
+        setEditText('');
+      };
+
+      const handleReaction = (idx, replyIdx, emoji) => {
+        const updated = [...cardComments];
+        let target;
+        if (replyIdx !== undefined) {
+          const comment = { ...updated[idx] };
+          const replies = [...(comment.replies || [])];
+          replies[replyIdx] = { ...replies[replyIdx] };
+          target = replies[replyIdx];
+          comment.replies = replies;
+          updated[idx] = comment;
+        } else {
+          updated[idx] = { ...updated[idx] };
+          target = updated[idx];
+        }
+        const reactions = { ...(target.reactions || {}) };
+        const users = reactions[emoji] ? [...reactions[emoji]] : [];
+        const userIdx = users.indexOf(currentUser);
+        if (userIdx >= 0) users.splice(userIdx, 1); else users.push(currentUser);
+        if (users.length > 0) reactions[emoji] = users; else delete reactions[emoji];
+        target.reactions = Object.keys(reactions).length > 0 ? reactions : null;
+        onAddComment(cardId, null, updated);
+        setShowReactions(null);
+      };
+
+      const isEditing = (idx, replyIdx) =>
+        editingComment && editingComment.idx === idx && editingComment.replyIdx === replyIdx;
+
+      const ReactionBar = ({ reactions, idx, replyIdx }) => {
+        const rKey = replyIdx !== undefined ? `reply-${idx}-${replyIdx}` : `comment-${idx}`;
+        return (
+          <div className="flex items-center gap-1 mt-1 flex-wrap">
+            {reactions && Object.entries(reactions).map(([emoji, users]) => (
+              <button key={emoji} onClick={() => handleReaction(idx, replyIdx, emoji)}
+                title={users.join(', ')}
+                className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[11px] transition-all ${
+                  users.includes(currentUser) ? 'bg-teal-100 border border-teal-300' : 'bg-gray-100 border border-gray-200 hover:bg-gray-200'
+                }`}>
+                <span>{emoji}</span><span className="text-gray-600 font-medium">{users.length}</span>
+              </button>
+            ))}
+            <div className="relative">
+              <button onClick={() => setShowReactions(showReactions === rKey ? null : rKey)}
+                className="w-5 h-5 rounded-full bg-gray-100 hover:bg-gray-200 text-[10px] flex items-center justify-center text-gray-400 transition-colors"
+                title="Add reaction">+</button>
+              {showReactions === rKey && (
+                <div className="absolute bottom-full left-0 mb-1 flex gap-0.5 bg-white rounded-lg shadow-lg border border-gray-200 px-1.5 py-1 z-10">
+                  {COMMENT_REACTIONS.map(e => (
+                    <button key={e} onClick={() => handleReaction(idx, replyIdx, e)}
+                      className="hover:scale-125 transition-transform text-sm px-0.5">{e}</button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      };
+
       return (
         <div className="pt-3 border-t border-gray-100" data-tour="comments">
-          <button onClick={() => setExpanded(!expanded)}
-            className="text-sm text-gray-500 hover:text-teal transition-colors flex items-center gap-1">
+          <div className="text-sm text-gray-500 flex items-center gap-1 mb-2">
             💬 {totalCount} comment{totalCount !== 1 ? 's' : ''}
-            <span className="text-xs">{expanded ? '▲' : '▼'}</span>
-          </button>
-          {expanded && (
-            <div className="mt-2 space-y-2">
-              {cardComments.map((c, i) => (
-                <div key={i}>
-                  <div className="bg-gray-50 rounded-lg px-3 py-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-semibold text-teal">{c.author}</span>
-                        <span className="text-[10px] text-gray-400">{formatRelativeTime(c.timestamp)}</span>
-                      </div>
+          </div>
+          <div className="space-y-2">
+            {cardComments.map((c, i) => (
+              <div key={i}>
+                <div className="bg-gray-50 rounded-lg px-3 py-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold text-teal">{c.author}</span>
+                      <span className="text-[10px] text-gray-400">{formatRelativeTime(c.timestamp)}{c.editedAt ? ' (edited)' : ''}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {c.author === currentUser && !isEditing(i) && (
+                        <button onClick={() => { setEditingComment({ idx: i }); setEditText(c.text); }}
+                          className="text-[10px] text-gray-400 hover:text-teal transition-colors">✏️</button>
+                      )}
                       <button onClick={() => { setReplyTo(replyTo === i ? null : i); setReplyText(''); }}
                         className="text-[10px] text-gray-400 hover:text-teal transition-colors">
                         ↩ Reply
                       </button>
                     </div>
-                    <p className="text-sm text-gray-700 mt-0.5">{c.text}</p>
                   </div>
-                  {/* Replies */}
-                  {c.replies && c.replies.length > 0 && (
-                    <div className="ml-4 mt-1 space-y-1 border-l-2 border-teal-100 pl-3">
-                      {c.replies.map((r, ri) => (
-                        <div key={ri} className="bg-teal-50/50 rounded-lg px-3 py-1.5">
+                  {isEditing(i) ? (
+                    <div className="mt-1 flex gap-2">
+                      <input type="text" value={editText} onChange={e => setEditText(e.target.value.slice(0, 280))}
+                        onKeyDown={e => { if (e.key === 'Enter') handleEdit(i); if (e.key === 'Escape') setEditingComment(null); }}
+                        autoFocus className="flex-1 text-sm px-2 py-1 rounded border border-gray-200 focus:outline-none focus:border-teal" />
+                      <button onClick={() => handleEdit(i)} disabled={!editText.trim()}
+                        className="text-[11px] text-teal font-medium hover:underline disabled:opacity-40">Save</button>
+                      <button onClick={() => setEditingComment(null)}
+                        className="text-[11px] text-gray-400 hover:underline">Cancel</button>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-700 mt-0.5 break-words overflow-wrap-anywhere"><Linkify>{c.text}</Linkify></p>
+                  )}
+                  <ReactionBar reactions={c.reactions} idx={i} />
+                </div>
+                {/* Replies */}
+                {c.replies && c.replies.length > 0 && (
+                  <div className="ml-4 mt-1 space-y-1 border-l-2 border-teal-100 pl-3">
+                    {c.replies.map((r, ri) => (
+                      <div key={ri} className="bg-teal-50/50 rounded-lg px-3 py-1.5">
+                        <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <span className="text-[11px] font-semibold text-teal">{r.author}</span>
-                            <span className="text-[10px] text-gray-400">{formatRelativeTime(r.timestamp)}</span>
+                            <span className="text-[10px] text-gray-400">{formatRelativeTime(r.timestamp)}{r.editedAt ? ' (edited)' : ''}</span>
                           </div>
-                          <p className="text-[13px] text-gray-700 mt-0.5">{r.text}</p>
+                          {r.author === currentUser && !isEditing(i, ri) && (
+                            <button onClick={() => { setEditingComment({ idx: i, replyIdx: ri }); setEditText(r.text); }}
+                              className="text-[10px] text-gray-400 hover:text-teal transition-colors">✏️</button>
+                          )}
                         </div>
-                      ))}
-                    </div>
-                  )}
-                  {/* Reply input */}
-                  {replyTo === i && (
-                    <div className="ml-4 mt-1 pl-3 border-l-2 border-teal-100">
-                      <div className="flex gap-2">
-                        <input type="text" value={replyText} onChange={e => setReplyText(e.target.value.slice(0, 280))}
-                          onKeyDown={e => e.key === 'Enter' && handleReply(i)}
-                          placeholder={`Reply to ${c.author}...`} autoFocus
-                          className="flex-1 text-xs px-3 py-1.5 rounded-lg border border-gray-200 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal/20" />
-                        <button onClick={() => handleReply(i)} disabled={!replyText.trim()}
-                          className="px-3 py-1.5 text-xs font-medium rounded-lg bg-teal text-white hover:bg-teal-dark disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
-                          Reply
-                        </button>
+                        {isEditing(i, ri) ? (
+                          <div className="mt-1 flex gap-2">
+                            <input type="text" value={editText} onChange={e => setEditText(e.target.value.slice(0, 280))}
+                              onKeyDown={e => { if (e.key === 'Enter') handleEdit(i, ri); if (e.key === 'Escape') setEditingComment(null); }}
+                              autoFocus className="flex-1 text-xs px-2 py-1 rounded border border-gray-200 focus:outline-none focus:border-teal" />
+                            <button onClick={() => handleEdit(i, ri)} disabled={!editText.trim()}
+                              className="text-[10px] text-teal font-medium hover:underline disabled:opacity-40">Save</button>
+                            <button onClick={() => setEditingComment(null)}
+                              className="text-[10px] text-gray-400 hover:underline">Cancel</button>
+                          </div>
+                        ) : (
+                          <p className="text-[13px] text-gray-700 mt-0.5 break-words overflow-wrap-anywhere"><Linkify>{r.text}</Linkify></p>
+                        )}
+                        <ReactionBar reactions={r.reactions} idx={i} replyIdx={ri} />
                       </div>
+                    ))}
+                  </div>
+                )}
+                {/* Reply input */}
+                {replyTo === i && (
+                  <div className="ml-4 mt-1 pl-3 border-l-2 border-teal-100">
+                    <div className="flex gap-2">
+                      <input type="text" value={replyText} onChange={e => setReplyText(e.target.value.slice(0, 280))}
+                        onKeyDown={e => e.key === 'Enter' && handleReply(i)}
+                        placeholder={`Reply to ${c.author}...`} autoFocus
+                        className="flex-1 text-xs px-3 py-1.5 rounded-lg border border-gray-200 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal/20" />
+                      <button onClick={() => handleReply(i)} disabled={!replyText.trim()}
+                        className="px-3 py-1.5 text-xs font-medium rounded-lg bg-teal text-white hover:bg-teal-dark disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
+                        Reply
+                      </button>
                     </div>
-                  )}
-                </div>
-              ))}
-              <div className="flex gap-2 mt-2">
-                <input type="text" value={text} onChange={e => setText(e.target.value.slice(0, 280))}
-                  onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-                  placeholder="Add a comment..."
-                  className="flex-1 text-sm px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal/20" />
-                <button onClick={handleSubmit} disabled={!text.trim()}
-                  className="px-4 py-2 text-sm font-medium rounded-lg bg-teal text-white hover:bg-teal-dark disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
-                  Post
-                </button>
+                  </div>
+                )}
               </div>
-              <div className="text-[10px] text-gray-400 text-right">{text.length}/280</div>
+            ))}
+            <div className="flex gap-2 mt-1">
+              <input type="text" value={text} onChange={e => setText(e.target.value.slice(0, 280))}
+                onKeyDown={e => e.key === 'Enter' && handleSubmit()}
+                placeholder="Add a comment..."
+                className="flex-1 text-sm px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal/20" />
+              <button onClick={handleSubmit} disabled={!text.trim()}
+                className="px-4 py-2 text-sm font-medium rounded-lg bg-teal text-white hover:bg-teal-dark disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
+                Post
+              </button>
             </div>
-          )}
+            <div className="text-[10px] text-gray-400 text-right">{text.length}/280</div>
+          </div>
         </div>
       );
     }
