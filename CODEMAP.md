@@ -80,11 +80,11 @@ STATUS.md               — Project status
 | `HOW_IT_WORKS_SLIDES` | 983 | 6-slide tutorial data: Welcome, Browse & Filter, Vote & Comment, Build Your Trip, Explore the Map, Compare & Decide. Each has `icon`, `bg`, `title`, `body`, `target` (CSS selector for spotlight or null for centered) |
 | `HowItWorksCarousel` | 1029 | Spotlight tour carousel. SVG overlay with animated cutout hole around `data-tour` target elements. Card positions near highlighted element (above/below/side) with smooth CSS transitions. Arrow keys, Escape, dot indicators, Skip link. Fade+scale enter/exit animation via `phase` state |
 | `TutorialModal` | 1257 | Thin wrapper — renders `HowItWorksCarousel` starting at slide 0 |
-| `Header` | 1261 | Sticky top bar: title, (i) info button (opens tour), card/vote stats, home base button, user switcher dropdown |
+| `Header` | 1261 | Sticky top bar: title (click returns to list view + all days), (i) info button (opens tour), card/vote stats, home base button, user switcher dropdown |
 | `HeroSection` | 1305 | Trip overview: dates, travelers with vote counts, route map |
 | `FilterBar` | 1354 | Tab filters (All Days, Must-Decide, Restaurants, Family Suggestions, Most Liked, Itineraries) + expandable advanced filters (Type, Cost, Booking, Hype) + List/Map toggle. Hype filter = Reddit rating minimum (5, 4+, 3+, 2+). Elements tagged with `data-tour` attributes for spotlight tour |
 | `DayNavigator` | 1459 | Fixed right-side dots (Day 1–8) with "DAY" label header, click to scroll, highlights active day. Hidden on mobile (<900px) |
-| `MapView` | 1479 | Full-screen Leaflet map with color-coded pins, compact popups, day filter legend, expanded card via `AnimatedModal`. Receives `onAddToTrip` for + buttons |
+| `MapView` | 1479 | Full-screen Leaflet map with color-coded pins, compact popups (including Reddit rating), day filter legend with route indicators. Route visualization: fetches OSRM driving directions per day, draws road-following polylines, caches responses. Planned stops show numbered markers at 34px; unplanned stops fade to gray 22px/0.45 opacity. "Show Route"/"Hide Route" toggle (bottom-left). Receives `activeDraft`, `showRoute`, `onToggleRoute`, `onAddToTrip` |
 | `DayHeaderContent` | 1606 | Shared markup for day headers (title at text-lg, distances, weather, flight). Used by both DayHeader and FloatingDayBar |
 | `DayHeader` | 1636 | In-page day section header with scroll anchor |
 | `FloatingDayBar` | 1645 | Fixed-position compact day bar via portal to `document.body`, z-index 45, opacity-based fade transition. Title font matches card titles (text-lg) |
@@ -113,6 +113,7 @@ STATUS.md               — Project status
 | `itineraryComments` | Firebase `/itinerary-comments` | Yes (real-time) |
 | `tripDrafts` | Firebase `/trip-drafts` | Yes (real-time) |
 | `sidePanelOpen` | React state only | No |
+| `showRoute` | React state only (auto-enabled when side panel opens) | No |
 | `panelDayCount` | React state (derived from active draft) | No |
 | `authenticated` | localStorage `icp_auth` | No (per-browser) |
 | `hasUpdate` | localStorage `icp_version` vs `APP_VERSION` | No (per-browser) |
