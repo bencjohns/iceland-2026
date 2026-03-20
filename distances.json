@@ -4510,5 +4510,389 @@
   "day8-ox|day8-skal": {
     "km": 0,
     "minutes": 1
+  },
+  "day1-blue-lagoon|home-reykjavik": {
+    "km": 49,
+    "minutes": 50
+  },
+  "day1-sky-lagoon|home-reykjavik": {
+    "km": 15,
+    "minutes": 22
+  },
+  "day1-hallgrimskirkja|home-reykjavik": {
+    "km": 0,
+    "minutes": 2
+  },
+  "day1-baejarins-beztu|home-reykjavik": {
+    "km": 1,
+    "minutes": 2
+  },
+  "day1-mat-bar|home-reykjavik": {
+    "km": 1,
+    "minutes": 3
+  },
+  "day1-matur-og-drykkur|home-reykjavik": {
+    "km": 1,
+    "minutes": 4
+  },
+  "day2-thingvellir|home-reykjavik": {
+    "km": 47,
+    "minutes": 48
+  },
+  "day2-silfra|home-reykjavik": {
+    "km": 53,
+    "minutes": 56
+  },
+  "day2-geysir|home-reykjavik": {
+    "km": 115,
+    "minutes": 103
+  },
+  "day2-gullfoss|home-reykjavik": {
+    "km": 123,
+    "minutes": 111
+  },
+  "day2-kerid|home-reykjavik": {
+    "km": 68,
+    "minutes": 63
+  },
+  "day2-grillmarkadurinn|home-reykjavik": {
+    "km": 1,
+    "minutes": 2
+  },
+  "day2-fiskfelagid|home-reykjavik": {
+    "km": 1,
+    "minutes": 3
+  },
+  "day3-ytri-tunga|home-reykjavik": {
+    "km": 185,
+    "minutes": 178
+  },
+  "day3-budakirkja|home-reykjavik": {
+    "km": 178,
+    "minutes": 160
+  },
+  "day3-arnarstapi|home-reykjavik": {
+    "km": 193,
+    "minutes": 172
+  },
+  "day3-djupalonssandur|home-reykjavik": {
+    "km": 207,
+    "minutes": 185
+  },
+  "day3-londrangar|home-reykjavik": {
+    "km": 200,
+    "minutes": 177
+  },
+  "day3-kirkjufell|home-reykjavik": {
+    "km": 181,
+    "minutes": 167
+  },
+  "day4-seljalandsfoss|home-reykjavik": {
+    "km": 128,
+    "minutes": 118
+  },
+  "day4-gljufrabui|home-reykjavik": {
+    "km": 129,
+    "minutes": 120
+  },
+  "day4-skogafoss|home-reykjavik": {
+    "km": 155,
+    "minutes": 142
+  },
+  "day4-plane-wreck|home-reykjavik": {
+    "km": 164,
+    "minutes": 147
+  },
+  "day4-dyrholaey|home-reykjavik": {
+    "km": 180,
+    "minutes": 167
+  },
+  "day4-reynisfjara|home-reykjavik": {
+    "km": 187,
+    "minutes": 169
+  },
+  "day4-smidjan|home-reykjavik": {
+    "km": 187,
+    "minutes": 167
+  },
+  "day4-black-crust|home-reykjavik": {
+    "km": 187,
+    "minutes": 167
+  },
+  "day5-ferry|home-reykjavik": {
+    "km": 151,
+    "minutes": 160
+  },
+  "day5-eldfell|home-reykjavik": {
+    "km": 154,
+    "minutes": 166
+  },
+  "day5-eldheimar|home-reykjavik": {
+    "km": 151,
+    "minutes": 161
+  },
+  "day5-rib-tour|home-reykjavik": {
+    "km": 150,
+    "minutes": 159
+  },
+  "day5-storhofdi|home-reykjavik": {
+    "km": 156,
+    "minutes": 167
+  },
+  "day5-beluga|home-reykjavik": {
+    "km": 151,
+    "minutes": 160
+  },
+  "day5-slippurinn|home-reykjavik": {
+    "km": 151,
+    "minutes": 161
+  },
+  "day6-fjadrargljufur|home-reykjavik": {
+    "km": 255,
+    "minutes": 225
+  },
+  "day6-glacier-hike|home-reykjavik": {
+    "km": 327,
+    "minutes": 286
+  },
+  "day6-svartifoss|home-reykjavik": {
+    "km": 328,
+    "minutes": 287
+  },
+  "day6-jokulsarlon-zodiac|home-reykjavik": {
+    "km": 377,
+    "minutes": 340
+  },
+  "day6-jokulsarlon-amphibian|home-reykjavik": {
+    "km": 380,
+    "minutes": 338
+  },
+  "day6-diamond-beach|home-reykjavik": {
+    "km": 380,
+    "minutes": 338
+  },
+  "day6-humarhofnin|home-reykjavik": {
+    "km": 459,
+    "minutes": 397
+  },
+  "day7-secret-lagoon|home-reykjavik": {
+    "km": 105,
+    "minutes": 98
+  },
+  "day7-reykjadalur|home-reykjavik": {
+    "km": 49,
+    "minutes": 48
+  },
+  "day8-perlan|home-reykjavik": {
+    "km": 2,
+    "minutes": 5
+  },
+  "day8-whale-watching|home-reykjavik": {
+    "km": 2,
+    "minutes": 5
+  },
+  "day8-dill|home-reykjavik": {
+    "km": 1,
+    "minutes": 2
+  },
+  "day8-ox|home-reykjavik": {
+    "km": 1,
+    "minutes": 3
+  },
+  "day8-skal|home-reykjavik": {
+    "km": 1,
+    "minutes": 2
+  },
+  "day1-blue-lagoon|home-kef-airport": {
+    "km": 20,
+    "minutes": 21
+  },
+  "day1-sky-lagoon|home-kef-airport": {
+    "km": 45,
+    "minutes": 46
+  },
+  "day1-hallgrimskirkja|home-kef-airport": {
+    "km": 46,
+    "minutes": 46
+  },
+  "day1-baejarins-beztu|home-kef-airport": {
+    "km": 48,
+    "minutes": 47
+  },
+  "day1-mat-bar|home-kef-airport": {
+    "km": 48,
+    "minutes": 48
+  },
+  "day1-matur-og-drykkur|home-kef-airport": {
+    "km": 49,
+    "minutes": 49
+  },
+  "day2-thingvellir|home-kef-airport": {
+    "km": 86,
+    "minutes": 81
+  },
+  "day2-silfra|home-kef-airport": {
+    "km": 93,
+    "minutes": 89
+  },
+  "day2-geysir|home-kef-airport": {
+    "km": 151,
+    "minutes": 135
+  },
+  "day2-gullfoss|home-kef-airport": {
+    "km": 159,
+    "minutes": 143
+  },
+  "day2-kerid|home-kef-airport": {
+    "km": 105,
+    "minutes": 95
+  },
+  "day2-grillmarkadurinn|home-kef-airport": {
+    "km": 48,
+    "minutes": 48
+  },
+  "day2-fiskfelagid|home-kef-airport": {
+    "km": 48,
+    "minutes": 47
+  },
+  "day3-ytri-tunga|home-kef-airport": {
+    "km": 225,
+    "minutes": 211
+  },
+  "day3-budakirkja|home-kef-airport": {
+    "km": 218,
+    "minutes": 193
+  },
+  "day3-arnarstapi|home-kef-airport": {
+    "km": 233,
+    "minutes": 205
+  },
+  "day3-djupalonssandur|home-kef-airport": {
+    "km": 247,
+    "minutes": 218
+  },
+  "day3-londrangar|home-kef-airport": {
+    "km": 239,
+    "minutes": 210
+  },
+  "day3-kirkjufell|home-kef-airport": {
+    "km": 220,
+    "minutes": 201
+  },
+  "day4-seljalandsfoss|home-kef-airport": {
+    "km": 164,
+    "minutes": 150
+  },
+  "day4-gljufrabui|home-kef-airport": {
+    "km": 166,
+    "minutes": 152
+  },
+  "day4-skogafoss|home-kef-airport": {
+    "km": 192,
+    "minutes": 174
+  },
+  "day4-plane-wreck|home-kef-airport": {
+    "km": 200,
+    "minutes": 179
+  },
+  "day4-dyrholaey|home-kef-airport": {
+    "km": 217,
+    "minutes": 199
+  },
+  "day4-reynisfjara|home-kef-airport": {
+    "km": 224,
+    "minutes": 200
+  },
+  "day4-smidjan|home-kef-airport": {
+    "km": 223,
+    "minutes": 199
+  },
+  "day4-black-crust|home-kef-airport": {
+    "km": 223,
+    "minutes": 199
+  },
+  "day5-ferry|home-kef-airport": {
+    "km": 187,
+    "minutes": 192
+  },
+  "day5-eldfell|home-kef-airport": {
+    "km": 191,
+    "minutes": 197
+  },
+  "day5-eldheimar|home-kef-airport": {
+    "km": 188,
+    "minutes": 193
+  },
+  "day5-rib-tour|home-kef-airport": {
+    "km": 187,
+    "minutes": 191
+  },
+  "day5-storhofdi|home-kef-airport": {
+    "km": 193,
+    "minutes": 199
+  },
+  "day5-beluga|home-kef-airport": {
+    "km": 188,
+    "minutes": 192
+  },
+  "day5-slippurinn|home-kef-airport": {
+    "km": 187,
+    "minutes": 193
+  },
+  "day6-fjadrargljufur|home-kef-airport": {
+    "km": 292,
+    "minutes": 257
+  },
+  "day6-glacier-hike|home-kef-airport": {
+    "km": 363,
+    "minutes": 318
+  },
+  "day6-svartifoss|home-kef-airport": {
+    "km": 364,
+    "minutes": 319
+  },
+  "day6-jokulsarlon-zodiac|home-kef-airport": {
+    "km": 414,
+    "minutes": 372
+  },
+  "day6-jokulsarlon-amphibian|home-kef-airport": {
+    "km": 417,
+    "minutes": 370
+  },
+  "day6-diamond-beach|home-kef-airport": {
+    "km": 417,
+    "minutes": 370
+  },
+  "day6-humarhofnin|home-kef-airport": {
+    "km": 495,
+    "minutes": 429
+  },
+  "day7-secret-lagoon|home-kef-airport": {
+    "km": 141,
+    "minutes": 129
+  },
+  "day7-reykjadalur|home-kef-airport": {
+    "km": 86,
+    "minutes": 80
+  },
+  "day8-perlan|home-kef-airport": {
+    "km": 45,
+    "minutes": 43
+  },
+  "day8-whale-watching|home-kef-airport": {
+    "km": 49,
+    "minutes": 49
+  },
+  "day8-dill|home-kef-airport": {
+    "km": 48,
+    "minutes": 47
+  },
+  "day8-ox|home-kef-airport": {
+    "km": 48,
+    "minutes": 48
+  },
+  "day8-skal|home-kef-airport": {
+    "km": 48,
+    "minutes": 47
   }
 }
