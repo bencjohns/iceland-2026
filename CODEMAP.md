@@ -5,11 +5,15 @@ Single-file React app (`index.html`, ~4237 lines). No build system — React 18,
 ## File Structure
 
 ```
-index.html          — The entire app (HTML + CSS + JS/JSX)
-images/{card-id}/   — Local images for restaurants (1.jpg, 2.jpg, etc.)
-todo.md             — Feature backlog
-CODEMAP.md          — This file
-STATUS.md           — Project status
+index.html              — The entire app (HTML + CSS + JS/JSX)
+images/{card-id}/       — Local images for restaurants (1.jpg, 2.jpg, etc.)
+distances.json          — Pre-computed OSRM driving distances for all 1,128 card pairs
+scripts/
+  compute-distances.mjs — One-time script: fetches real road distances from OSRM public API
+  inject-distances.mjs  — Embeds distances.json into index.html as DRIVE_DISTANCES constant
+todo.md                 — Feature backlog
+CODEMAP.md              — This file
+STATUS.md               — Project status
 ```
 
 ## index.html Layout (top to bottom)
@@ -33,6 +37,7 @@ STATUS.md           — Project status
 | `DAYS` | 110 | Array of 8 day objects (Day 1–8). Each has: `day`, `date`, `title`, `weather`, `flight?`, `distFromPrev?`, `distFromBase?`, `region` |
 | `CARDS` | 129 | Array of ~48 hardcoded attraction/restaurant cards. Each has: `id`, `day`, `name`, `category`, `tier`, `description`, `costPerPerson`, `costDisplay`, `costTier`, `bookAhead`, `bookingUrl`, `driveFromPrevious`, `redditScore`, `images`, etc. |
 | `CARD_COORDS` | 435 | GPS coordinates (lat/lng) for all 48 cards, used by map view and itinerary drive time calculations |
+| `DRIVE_DISTANCES` | 867 | Pre-computed OSRM road distances/times for all 1,128 card pairs. Keyed as `"cardA|cardB"` (alphabetical). Values: `{km, minutes}` |
 | `DAY_COLORS` | 493 | 8-color palette for day-coded map pins and itinerary badges |
 | `REGION_CENTROIDS` | 495 | 7 GPS centroids (Reykjavik, Golden Circle, Snæfellsnes, South Coast, Westman Islands, Southeast/Glaciers, KEF Airport) for auto-detecting stop regions |
 
@@ -61,7 +66,7 @@ STATUS.md           — Project status
 | `getNetScore(cardId, votes)` | Counts up/down votes, returns `{up, down, net}` |
 | `getVoters(cardId, votes)` | Returns `{upVoters, downVoters}` name arrays |
 | `haversineKm(lat1, lng1, lat2, lng2)` | Straight-line distance in km between two GPS points |
-| `getDriveInfo(cardIdA, cardIdB)` | Estimated road distance (×1.4 factor) and drive time (÷70 km/h) between two cards |
+| `getDriveInfo(cardIdA, cardIdB)` | Returns `{km, minutes, label}`. Uses pre-computed OSRM lookup (`DRIVE_DISTANCES`); falls back to haversine×1.4 estimate for user-submitted cards not in the table (prefixed with `~`) |
 
 **Important:** Vote keys use `__` separator (e.g., `day1-blue-lagoon__Murray`) because Firebase keys can't contain `.` `#` `$` `[` `]`.
 
@@ -77,14 +82,14 @@ STATUS.md           — Project status
 | `TutorialModal` | 1257 | Thin wrapper — renders `HowItWorksCarousel` starting at slide 0 |
 | `Header` | 1261 | Sticky top bar: title, (i) info button (opens tour), card/vote stats, home base button, user switcher dropdown |
 | `HeroSection` | 1305 | Trip overview: dates, travelers with vote counts, route map |
-| `FilterBar` | 1354 | Tab filters (All Days, Must-Decide, Restaurants, Family Suggestions, Most Liked, Itineraries) + expandable advanced filters (Type, Cost, Booking) + List/Map toggle. Elements tagged with `data-tour` attributes for spotlight tour |
+| `FilterBar` | 1354 | Tab filters (All Days, Must-Decide, Restaurants, Family Suggestions, Most Liked, Itineraries) + expandable advanced filters (Type, Cost, Booking, Hype) + List/Map toggle. Hype filter = Reddit rating minimum (5, 4+, 3+, 2+). Elements tagged with `data-tour` attributes for spotlight tour |
 | `DayNavigator` | 1459 | Fixed right-side dots (Day 1–8) with "DAY" label header, click to scroll, highlights active day. Hidden on mobile (<900px) |
 | `MapView` | 1479 | Full-screen Leaflet map with color-coded pins, compact popups, day filter legend, expanded card via `AnimatedModal`. Receives `onAddToTrip` for + buttons |
 | `DayHeaderContent` | 1606 | Shared markup for day headers (title at text-lg, distances, weather, flight). Used by both DayHeader and FloatingDayBar |
 | `DayHeader` | 1636 | In-page day section header with scroll anchor |
 | `FloatingDayBar` | 1645 | Fixed-position compact day bar via portal to `document.body`, z-index 45, opacity-based fade transition. Title font matches card titles (text-lg) |
 | `ImageCarousel` | 1658 | Photo carousel with full left/right half click zones + arrow key support |
-| `StarRating` | 1707 | Reddit score (1–5 stars) |
+| `StarRating` | 1735 | Reddit hype score (1–5 stars) with tooltip explaining the scale (5 = bucket-list legendary, 1 = niche/skippable) |
 | `VoteButtons` | 1719 | Upvote/downvote buttons with voter name lists. Tagged `data-tour="vote-buttons"` |
 | `CommentSection` | 1775 | Expandable comments with threaded replies. Tagged `data-tour="comments"` |
 | `CardComponent` | 1873 | Full card: image carousel, cost badge, tier, description, details, Google/Reddit links, votes, comments. + "Add to Trip" button (top-right) with day picker dropdown. Tagged `data-tour="add-to-trip"` |
@@ -92,7 +97,7 @@ STATUS.md           — Project status
 | `LeaderboardView` | 2111 | "Most Liked" — ranked cards by net vote score with thumbnail images, descriptions, and estimated cost |
 | `DraftCompareView` | 2207 | Side-by-side comparison of all drafts with 1+ stops. Horizontal scrolling grid (one column per draft, rows by day). Consensus highlighting for stops in 2+ drafts. Inline expand/collapse with horizontal card layout (image left, details right). Expand All / Collapse All. Uses composite keys (`draftId__cardId`) for independent expand per column |
 | `ItineraryView` | 2483 | Two sub-tabs: **"Compare"** (default, renders DraftCompareView) and **"Browse Trips"** (family grid → person's drafts → expandable day-by-day view). Default subTab is `'compare'` |
-| `ItinerarySidePanel` | 3086 | Slide-out right panel (380px, z-1003) via portal. Pre-seeded 8 trip days with dates/regions in headers (e.g., "Day 3 · Sep 7 📍 Snæfellsnes"). Draft switcher pills (hidden with 1 draft, shown with 2+), inline title rename, liked-but-unplanned cards grouped by region. Each stop in bordered card with mouse-based drag-and-drop (vertical only, teal insertion line, cross-day support, 5px movement threshold to distinguish clicks from drags). Arrow buttons as desktop fallback. Card picker via `AnimatedModal` with Type/Cost/Booking filters. Expanded card modal via `AnimatedModal`. Reads/writes to active draft in `/trip-drafts/` |
+| `ItinerarySidePanel` | 3086 | Slide-out right panel (380px, z-1003) via portal. Pre-seeded 8 trip days with dates/regions in headers (e.g., "Day 3 · Sep 7 📍 Snæfellsnes"). Draft switcher pills (hidden with 1 draft, shown with 2+), inline title rename, liked-but-unplanned cards grouped by region. Each stop in bordered card with mouse-based drag-and-drop: positions snapshotted at drag start for stable hit-testing, siblings displaced via `translateY` transforms with 200ms ease transitions (dnd-kit displacement model), absolutely-positioned teal indicator line, cross-day support, 5px movement threshold to distinguish clicks from drags, `didDrag` ref flag prevents click-on-release from opening card detail. Arrow buttons as desktop fallback. Card picker via `AnimatedModal` with Type/Cost/Booking/Hype filters. Expanded card modal via `AnimatedModal`. Reads/writes to active draft in `/trip-drafts/` |
 
 ### App Component (lines 3702–4233)
 
@@ -112,7 +117,7 @@ STATUS.md           — Project status
 | `authenticated` | localStorage `icp_auth` | No (per-browser) |
 | `hasUpdate` | localStorage `icp_version` vs `APP_VERSION` | No (per-browser) |
 | `activeFilter` | React state only | No |
-| `advancedFilters` | React state only | No |
+| `advancedFilters` | React state only (`{category, cost, booking, rating}`) | No |
 | `viewMode` | React state only (`'list'` or `'map'`) | No |
 | `activeDay` | React state only (scroll-tracked) | No |
 | `showFloatingDay` | React state only (scroll-tracked) | No |

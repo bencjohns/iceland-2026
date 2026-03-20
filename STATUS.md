@@ -36,7 +36,7 @@
 - [x] Day headers: left side shows "Day N · date", right side shows "📍 Region"; stats row below (stops, drive time, cost/pp)
 - [x] "Liked but unplanned" section — upvoted cards grouped by region (Reykjavik, Golden Circle, etc.)
 - [x] Each stop in its own bordered card with drag handle, thumbnail, details, and action buttons
-- [x] Drag-and-drop reordering — click and hold anywhere on a card to drag vertically; teal insertion line shows drop position; other cards slide around smoothly (mouse-event based, not HTML5 drag API)
+- [x] Drag-and-drop reordering — click and hold anywhere on a card to drag vertically; siblings smoothly displace via CSS transforms (dnd-kit style); absolutely-positioned teal indicator line marks drop position; snapshot-based hit-testing prevents stutter (mouse-event based, not HTML5 drag API)
 - [x] Cross-day drag — drag stops between days, including into empty days ("Drop here" zone)
 - [x] Arrow buttons (▲/▼) as fallback for reordering (hidden on mobile, visible on desktop)
 - [x] Drive time connectors between stops
