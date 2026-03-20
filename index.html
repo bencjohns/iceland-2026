@@ -3092,7 +3092,7 @@
       const [expandedCard, setExpandedCard] = useState(null);
       const [editingTitle, setEditingTitle] = useState(false);
       const [dragState, setDragState] = useState({ fromDay: null, fromIdx: null, overDay: null, overIdx: null, position: 'before' });
-      const dragRef = useRef({ active: false, ghostEl: null, startY: 0, scrollInterval: null });
+      const dragRef = useRef({ active: false, ghostEl: null, startY: 0, scrollInterval: null, didDrag: false });
 
       const userTripDrafts = tripDrafts[currentUser] || {};
       const activeDraft = activeDraftId && userTripDrafts[activeDraftId] ? userTripDrafts[activeDraftId] : {};
@@ -3153,7 +3153,7 @@
         }
       };
 
-      // Mouse-based drag system — card moves in-place vertically, others slide around
+      // Mouse-based drag system — dragged card follows cursor, siblings displaced via translateY transforms
       const handlePointerDown = (dayNum, idx, e) => {
         if (e.button !== 0) return;
         if (e.target.closest('button')) return;
@@ -3168,14 +3168,105 @@
 
         const startDrag = () => {
           started = true;
-          dragRef.current = { active: true, ghostEl: null, startY: rect.top, offsetY: startY - rect.top, el, scrollInterval: null };
+          // Snapshot all stop row positions + element refs for stable hit-testing and imperative transforms
+          const rows = document.querySelectorAll('[data-stop-row]');
+          const rowSnaps = [];
+          rows.forEach(row => {
+            const r = row.getBoundingClientRect();
+            const snap = { day: parseInt(row.dataset.stopDay), idx: parseInt(row.dataset.stopIdx), top: r.top, bottom: r.bottom, height: r.height, el: row, isSelf: row === el };
+            rowSnaps.push(snap);
+            if (!snap.isSelf) {
+              row.style.transition = 'transform 200ms ease';
+              row.style.willChange = 'transform';
+            }
+          });
+          const empties = document.querySelectorAll('[data-empty-day]');
+          const emptySnaps = [];
+          empties.forEach(zone => {
+            const r = zone.getBoundingClientRect();
+            emptySnaps.push({ day: parseInt(zone.dataset.emptyDay), top: r.top, bottom: r.bottom });
+          });
+          const scrollY0 = panelEl ? panelEl.scrollTop : 0;
+          const dragHeight = rect.height;
+          const gap = 6; // space-y-1.5 = 0.375rem = 6px
+
+          // Create teal insertion indicator (positioned imperatively, no layout impact)
+          const indicator = document.createElement('div');
+          indicator.style.cssText = 'position:absolute;left:8px;right:8px;height:2px;background:#14b8a6;border-radius:9999px;pointer-events:none;opacity:0;transition:top 150ms ease,opacity 150ms ease;z-index:50;';
+          if (panelEl) { panelEl.style.position = 'relative'; panelEl.appendChild(indicator); }
+
+          dragRef.current = {
+            active: true, startY: rect.top, offsetY: startY - rect.top, el,
+            scrollInterval: null, didDrag: true,
+            rowSnaps, emptySnaps, scrollY0, dragHeight, gap, indicator,
+            overDay: dayNum, overIdx: idx, position: 'before',
+            fromDay: dayNum, fromIdx: idx
+          };
           el.style.position = 'relative';
           el.style.zIndex = '100';
           el.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
           el.style.background = '#e5e7eb';
           el.style.borderColor = '#d1d5db';
-          el.style.transition = 'none';
+          el.style.transition = 'box-shadow 200ms ease';
+          // Minimal React state — just marks which card is the drag source for isDragging CSS
           setDragState({ fromDay: dayNum, fromIdx: idx, overDay: dayNum, overIdx: idx, position: 'before' });
+        };
+
+        // Apply translateY displacement to all sibling cards (dnd-kit style)
+        const applyDisplacement = () => {
+          const dr = dragRef.current;
+          const { rowSnaps, fromDay, fromIdx, overDay, overIdx, position, dragHeight, gap } = dr;
+          const insertIdx = position === 'after' ? overIdx + 1 : overIdx;
+
+          for (const snap of rowSnaps) {
+            if (snap.isSelf) continue;
+            let dy = 0;
+
+            if (snap.day === fromDay && snap.day === overDay) {
+              // Same day: items between source and insertion shift to fill/make space
+              if (fromIdx < insertIdx) {
+                // Dragging down — items in (fromIdx, insertIdx) shift up
+                if (snap.idx > fromIdx && snap.idx < insertIdx) dy = -(dragHeight + gap);
+              } else if (fromIdx > insertIdx) {
+                // Dragging up — items in [insertIdx, fromIdx) shift down
+                if (snap.idx >= insertIdx && snap.idx < fromIdx) dy = dragHeight + gap;
+              }
+            } else if (snap.day === fromDay && snap.day !== overDay) {
+              // Source day (cross-day): items after source shift up to close gap
+              if (snap.idx > fromIdx) dy = -(dragHeight + gap);
+            } else if (snap.day === overDay && snap.day !== fromDay) {
+              // Target day (cross-day): items at/after insertion shift down to open gap
+              if (snap.idx >= insertIdx) dy = dragHeight + gap;
+            }
+
+            snap.el.style.transform = dy !== 0 ? `translateY(${dy}px)` : '';
+          }
+
+          // Position the teal indicator line
+          if (dr.indicator && panelEl) {
+            const scrollDelta = panelEl.scrollTop - dr.scrollY0;
+            // Find the snap at the insertion boundary
+            let lineY = null;
+            if (fromDay === overDay) {
+              // Same-day: find the gap where the card will land
+              const targetSnap = rowSnaps.find(s => s.day === overDay && s.idx === overIdx && !s.isSelf);
+              if (targetSnap) {
+                lineY = position === 'before' ? targetSnap.top - scrollDelta - gap / 2 : targetSnap.bottom - scrollDelta + gap / 2;
+              }
+            } else {
+              const targetSnap = rowSnaps.find(s => s.day === overDay && s.idx === overIdx);
+              if (targetSnap) {
+                lineY = position === 'before' ? targetSnap.top - scrollDelta - gap / 2 : targetSnap.bottom - scrollDelta + gap / 2;
+              }
+            }
+            if (lineY !== null) {
+              const panelRect = panelEl.getBoundingClientRect();
+              dr.indicator.style.top = (lineY - panelRect.top + panelEl.scrollTop) + 'px';
+              dr.indicator.style.opacity = '1';
+            } else {
+              dr.indicator.style.opacity = '0';
+            }
+          }
         };
 
         const onMove = (me) => {
@@ -3200,35 +3291,39 @@
             }
           }
 
-          // Hit-test stop rows
-          const rows = document.querySelectorAll('[data-stop-row]');
+          // Hit-test using snapshotted positions (stable — prevents stutter feedback loop)
+          const scrollDelta = panelEl ? (panelEl.scrollTop - dragRef.current.scrollY0) : 0;
           let found = false;
-          rows.forEach(row => {
-            if (row === el) return;
-            const r = row.getBoundingClientRect();
-            if (me.clientY >= r.top && me.clientY <= r.bottom) {
-              const d = parseInt(row.dataset.stopDay);
-              const i = parseInt(row.dataset.stopIdx);
-              const pos = me.clientY < r.top + r.height / 2 ? 'before' : 'after';
-              setDragState(prev => {
-                if (prev.overDay === d && prev.overIdx === i && prev.position === pos) return prev;
-                return { ...prev, overDay: d, overIdx: i, position: pos };
-              });
-              found = true;
-            }
-          });
-          if (!found) {
-            const empties = document.querySelectorAll('[data-empty-day]');
-            empties.forEach(zone => {
-              const r = zone.getBoundingClientRect();
-              if (me.clientY >= r.top && me.clientY <= r.bottom) {
-                const d = parseInt(zone.dataset.emptyDay);
-                setDragState(prev => {
-                  if (prev.overDay === d && prev.overIdx === 0 && prev.position === 'before') return prev;
-                  return { ...prev, overDay: d, overIdx: 0, position: 'before' };
-                });
+          for (const snap of dragRef.current.rowSnaps) {
+            if (snap.isSelf) continue;
+            const adjTop = snap.top - scrollDelta;
+            const adjBottom = snap.bottom - scrollDelta;
+            if (me.clientY >= adjTop && me.clientY <= adjBottom) {
+              const pos = me.clientY < adjTop + (adjBottom - adjTop) / 2 ? 'before' : 'after';
+              if (dragRef.current.overDay !== snap.day || dragRef.current.overIdx !== snap.idx || dragRef.current.position !== pos) {
+                dragRef.current.overDay = snap.day;
+                dragRef.current.overIdx = snap.idx;
+                dragRef.current.position = pos;
+                applyDisplacement();
               }
-            });
+              found = true;
+              break;
+            }
+          }
+          if (!found) {
+            for (const snap of dragRef.current.emptySnaps) {
+              const adjTop = snap.top - scrollDelta;
+              const adjBottom = snap.bottom - scrollDelta;
+              if (me.clientY >= adjTop && me.clientY <= adjBottom) {
+                if (dragRef.current.overDay !== snap.day || dragRef.current.overIdx !== 0 || dragRef.current.position !== 'before') {
+                  dragRef.current.overDay = snap.day;
+                  dragRef.current.overIdx = 0;
+                  dragRef.current.position = 'before';
+                  applyDisplacement();
+                }
+                break;
+              }
+            }
           }
         };
 
@@ -3242,6 +3337,20 @@
             return;
           }
           if (dragRef.current.scrollInterval) clearInterval(dragRef.current.scrollInterval);
+
+          // Clear all sibling transforms and will-change
+          for (const snap of dragRef.current.rowSnaps) {
+            if (!snap.isSelf) {
+              snap.el.style.transform = '';
+              snap.el.style.transition = '';
+              snap.el.style.willChange = '';
+            }
+          }
+          // Remove indicator
+          if (dragRef.current.indicator && dragRef.current.indicator.parentNode) {
+            dragRef.current.indicator.parentNode.removeChild(dragRef.current.indicator);
+          }
+
           el.style.position = '';
           el.style.zIndex = '';
           el.style.boxShadow = '';
@@ -3249,31 +3358,31 @@
           el.style.borderColor = '';
           el.style.transform = '';
           el.style.transition = '';
+
+          // Read final position from ref (not React state) and commit the reorder
+          const { fromDay, fromIdx, overDay, overIdx, position } = dragRef.current;
           dragRef.current.active = false;
 
-          setDragState(prev => {
-            const { fromDay, fromIdx, overDay, overIdx, position } = prev;
-            if (fromDay !== null && overDay !== null && !(fromDay === overDay && fromIdx === overIdx)) {
-              const dropIdx = position === 'after' ? overIdx + 1 : overIdx;
-              if (fromDay === overDay) {
-                const stops = [...getStops(fromDay)];
-                const [moved] = stops.splice(fromIdx, 1);
-                const insertAt = dropIdx > fromIdx ? dropIdx - 1 : dropIdx;
-                stops.splice(insertAt, 0, moved);
-                onSetDraftDay(activeDraftId, overDay, stops);
-              } else {
-                const fromStops = [...getStops(fromDay)];
-                const toStops = [...getStops(overDay)];
-                const [moved] = fromStops.splice(fromIdx, 1);
-                if (!toStops.includes(moved)) {
-                  toStops.splice(dropIdx, 0, moved);
-                  onSetDraftDay(activeDraftId, fromDay, fromStops);
-                  onSetDraftDay(activeDraftId, overDay, toStops);
-                }
+          if (fromDay !== null && overDay !== null && !(fromDay === overDay && fromIdx === overIdx)) {
+            const dropIdx = position === 'after' ? overIdx + 1 : overIdx;
+            if (fromDay === overDay) {
+              const stops = [...getStops(fromDay)];
+              const [moved] = stops.splice(fromIdx, 1);
+              const insertAt = dropIdx > fromIdx ? dropIdx - 1 : dropIdx;
+              stops.splice(insertAt, 0, moved);
+              onSetDraftDay(activeDraftId, overDay, stops);
+            } else {
+              const fromStops = [...getStops(fromDay)];
+              const toStops = [...getStops(overDay)];
+              const [moved] = fromStops.splice(fromIdx, 1);
+              if (!toStops.includes(moved)) {
+                toStops.splice(dropIdx, 0, moved);
+                onSetDraftDay(activeDraftId, fromDay, fromStops);
+                onSetDraftDay(activeDraftId, overDay, toStops);
               }
             }
-            return { fromDay: null, fromIdx: null, overDay: null, overIdx: null, position: 'before' };
-          });
+          }
+          setDragState({ fromDay: null, fromIdx: null, overDay: null, overIdx: null, position: 'before' });
         };
 
         document.addEventListener('mousemove', onMove);
@@ -3487,8 +3596,7 @@
                         {stops.length === 0 ? (
                           <div className={`text-center py-4 rounded-lg transition-all`}
                             data-empty-day={dayNum}>
-                            {dragState.fromDay !== null && dragState.overDay === dayNum && <div className="h-0.5 bg-teal rounded-full mx-2 mb-2" />}
-                            <p className="text-xs text-gray-400 mb-2">{dragState.fromDay !== null && dragState.overDay === dayNum ? 'Drop here' : 'No stops yet'}</p>
+                            <p className="text-xs text-gray-400 mb-2">No stops yet</p>
                             <button onClick={() => { setPickerDay(dayNum); setPickerSearch(''); }}
                               className="text-teal text-xs font-medium hover:underline">+ Add your first stop</button>
                           </div>
@@ -3499,18 +3607,14 @@
                               if (!card) return null;
                               const img = (IMAGE_URLS[card.id] || [])[0];
                               const isDragging = dragState.fromDay === dayNum && dragState.fromIdx === idx;
-                              const showLineBefore = dragState.fromDay !== null && dragState.overDay === dayNum && dragState.overIdx === idx && dragState.position === 'before' && !isDragging;
-                              const showLineAfter = dragState.fromDay !== null && dragState.overDay === dayNum && dragState.overIdx === idx && dragState.position === 'after' && !isDragging;
                               return (
                                 <div key={cardId}>
-                                  {showLineBefore && <div className="h-0.5 bg-teal rounded-full mx-2 my-1" />}
                                   <div className={`panel-stop flex items-center gap-2 p-2 rounded-xl border cursor-grab active:cursor-grabbing select-none ${
                                     isDragging ? 'bg-gray-200 border-gray-300' : 'bg-white border-gray-100'}`}
-                                    style={{ transition: dragState.fromDay !== null && !isDragging ? 'transform 200ms ease, opacity 200ms ease' : '' }}
                                     data-stop-row data-stop-day={dayNum} data-stop-idx={idx}
                                     onMouseDown={(e) => handlePointerDown(dayNum, idx, e)}>
                                     <span className="text-gray-300 text-xs shrink-0">⠿</span>
-                                    <div className="flex items-center gap-2 flex-1 min-w-0 cursor-pointer" data-click-expand onClick={() => setExpandedCard(card)}>
+                                    <div className="flex items-center gap-2 flex-1 min-w-0 cursor-pointer" data-click-expand onClick={() => { if (dragRef.current.didDrag) { dragRef.current.didDrag = false; return; } setExpandedCard(card); }}>
                                       {img && <img src={img.url} alt={card.name} className="w-10 h-10 rounded-lg object-cover shrink-0 pointer-events-none" loading="lazy" />}
                                       <span className="text-sm shrink-0">{getCategoryIcon(card.category)}</span>
                                       <div className="flex-1 min-w-0">
@@ -3527,8 +3631,7 @@
                                         className="w-6 h-6 rounded bg-red-50 hover:bg-red-100 text-red-500 text-[11px]">✕</button>
                                     </div>
                                   </div>
-                                  {showLineAfter && <div className="h-0.5 bg-teal rounded-full mx-2 my-1" />}
-                                  {idx < stops.length - 1 && !showLineAfter && (() => {
+                                  {idx < stops.length - 1 && (() => {
                                     const info = getDriveInfo(stops[idx], stops[idx + 1]);
                                     return info && info.km > 0 ? (
                                       <div className="flex items-center justify-center py-0.5">
