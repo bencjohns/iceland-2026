@@ -1941,27 +1941,29 @@
       };
 
       // Like button with hover-to-expand reaction picker (FB-style)
+      // Uses a single wrapper with generous padding so mouse never leaves the hover zone
       const LikeButton = ({ idx, replyIdx, reactions }) => {
         const rKey = replyIdx !== undefined ? `reply-${idx}-${replyIdx}` : `comment-${idx}`;
         const userReaction = reactions ? Object.entries(reactions).find(([e, users]) => users.includes(currentUser)) : null;
         const hasLiked = !!userReaction;
         const likeEmoji = userReaction ? userReaction[0] : null;
         const hoverRef = useRef(null);
+        const open = showReactions === rKey;
+        const startHover = () => { clearTimeout(hoverRef.current); hoverRef.current = setTimeout(() => setShowReactions(rKey), 400); };
+        const endHover = () => { clearTimeout(hoverRef.current); hoverRef.current = setTimeout(() => setShowReactions(prev => prev === rKey ? null : prev), 300); };
         return (
           <div className="relative inline-block"
-            onMouseEnter={() => { hoverRef.current = setTimeout(() => setShowReactions(rKey), 400); }}
-            onMouseLeave={() => { clearTimeout(hoverRef.current); setTimeout(() => setShowReactions(prev => prev === rKey ? null : prev), 150); }}>
+            onMouseEnter={startHover} onMouseLeave={endHover}>
             <button onClick={() => handleReaction(idx, replyIdx, '👍')}
               className={`text-[11px] font-semibold transition-colors ${
                 hasLiked ? 'text-teal' : 'text-gray-500 hover:text-teal hover:underline'
               }`}>
               {hasLiked && likeEmoji ? likeEmoji + ' ' : ''}Like
             </button>
-            {showReactions === rKey && (
-              <div className="absolute left-1/2 bottom-full pb-2 z-10"
-                onMouseEnter={() => { clearTimeout(hoverRef.current); setShowReactions(rKey); }}
-                onMouseLeave={() => setShowReactions(null)}>
-                <div className="flex gap-1 bg-white rounded-full shadow-lg border border-gray-200 px-2.5 py-1.5"
+            {open && (
+              <div className="absolute left-1/2 bottom-0 z-10" style={{ paddingBottom: 0 }}
+                onMouseEnter={startHover} onMouseLeave={endHover}>
+                <div className="mb-6 flex gap-1 bg-white rounded-full shadow-lg border border-gray-200 px-2.5 py-1.5"
                   style={{ animation: 'reactionPopIn 0.2s ease-out both' }}>
                   {COMMENT_REACTIONS.map(e => (
                     <button key={e} onClick={() => handleReaction(idx, replyIdx, e)}
