@@ -1920,12 +1920,11 @@
 
       const ReactionBadges = ({ reactions, idx, replyIdx }) => {
         if (!reactions || Object.keys(reactions).length === 0) return null;
-        const rKey = replyIdx !== undefined ? `reply-${idx}-${replyIdx}` : `comment-${idx}`;
         const allUsers = [];
         Object.values(reactions).forEach(u => u.forEach(n => { if (!allUsers.includes(n)) allUsers.push(n); }));
         return (
-          <div className="flex items-center -mt-2 ml-2 mb-1 relative z-[1]">
-            <div className="inline-flex items-center gap-0.5 bg-white rounded-full shadow-sm border border-gray-100 px-1.5 py-0.5">
+          <div className="absolute -bottom-2.5 right-1 z-[1]">
+            <div className="inline-flex items-center gap-0.5 bg-white rounded-full shadow-sm border border-gray-100 px-1.5 py-0.5 cursor-pointer">
               {Object.entries(reactions).map(([emoji, users]) => (
                 <button key={emoji} onClick={() => handleReaction(idx, replyIdx, emoji)}
                   title={users.join(', ')}
@@ -1974,8 +1973,9 @@
                           className="text-[11px] text-gray-400 hover:underline">Cancel</button>
                       </div>
                     ) : (
-                      <div className="bg-gray-100 rounded-2xl px-3 py-1.5 mt-0.5 inline-block max-w-full relative group/bubble">
+                      <div className={`bg-gray-100 rounded-2xl px-3 py-1.5 mt-0.5 inline-block max-w-full relative group/bubble ${c.reactions && Object.keys(c.reactions).length > 0 ? 'mb-3' : ''}`}>
                         <p className="text-[13px] text-gray-800 break-words overflow-wrap-anywhere leading-snug"><Linkify>{c.text}</Linkify></p>
+                        <ReactionBadges reactions={c.reactions} idx={i} />
                         {/* Hover action row */}
                         <div className="absolute -right-1 top-1/2 -translate-y-1/2 translate-x-full hidden group-hover/bubble:flex items-center gap-0.5 pl-1">
                           <div className="relative">
@@ -1995,7 +1995,6 @@
                       </div>
                     )}
                   </div>
-                  <ReactionBadges reactions={c.reactions} idx={i} />
                   {/* Action row: time · Reply */}
                   <div className="flex items-center gap-2 ml-3 mt-0.5 mb-1">
                     <span className="text-[11px] text-gray-400">{formatRelativeTime(c.timestamp)}{c.editedAt ? ' · edited' : ''}</span>
@@ -2021,8 +2020,9 @@
                                 className="text-[10px] text-gray-400 hover:underline">Cancel</button>
                             </div>
                           ) : (
-                            <div className="bg-gray-100 rounded-2xl px-3 py-1 mt-0.5 inline-block max-w-full relative group/reply">
+                            <div className={`bg-gray-100 rounded-2xl px-3 py-1 mt-0.5 inline-block max-w-full relative group/reply ${r.reactions && Object.keys(r.reactions).length > 0 ? 'mb-3' : ''}`}>
                               <p className="text-[12px] text-gray-800 break-words overflow-wrap-anywhere leading-snug"><Linkify>{r.text}</Linkify></p>
+                              <ReactionBadges reactions={r.reactions} idx={i} replyIdx={ri} />
                               <div className="absolute -right-1 top-1/2 -translate-y-1/2 translate-x-full hidden group-hover/reply:flex items-center gap-0.5 pl-1">
                                 <div className="relative">
                                   <button onClick={() => setShowReactions(showReactions === `reply-${i}-${ri}` ? null : `reply-${i}-${ri}`)}
@@ -2041,7 +2041,6 @@
                             </div>
                           )}
                         </div>
-                        <ReactionBadges reactions={r.reactions} idx={i} replyIdx={ri} />
                         <div className="flex items-center gap-2 ml-3 mt-0.5 mb-1">
                           <span className="text-[10px] text-gray-400">{formatRelativeTime(r.timestamp)}{r.editedAt ? ' · edited' : ''}</span>
                         </div>
