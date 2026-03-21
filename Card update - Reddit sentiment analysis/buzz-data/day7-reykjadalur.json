@@ -1,0 +1,132 @@
+{
+  "cardId": "day7-reykjadalur",
+  "sentiment": "loved",
+  "mentionCount": 10,
+  "tensionSummary": "\"Very relaxing river experience\" vs \"No joke about the challenging hike\"",
+  "distribution": {
+    "positive": 8,
+    "mixed": 2,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "How would you pronounce Reykjadalur and Hverageroi?",
+      "summary": "Pronunciation help needed",
+      "emoji": "🤔",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "r/travel",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=How%20would%20you%20pronounce%20Reykjadalur%20and%20Hverageroi%3F&type=comment"
+    },
+    {
+      "text": "It is no joke about the hike to Reykjadalur. Took my buddy and I about and 1 1/2 hours to get to the spring and only 20 to get back to the car. The river though was very relaxing.",
+      "summary": "Challenging hike but relaxing",
+      "emoji": "🥵",
+      "theme": "wait_time",
+      "score": 1,
+      "sub": "r/VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=It%20is%20no%20joke%20about%20the%20hike%20to%20Reykjadalur.%20Took%20my%20buddy%20a&type=comment"
+    },
+    {
+      "text": "I see a lot of questions about hiking options that don't require driving halfway across the country, so I put together a detailed rundown of the five hikes near Reykjavík that I keep coming back to. I've done all of these dozens of times — with friends, with clients, and on my own — and they never…",
+      "summary": "Top hikes near Reykjavík",
+      "emoji": "🥾",
+      "theme": "tip",
+      "score": 137,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20see%20a%20lot%20of%20questions%20about%20hiking%20options%20that%20don't%20req&type=comment"
+    },
+    {
+      "text": "Hi everyone, my girlfriend and I will be arriving in Iceland next week for a 2 week vacation (so mid to end May) we have been dreaming of for a long time.",
+      "summary": "Dream vacation planning",
+      "emoji": "💭",
+      "theme": "logistics",
+      "score": 22,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Hi%20everyone%2C%20my%20girlfriend%20and%20I%20will%20be%20arriving%20in%20Iceland&type=comment"
+    },
+    {
+      "text": "Gullfoss and Strokkur belong on the same day, Reykjadalur is on the way to Friðheimar etc. etc. etc.",
+      "summary": "Smart routing advice",
+      "emoji": "🗺️",
+      "theme": "logistics",
+      "score": 3,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Gullfoss%20and%20Strokkur%20belong%20on%20the%20same%20day%2C%20Reykjadalur%20is&type=comment"
+    },
+    {
+      "text": "Day 3 selfoss to vik (Reykjadalur hot spring river, Seljalandsfoss, Gljúfrabúi waterfalls, Skógafoss waterfall, Dyrhólaey clift,…",
+      "summary": "Perfect itinerary inclusion",
+      "emoji": "📋",
+      "theme": "logistics",
+      "score": 5,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Day%203%20selfoss%20to%20vik%20(Reykjadalur%20hot%20spring%20river%2C%20Seljalan&type=comment"
+    },
+    {
+      "text": "My husband has been wanting to take a hiking trip, and I figured he'd love the hiking and scenery of Iceland.",
+      "summary": "Perfect hiking destination",
+      "emoji": "🏔️",
+      "theme": "scenery",
+      "score": 2,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=My%20husband%20has%20been%20wanting%20to%20take%20a%20hiking%20trip%2C%20and%20I%20fig&type=comment"
+    },
+    {
+      "text": "My partner and I are going to Iceland for the first time, for 10 days in September. We'll be getting to Reykjavik at 8 am on the 12th, leaving at 5 pm on the 22nd.",
+      "summary": "First time visit",
+      "emoji": "✈️",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "r/itineraries",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=My%20partner%20and%20I%20are%20going%20to%20Iceland%20for%20the%20first%20time%2C%20fo&type=comment"
+    },
+    {
+      "text": "Here is my current itinerary, is this anything we are missing/mistakes?",
+      "summary": "Itinerary validation request",
+      "emoji": "✅",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Here%20is%20my%20current%20itinerary%2C%20is%20this%20anything%20we%20are%20missin&type=comment"
+    },
+    {
+      "text": "The drive from Kirkjubæjarklaustur to Reykjadalur is closer to 3 hours than 2, so keep that in mind",
+      "summary": "Driving time reality check",
+      "emoji": "⏰",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=The%20drive%20from%20Kirkjub%C3%A6jarklaustur%20to%20Reykjadalur%20is%20closer%20&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "It is no joke about the hike to Reykjadalur. Took my buddy and I about and 1 1/2 hours to get to the spring and only 20 to get back to the car.",
+      "score": 1,
+      "sub": "r/VisitingIceland"
+    },
+    {
+      "text": "Reykjadalur is on the way to Friðheimar - plan your route efficiently",
+      "score": 3,
+      "sub": "r/VisitingIceland"
+    },
+    {
+      "text": "The drive from Kirkjubæjarklaustur to Reykjadalur is closer to 3 hours than 2, so keep that in mind",
+      "score": 2,
+      "sub": "r/VisitingIceland"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:52:09.239Z"
+}

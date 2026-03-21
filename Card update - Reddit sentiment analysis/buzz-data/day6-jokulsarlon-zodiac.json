@@ -1,0 +1,87 @@
+{
+  "cardId": "day6-jokulsarlon-zodiac",
+  "sentiment": "hidden-gem",
+  "mentionCount": 6,
+  "tensionSummary": "\"Planning to experience it\" vs \"Need recommendations for tours\"",
+  "distribution": {
+    "positive": 6,
+    "mixed": 0,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "Hi, I'm planning my first trip to Iceland and would really appreciate feedback on this proposed itinerary.",
+      "summary": "First trip planning",
+      "emoji": "🗓️",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Hi%2C%20I'm%20planning%20my%20first%20trip%20to%20Iceland%20and%20would%20really%20a&type=comment"
+    },
+    {
+      "text": "Hello! Hoping to get some feedback on my 9 day early September Ring Road itinerary. This is a self drive tour with 2 people.",
+      "summary": "Ring road itinerary planning",
+      "emoji": "🚗",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Hello!%20Hoping%20to%20get%20some%20feedback%20on%20my%209%20day%20early%20Septemb&type=comment"
+    },
+    {
+      "text": "Wife and I are visiting for the first time in two weeks. Planning on visiting the Golden Circle and then driving the south coast to Höfn.",
+      "summary": "First time couple trip",
+      "emoji": "💑",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Wife%20and%20I%20are%20visiting%20for%20the%20first%20time%20in%20two%20weeks.%20Pla&type=comment"
+    },
+    {
+      "text": "Wanted to post our itinerary of our completed 8 full days in a camper van touring the Ring Road + Snæfellsnes and a few more notes on our experience, hope it's helpful!",
+      "summary": "Completed camper van tour",
+      "emoji": "🚐",
+      "theme": "tip",
+      "score": 12,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Wanted%20to%20post%20our%20itinerary%20of%20our%20completed%208%20full%20days%20in&type=comment"
+    },
+    {
+      "text": "Does anyone have any recommendations on good tour groups for the following excursions? Jökulsárlón Zodiac Boat Tour",
+      "summary": "Seeking tour recommendations",
+      "emoji": "❓",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Does%20anyone%20have%20any%20recommendations%20on%20good%20tour%20groups%20for&type=comment"
+    },
+    {
+      "text": "For Suba Diving - SILFRA SNORKELING TOUR - MEET ON LOCATION by https://www.dive.is/ For Katla Ice Cave Tour - https://katlatrack.is/ For Glacier Walk - Blue Ice Experience - Glacier Walk by",
+      "summary": "Tour operator recommendations",
+      "emoji": "🔗",
+      "theme": "tip",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=For%20Suba%20Diving%20-%20SILFRA%20SNORKELING%20TOUR%20-%20MEET%20ON%20LOCATION%20&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Use dive.is for Silfra snorkeling tours",
+      "score": 2,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Consider katlatrack.is for Katla Ice Cave tours",
+      "score": 2,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:44:34.709Z"
+}

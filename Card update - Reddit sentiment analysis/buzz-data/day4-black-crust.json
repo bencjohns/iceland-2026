@@ -1,0 +1,117 @@
+{
+  "cardId": "day4-black-crust",
+  "sentiment": "hidden-gem",
+  "mentionCount": 9,
+  "tensionSummary": "\"Must-visit pizza spot\" vs \"Brief mention in lists\"",
+  "distribution": {
+    "positive": 9,
+    "mixed": 0,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "Thanks to this subreddit and the amount of info here, I was able to make a really great solo trip for myself. I focused my trip on hiking and trying to...",
+      "summary": "Great solo trip success",
+      "emoji": "🌟",
+      "theme": "vibe",
+      "score": 538,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Thanks%20to%20this%20subreddit%20and%20the%20amount%20of%20info%20here%2C%20I%20was%20&type=comment"
+    },
+    {
+      "text": "Thank you to this sub! We drove the ring road in 9 days. HIGHLIGHTS - Deig (Rekyjavik): great bagel sandwiches, donuts and coffee...",
+      "summary": "Ring road highlights compilation",
+      "emoji": "🚗",
+      "theme": "tip",
+      "score": 158,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Thank%20you%20to%20this%20sub!%20We%20drove%20the%20ring%20road%20in%209%20days.%20HIG&type=comment"
+    },
+    {
+      "text": "This trip was absolutely life changing and I'm here to tell you that whatever you have to sacrifice to make it to Iceland is 10000% worth it",
+      "summary": "Life changing Iceland experience",
+      "emoji": "✨",
+      "theme": "vibe",
+      "score": 482,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=This%20trip%20was%20absolutely%20life%20changing%20and%20I'm%20here%20to%20tell%20&type=comment"
+    },
+    {
+      "text": "I'm now on my last day in Iceland, after a 12 day trip. I spent 2 months researching and now sharing back",
+      "summary": "Comprehensive trip research sharing",
+      "emoji": "📝",
+      "theme": "tip",
+      "score": 179,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I'm%20now%20on%20my%20last%20day%20in%20Iceland%2C%20after%20a%2012%20day%20trip.%20I%20sp&type=comment"
+    },
+    {
+      "text": "Planning a solo Iceland trip soon and wanted some feedback on my itinerary. I will be renting a camper van",
+      "summary": "Solo camper van planning",
+      "emoji": "🚐",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Planning%20a%20solo%20Iceland%20trip%20soon%20and%20wanted%20some%20feedback%20o&type=comment"
+    },
+    {
+      "text": "We just came back from completing a 2 week counter clockwise ring road trip. I used this page almost exclusively to plan my itinerary",
+      "summary": "Two week ring road",
+      "emoji": "🗺️",
+      "theme": "tip",
+      "score": 33,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20just%20came%20back%20from%20completing%20a%202%20week%20counter%20clockwise&type=comment"
+    },
+    {
+      "text": "My partner and I are planning our first trip to Iceland this June, covering the South Coast and Golden Circle",
+      "summary": "First time June planning",
+      "emoji": "🌸",
+      "theme": "logistics",
+      "score": 0,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=My%20partner%20and%20I%20are%20planning%20our%20first%20trip%20to%20Iceland%20this&type=comment"
+    },
+    {
+      "text": "I built this itinerary for wiggle room, we can decide most days what we want to do that morning. I have been to Iceland before",
+      "summary": "Flexible itinerary approach",
+      "emoji": "🤸",
+      "theme": "tip",
+      "score": 0,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20built%20this%20itinerary%20for%20wiggle%20room%2C%20we%20can%20decide%20most%20d&type=comment"
+    },
+    {
+      "text": "My boyfriend and I just booked our flights to Iceland for January 9th-14th and we are beyond excited",
+      "summary": "Winter trip excitement",
+      "emoji": "❄️",
+      "theme": "vibe",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=My%20boyfriend%20and%20I%20just%20booked%20our%20flights%20to%20Iceland%20for%20Ja&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Build itinerary with wiggle room to decide activities each morning",
+      "score": 0,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Get maximum insurance when renting camper van for winter trips",
+      "score": 2,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:24:56.304Z"
+}

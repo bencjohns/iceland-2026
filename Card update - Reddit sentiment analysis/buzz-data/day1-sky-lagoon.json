@@ -1,0 +1,683 @@
+{
+  "cardId": "day1-sky-lagoon",
+  "sentiment": "loved",
+  "mentionCount": 63,
+  "tensionSummary": "\"Beautiful ocean views and intimate ritual\" vs \"Overcrowded and underwhelming for the price\"",
+  "distribution": {
+    "positive": 43,
+    "mixed": 15,
+    "negative": 5
+  },
+  "quotes": [
+    {
+      "text": "If you have been to Sky Lagoon, how was your experience? Or are there any better hot springs than sky lagoon?",
+      "summary": "Seeking Sky Lagoon advice",
+      "emoji": "❓",
+      "theme": "tip",
+      "score": 18,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=If%20you%20have%20been%20to%20Sky%20Lagoon%2C%20how%20was%20your%20experience%3F%20Or%20&type=comment"
+    },
+    {
+      "text": "Sky Lagoon is not a hot spring. Like Blue Lagoon it is a man made pool. Sky Lagoon is close to Reykjavik. It has a beautiful view over the bay.",
+      "summary": "Artificial but beautiful views",
+      "emoji": "🏗️",
+      "theme": "scenery",
+      "score": 25,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Sky%20Lagoon%20is%20not%20a%20hot%20spring.%20Like%20Blue%20Lagoon%20it%20is%20a%20man&type=comment"
+    },
+    {
+      "text": "I like Sky Lagoon, perhaps a lukewarm take but I find it slightly overhyped on here - Mainly since most people hype it over Blue Lagoon",
+      "summary": "Good but overhyped experience",
+      "emoji": "🤷",
+      "theme": "overrated",
+      "score": 15,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20like%20Sky%20Lagoon%2C%20perhaps%20a%20lukewarm%20take%20but%20I%20find%20it%20sli&type=comment"
+    },
+    {
+      "text": "I was recently at Sky Lagoon on the 1st of September and loved it! The 7 step ritual spa treatment, the views & atmosphere were all incredible.",
+      "summary": "Loved ritual and atmosphere",
+      "emoji": "😍",
+      "theme": "vibe",
+      "score": 6,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20was%20recently%20at%20Sky%20Lagoon%20on%20the%201st%20of%20September%20and%20lov&type=comment"
+    },
+    {
+      "text": "Been to Hvammsvik, Blue and Sky Lagoons. Blue Lagoon was our first top after a red eye flight. I likened it to being in a bath tub with 1500",
+      "summary": "Comparing multiple lagoon experiences",
+      "emoji": "⚖️",
+      "theme": "crowds",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Been%20to%20Hvammsvik%2C%20Blue%20and%20Sky%20Lagoons.%20Blue%20Lagoon%20was%20our&type=comment"
+    },
+    {
+      "text": "I would put Sky Lagoon in the same league as Blue Lagoon, but if I could only pick one it would be Blue Lagoon. Sky lagoon was smaller in scale but more varied and more deluxe.",
+      "summary": "Deluxe but smaller scale",
+      "emoji": "💎",
+      "theme": "vibe",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20would%20put%20Sky%20Lagoon%20in%20the%20same%20league%20as%20Blue%20Lagoon%2C%20bu&type=comment"
+    },
+    {
+      "text": "Have only been to Sky Lagoon, so I can comment on what I found different from expectations. Very crowded. We had a 10 am slot but that was felt only in the lagoon.",
+      "summary": "Crowded despite early slot",
+      "emoji": "🌊",
+      "theme": "crowds",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Have%20only%20been%20to%20Sky%20Lagoon%2C%20so%20I%20can%20comment%20on%20what%20I%20fou&type=comment"
+    },
+    {
+      "text": "Personally, love Sky Lagoon 😊 what makes it great is the natural elements including the rocks and open spaces with views over the ocean from the infinity pool",
+      "summary": "Love natural ocean views",
+      "emoji": "🌊",
+      "theme": "scenery",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Personally%2C%20love%20Sky%20Lagoon%20%F0%9F%98%8A%20what%20makes%20it%20great%20is%20the%20na&type=comment"
+    },
+    {
+      "text": "I visited Sky Lagoon, Secret Lagoon and Husafell Canyon Baths - each great but if I only could do one it would be Sky Lagoon",
+      "summary": "Top choice among options",
+      "emoji": "🥇",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20visited%20Sky%20Lagoon%2C%20Secret%20Lagoon%20and%20Husafell%20Canyon%20Bath&type=comment"
+    },
+    {
+      "text": "Just visited in August. We both loved Sky Lagoon. We did the ritual and had a drink at the bar in the lagoon. We also visited the Landmannalaugar hot spring.",
+      "summary": "Loved ritual and bar",
+      "emoji": "🍹",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Just%20visited%20in%20August.%20We%20both%20loved%20Sky%20Lagoon.%20We%20did%20the&type=comment"
+    },
+    {
+      "text": "My husband and I enjoyed Sky Lagoon. It was large enough that it didn't feel overly crowded. It felt the most clean out of all hot springs we visited.",
+      "summary": "Clean and spacious feeling",
+      "emoji": "✨",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=My%20husband%20and%20I%20enjoyed%20Sky%20Lagoon.%20It%20was%20large%20enough%20tha&type=comment"
+    },
+    {
+      "text": "How much time would people recommend to spend at Sky Lagoon? I am considering an evening visit after my flight into Reykjavik",
+      "summary": "Seeking timing advice",
+      "emoji": "⏰",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=How%20much%20time%20would%20people%20recommend%20to%20spend%20at%20Sky%20Lagoon%3F&type=comment"
+    },
+    {
+      "text": "Sky Lagoon was a great first stop coming off an early morning flight. We enjoyed their 7-step ritual and the small breakfast you can order in advance.",
+      "summary": "Perfect post-flight stop",
+      "emoji": "✈️",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Sky%20Lagoon%20was%20a%20great%20first%20stop%20coming%20off%20an%20early%20mornin&type=comment"
+    },
+    {
+      "text": "We loved our Sky Lagoon experience, gorgeous scenery and oh-so relaxing. We booked the Sér package, the upgraded booking with private changing rooms—I would recommend against this.",
+      "summary": "Skip the upgrade package",
+      "emoji": "💸",
+      "theme": "cost",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20loved%20our%20Sky%20Lagoon%20experience%2C%20gorgeous%20scenery%20and%20oh-&type=comment"
+    },
+    {
+      "text": "Sky Lagoon is my fave followed by Forest Lagoon. I love this place, maybe because when we stay in Reykjavik we'll go there almost every",
+      "summary": "Favorite lagoon overall",
+      "emoji": "❤️",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Sky%20Lagoon%20is%20my%20fave%20followed%20by%20Forest%20Lagoon.%20I%20love%20this&type=comment"
+    },
+    {
+      "text": "We really enjoyed Sky Lagoon. It was our first official stop and it was a great introduction to Iceland. My 17 year old son said after the Ritual, \"I don't think I've ever felt this clean or soft before.\"",
+      "summary": "Great Iceland introduction",
+      "emoji": "🧴",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20really%20enjoyed%20Sky%20Lagoon.%20It%20was%20our%20first%20official%20stop&type=comment"
+    },
+    {
+      "text": "In my opinion Sky Lagoon is great place to spend time when you have just couple of days in Reykjavik. Very easy accessible by bus.",
+      "summary": "Great for short visits",
+      "emoji": "🚌",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=In%20my%20opinion%20Sky%20Lagoon%20is%20great%20place%20to%20spend%20time%20when%20y&type=comment"
+    },
+    {
+      "text": "before visiting the Sky lagoon we had been to Reykjadalur and to the Secret Lagoon and had a great time in both places, so we were really excited to go to one of the most expensive baths in Iceland. everything is scenographic",
+      "summary": "Expensive but scenographic",
+      "emoji": "💰",
+      "theme": "cost",
+      "score": 5,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=before%20visiting%20the%20Sky%20lagoon%20we%20had%20been%20to%20Reykjadalur%20an&type=comment"
+    },
+    {
+      "text": "Sky Lagoon is touristy but not a tourist trap. Blue Lagoon is touristy but not a tourist trap. Use a sauna however you like.",
+      "summary": "Touristy but not trap",
+      "emoji": "🎭",
+      "theme": "vibe",
+      "score": 14,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Sky%20Lagoon%20is%20touristy%20but%20not%20a%20tourist%20trap.%20Blue%20Lagoon%20i&type=comment"
+    },
+    {
+      "text": "my friends and I definitely found sky lagoon underwhelming relative to other spas I've been to that are cheaper yet feel more premium. Apart from the ocean view, it felt basic and was overcrowded",
+      "summary": "Underwhelming and overcrowded",
+      "emoji": "😕",
+      "theme": "overrated",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=my%20friends%20and%20I%20definitely%20found%20sky%20lagoon%20underwhelming%20r&type=comment"
+    },
+    {
+      "text": "We highly enjoyed the sky lagoon. Was a good time. Sorry it wasn't what you were expecting.",
+      "summary": "We enjoyed it",
+      "emoji": "👍",
+      "theme": "vibe",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20highly%20enjoyed%20the%20sky%20lagoon.%20Was%20a%20good%20time.%20Sorry%20it%20&type=comment"
+    },
+    {
+      "text": "We love sky lagoon. Would go back again",
+      "summary": "Love it, would return",
+      "emoji": "🔄",
+      "theme": "vibe",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20love%20sky%20lagoon.%20Would%20go%20back%20again&type=comment"
+    },
+    {
+      "text": "I loved Sky Lagoon and the shampoo and conditioner are wonderful. If this is how you feel going to Sky Lagoon, skip Blue Lagoon.",
+      "summary": "Great amenities, skip Blue",
+      "emoji": "🧴",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20loved%20Sky%20Lagoon%20and%20the%20shampoo%20and%20conditioner%20are%20wonde&type=comment"
+    },
+    {
+      "text": "at Blue Lagoon I was able to find where the super hot water was coming into the pool and stand there, but at Sky Lagoon I could NOT find a source. It was much more picturesque, though.",
+      "summary": "Not hot enough spots",
+      "emoji": "🌡️",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=at%20Blue%20Lagoon%20I%20was%20able%20to%20find%20where%20the%20super%20hot%20water%20&type=comment"
+    },
+    {
+      "text": "Those of us less traveled than you apparently appreciate the beauty and experience of Sky Lagoon.",
+      "summary": "Defending Sky Lagoon beauty",
+      "emoji": "🛡️",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Those%20of%20us%20less%20traveled%20than%20you%20apparently%20appreciate%20the&type=comment"
+    },
+    {
+      "text": "I have 16th to 19th March (Mon to Thurs) to decide which day and what time is the best to book for Sky lagoon time slot, with regard to weather and least crowd?",
+      "summary": "Planning optimal visit timing",
+      "emoji": "📅",
+      "theme": "tip",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20have%2016th%20to%2019th%20March%20(Mon%20to%20Thurs)%20to%20decide%20which%20day&type=comment"
+    },
+    {
+      "text": "Weekday mornings (right when they open) are the least crowded. Tuesday or Wednesday tend to be quieter than Monday or Thursday. For the best experience, I'd book a late afternoon slot around 4-5 PM.",
+      "summary": "Best timing advice",
+      "emoji": "⏰",
+      "theme": "tip",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Weekday%20mornings%20(right%20when%20they%20open)%20are%20the%20least%20crowde&type=comment"
+    },
+    {
+      "text": "I'm visiting Iceland in a few days for the first time, and I'm excited to visit the sky lagoon as one of the activities I have planned. That said, swimwear is a bit difficult for me. I'm FtM trans",
+      "summary": "Trans visitor seeking advice",
+      "emoji": "🏳️‍⚧️",
+      "theme": "logistics",
+      "score": 11,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I'm%20visiting%20Iceland%20in%20a%20few%20days%20for%20the%20first%20time%2C%20and%20I&type=comment"
+    },
+    {
+      "text": "You might want to shoot the Sky Lagoon an email just in case, but generally as long as it is clean and fit for being underwater you ought to be fine.",
+      "summary": "Contact them about swimwear",
+      "emoji": "📧",
+      "theme": "tip",
+      "score": 6,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=You%20might%20want%20to%20shoot%20the%20Sky%20Lagoon%20an%20email%20just%20in%20case&type=comment"
+    },
+    {
+      "text": "I'm non-binary and wore a compression swim top (from tomboyx) and swim shorts. No issues. Be sure to bring extra binders if you go the binder and shirt route",
+      "summary": "Trans-friendly experience shared",
+      "emoji": "🏊",
+      "theme": "logistics",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I'm%20non-binary%20and%20wore%20a%20compression%20swim%20top%20(from%20tomboyx&type=comment"
+    },
+    {
+      "text": "We want to check out Sky Lagoon on our last night in Reykjavik. We want to go in the late afternoon or early evening. The last time available to book right now is 7:30pm- is this enough time?",
+      "summary": "Evening timing question",
+      "emoji": "🌅",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=We%20want%20to%20check%20out%20Sky%20Lagoon%20on%20our%20last%20night%20in%20Reykjav&type=comment"
+    },
+    {
+      "text": "Yes, that's plenty of time. We skipped Blue Lagoon and did Sky Lagoon on our third night. I think our booking was for 7pm. We got to watch the sunset and it was absolutely perfect.",
+      "summary": "Perfect sunset timing",
+      "emoji": "🌅",
+      "theme": "scenery",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Yes%2C%20that's%20plenty%20of%20time.%20We%20skipped%20Blue%20Lagoon%20and%20did%20S&type=comment"
+    },
+    {
+      "text": "Did Sky Lagoon in August. We had reservations for 7;30 and we stayed there till 10:30. It was amazing to see the sunset and city lights come on.",
+      "summary": "Amazing sunset and lights",
+      "emoji": "🌃",
+      "theme": "scenery",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Did%20Sky%20Lagoon%20in%20August.%20We%20had%20reservations%20for%207%3B30%20and%20w&type=comment"
+    },
+    {
+      "text": "Going to book the pure pass at the sky lagoon and take the public number 1 bus from Reykjavik then the 30 min walk. Question - how much is the bus roughly?",
+      "summary": "Bus transport logistics",
+      "emoji": "🚌",
+      "theme": "logistics",
+      "score": 0,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Going%20to%20book%20the%20pure%20pass%20at%20the%20sky%20lagoon%20and%20take%20the%20p&type=comment"
+    },
+    {
+      "text": "Agree that blue lagoon is worse. We went to sky lagoon at 11 am when it opens and didn't experience this. It was really lovely, low key, no drunk idiots.",
+      "summary": "Better than Blue Lagoon",
+      "emoji": "🌅",
+      "theme": "vibe",
+      "score": 9,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Agree%20that%20blue%20lagoon%20is%20worse.%20We%20went%20to%20sky%20lagoon%20at%2011&type=comment"
+    },
+    {
+      "text": "Did Sky Lagoon on a saturday at 8pm and didn't feel this way, though was awesome just in awe hanging in the pool and being able to see the red from the volcano light up the sky",
+      "summary": "Volcano views were awesome",
+      "emoji": "🌋",
+      "theme": "scenery",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Did%20Sky%20Lagoon%20on%20a%20saturday%20at%208pm%20and%20didn't%20feel%20this%20way&type=comment"
+    },
+    {
+      "text": "I went to both. Sky Lagoon has better views and is more lowkey IMO. The lava restaurant at the Blue Lagoon though is 🔥🤤",
+      "summary": "Better views, more lowkey",
+      "emoji": "🌊",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20went%20to%20both.%20Sky%20Lagoon%20has%20better%20views%20and%20is%20more%20lowk&type=comment"
+    },
+    {
+      "text": "I loved blue lagoon. I think it is completely different that sky lagoon.",
+      "summary": "Different from Blue Lagoon",
+      "emoji": "⚖️",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20loved%20blue%20lagoon.%20I%20think%20it%20is%20completely%20different%20that&type=comment"
+    },
+    {
+      "text": "Ive done blue lagoon multiple times. I just did sky lagoon this week and it was so underwhelming. At least at the blue lagoon you get the novelty of the cool water, you have access to steam baths, a facial scrub etc. None of that is included at the sky lagoon.",
+      "summary": "Underwhelming compared to Blue",
+      "emoji": "😞",
+      "theme": "overrated",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=Ive%20done%20blue%20lagoon%20multiple%20times.%20I%20just%20did%20sky%20lagoon%20t&type=comment"
+    },
+    {
+      "text": "I have traveled to Iceland last year for a personal vacation and I am now returning for a work trip soon. My work colleagues are going to blue lagoon and I am not sure whether to go again with them, or just wander to sky lagoon",
+      "summary": "Choosing between lagoons again",
+      "emoji": "🤔",
+      "theme": "logistics",
+      "score": 36,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20have%20traveled%20to%20Iceland%20last%20year%20for%20a%20personal%20vacation&type=comment"
+    },
+    {
+      "text": "I've been to both and they're honestly quite different, which is why I always struggle to say which one is better. Blue Lagoon is iconic and very unique, but Sky Lagoon feels more intimate and atmospheric, especially with the ocean view and the ritual.",
+      "summary": "More intimate and atmospheric",
+      "emoji": "🌊",
+      "theme": "vibe",
+      "score": 102,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I've%20been%20to%20both%20and%20they're%20honestly%20quite%20different%2C%20whic&type=comment"
+    },
+    {
+      "text": "Sky lagoon",
+      "summary": "Simple Sky recommendation",
+      "emoji": "👆",
+      "theme": "vibe",
+      "score": 16,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Sky%20lagoon&type=comment"
+    },
+    {
+      "text": "Blue Lagoon is, in my opinion, *disgusting*. We did a bunch all around the ringroad of Iceland and it came out the bottom for us. Sky Lagoon is the winner. It's clean, stunningly beautiful, serene and relaxing.",
+      "summary": "Clean and stunningly beautiful",
+      "emoji": "✨",
+      "theme": "vibe",
+      "score": 8,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Blue%20Lagoon%20is%2C%20in%20my%20opinion%2C%20*disgusting*.%20We%20did%20a%20bunch%20&type=comment"
+    },
+    {
+      "text": "My experience was that Sky Lagoon is much nicer. The Blue Lagoon was so overly crowded and mechanical. The Sky Lagoon was beautiful, and more relaxing.",
+      "summary": "Much nicer than Blue",
+      "emoji": "😌",
+      "theme": "vibe",
+      "score": 5,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=My%20experience%20was%20that%20Sky%20Lagoon%20is%20much%20nicer.%20The%20Blue%20La&type=comment"
+    },
+    {
+      "text": "Of those two Blue Lagoon for sure. Iconic. Really fun. Bigger. Go early in the AM to avoid crowds. Sky Lagoon felt off to us. Really crowded, still beautiful though.",
+      "summary": "Felt off, really crowded",
+      "emoji": "😕",
+      "theme": "crowds",
+      "score": 5,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=Of%20those%20two%20Blue%20Lagoon%20for%20sure.%20Iconic.%20Really%20fun.%20Bigge&type=comment"
+    },
+    {
+      "text": "Sky Lagoon is my favorite of the two.",
+      "summary": "Favorite of the two",
+      "emoji": "❤️",
+      "theme": "vibe",
+      "score": 5,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Sky%20Lagoon%20is%20my%20favorite%20of%20the%20two.&type=comment"
+    },
+    {
+      "text": "We are headed to Sky Lagoon mainly due to its proximity to Reykjavik. It's less than half the distance compared to Blue, and considering we are traveling in February the decision makes sense.",
+      "summary": "Proximity to Reykjavik advantage",
+      "emoji": "📍",
+      "theme": "logistics",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20are%20headed%20to%20Sky%20Lagoon%20mainly%20due%20to%20its%20proximity%20to%20R&type=comment"
+    },
+    {
+      "text": "I would choose a Hvammsvik. It's in a more natural setting than Sky Lagoon. You can book a shuttle out there.",
+      "summary": "Hvammsvik more natural",
+      "emoji": "🌿",
+      "theme": "vibe",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20would%20choose%20a%20Hvammsvik.%20It's%20in%20a%20more%20natural%20setting%20t&type=comment"
+    },
+    {
+      "text": "Sky lagoon is definitely worth going to! The trouble with my solo trip and the spas is I felt a little alone like \"I should be here with someone damn\". Sky Lagoon is absolutely amazing.",
+      "summary": "Amazing but lonely solo",
+      "emoji": "🥲",
+      "theme": "vibe",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Sky%20lagoon%20is%20definitely%20worth%20going%20to!%20The%20trouble%20with%20my&type=comment"
+    },
+    {
+      "text": "We did both. Blue Lagoon was a \"we're in Iceland and it would be cool to see\" Sky Lagoon was because we wanted a nice experience. Both were great, but Sky is far nicer.",
+      "summary": "Sky far nicer experience",
+      "emoji": "🏆",
+      "theme": "vibe",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20did%20both.%20Blue%20Lagoon%20was%20a%20we're%20in%20Iceland%20and%20it%20woul&type=comment"
+    },
+    {
+      "text": "Been to both, and I personally thought sky lagoon was way better. You should def go there and experience it since you've already done blue lagoon before.",
+      "summary": "Way better than Blue",
+      "emoji": "👑",
+      "theme": "vibe",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Been%20to%20both%2C%20and%20I%20personally%20thought%20sky%20lagoon%20was%20way%20be&type=comment"
+    },
+    {
+      "text": "Sky Lagoon was nice. Really crowded when we went (late Nov a few years ago). I preferred the vibe and views at Hvammsvik Hot Springs, but that's only if you have a car.",
+      "summary": "Nice but crowded",
+      "emoji": "🚗",
+      "theme": "crowds",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Sky%20Lagoon%20was%20nice.%20Really%20crowded%20when%20we%20went%20(late%20Nov%20a&type=comment"
+    },
+    {
+      "text": "I definitely preferred Sky lagoon",
+      "summary": "Definitely preferred Sky",
+      "emoji": "✅",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20definitely%20preferred%20Sky%20lagoon&type=comment"
+    },
+    {
+      "text": "Sky Lagoon x 1,000,000!!!! It's amazing.",
+      "summary": "Extremely enthusiastic endorsement",
+      "emoji": "🚀",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Sky%20Lagoon%20x%201%2C000%2C000!!!!%20It's%20amazing.&type=comment"
+    },
+    {
+      "text": "Sky Lagoon is worth a visit",
+      "summary": "Worth a visit",
+      "emoji": "✔️",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Sky%20Lagoon%20is%20worth%20a%20visit&type=comment"
+    },
+    {
+      "text": "I've been to Iceland 3 times, we did both on the first visit. I've only been back to sky lagoon. Make of that what you will.",
+      "summary": "Only returns to Sky",
+      "emoji": "🔄",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I've%20been%20to%20Iceland%203%20times%2C%20we%20did%20both%20on%20the%20first%20visit&type=comment"
+    },
+    {
+      "text": "Sky lagoon 100%",
+      "summary": "One hundred percent Sky",
+      "emoji": "💯",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Sky%20lagoon%20100%25&type=comment"
+    },
+    {
+      "text": "I went to sky lagoon as blue lagoon wasn't an option due to the volcanic activity at the time. I really enjoyed sky lagoon, I don't feel like I have missed out on not being able to go to blue lagoon at all.",
+      "summary": "No regrets missing Blue",
+      "emoji": "🌋",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20went%20to%20sky%20lagoon%20as%20blue%20lagoon%20wasn't%20an%20option%20due%20to%20&type=comment"
+    },
+    {
+      "text": "I just did both this past week - Sky is more for grown ups, has a beautiful view of the sea, nicer facilities, nicer cafe, & locker rooms, but no suit spinner to dry your bathing suit.",
+      "summary": "More mature, nicer facilities",
+      "emoji": "👔",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20just%20did%20both%20this%20past%20week%20-%20Sky%20is%20more%20for%20grown%20ups%2C%20&type=comment"
+    },
+    {
+      "text": "I'll be in Iceland next week and wanting to go Sky lagoon and take lots of photos! But I'm just wondering how do you go about holding the phone all throughout while you're in the water?",
+      "summary": "Photo logistics question",
+      "emoji": "📱",
+      "theme": "logistics",
+      "score": 0,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I'll%20be%20in%20Iceland%20next%20week%20and%20wanting%20to%20go%20Sky%20lagoon%20an&type=comment"
+    },
+    {
+      "text": "On my first trip to Sky Lagoon, I took the iPhone in with me. I left it in my swimsuit pocket. It stayed underwater for about 2 hours.",
+      "summary": "Phone survived underwater",
+      "emoji": "📱",
+      "theme": "logistics",
+      "score": -5,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=On%20my%20first%20trip%20to%20Sky%20Lagoon%2C%20I%20took%20the%20iPhone%20in%20with%20me&type=comment"
+    },
+    {
+      "text": "Sky Lagoon is up there with best sauna/ hot spring experience - we love tying this into trips and Sky lagoon is our favourite from around the world. Added perk was the northern lights.",
+      "summary": "World's best spa experience",
+      "emoji": "🌟",
+      "theme": "vibe",
+      "score": 536,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Sky%20Lagoon%20is%20up%20there%20with%20best%20sauna%2F%20hot%20spring%20experienc&type=comment"
+    },
+    {
+      "text": "what time did you book the sky lagoon?",
+      "summary": "Booking time inquiry",
+      "emoji": "⏰",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=what%20time%20did%20you%20book%20the%20sky%20lagoon%3F&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Weekday mornings (right when they open) are the least crowded. Tuesday or Wednesday tend to be quieter than Monday or Thursday. For the best experience, I'd book a late afternoon slot around 4-5 PM for sunset views.",
+      "score": 2,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Sky Lagoon was a great first stop coming off an early morning flight - perfect for jet lag recovery",
+      "score": 1,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Skip the Sér package upgrade with private changing rooms - not worth the extra cost",
+      "score": 1,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Hvammsvik Hot Springs",
+      "mentionCount": 4,
+      "context": "more natural setting, can go into ocean, less crowded, better food"
+    },
+    {
+      "name": "Blue Lagoon",
+      "mentionCount": 22,
+      "context": "larger scale, more iconic, unique milky water, facial scrubs included"
+    },
+    {
+      "name": "Secret Lagoon",
+      "mentionCount": 2,
+      "context": "cheaper option, good experience"
+    },
+    {
+      "name": "Forest Lagoon",
+      "mentionCount": 2,
+      "context": "second favorite after Sky Lagoon"
+    }
+  ],
+  "scrapedAt": "2026-03-21T16:36:54.117Z"
+}

@@ -1,0 +1,142 @@
+{
+  "cardId": "day6-glacier-hike",
+  "sentiment": "loved",
+  "mentionCount": 11,
+  "tensionSummary": "\"Highlights of our trip\" vs \"Long driving day challenges\"",
+  "distribution": {
+    "positive": 9,
+    "mixed": 2,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "Day 1 - Land around noon, pick up car, explore Reykjavik, northern lights attempt",
+      "summary": "First time itinerary planning",
+      "emoji": "🗓️",
+      "theme": "logistics",
+      "score": 3,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Day%201%20-%20Land%20around%20noon%2C%20pick%20up%20car%2C%20explore%20Reykjavik%2C%20no&type=comment"
+    },
+    {
+      "text": "On 4 jun we have glacier hike at skaftafell, and late eve jokulsarlon zodiac boat tour",
+      "summary": "Planned glacier hike activity",
+      "emoji": "🏔️",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=On%204%20jun%20we%20have%20glacier%20hike%20at%20skaftafell%2C%20and%20late%20eve%20jo&type=comment"
+    },
+    {
+      "text": "Planning a 15-day trip in late May-early June 2026 with my wife and son (9 years)",
+      "summary": "Family trip planning ahead",
+      "emoji": "👨‍👩‍👦",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Planning%20a%2015-day%20trip%20in%20late%20May-early%20June%202026%20with%20my%20w&type=comment"
+    },
+    {
+      "text": "we'll leave in the morning from Hvoll and the plan would be to go to Skaftafell, do a glacier hike (3–4 hours), see Svartifoss",
+      "summary": "Detailed day trip planning",
+      "emoji": "⏰",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=we'll%20leave%20in%20the%20morning%20from%20Hvoll%20and%20the%20plan%20would%20be%20&type=comment"
+    },
+    {
+      "text": "We did the Glacier Hike and it was the highlights of our trip. We had a great guide who brought us to see different parts of the glacier safely.",
+      "summary": "Trip highlight experience",
+      "emoji": "🌟",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20did%20the%20Glacier%20Hike%20and%20it%20was%20the%20highlights%20of%20our%20tri&type=comment"
+    },
+    {
+      "text": "I'm solo traveling to Iceland in mid-to-late April (4/18–4/26) and am putting together a Ring Road trip itinerary",
+      "summary": "Solo Ring Road planning",
+      "emoji": "🚗",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I'm%20solo%20traveling%20to%20Iceland%20in%20mid-to-late%20April%20(4%2F18%E2%80%934%2F2&type=comment"
+    },
+    {
+      "text": "Traveling in late August 2025 with my husband and two kids (will be ages 6 & 8). Trying to find a good mix of hiking/seeing sights",
+      "summary": "Family adventure balance seeking",
+      "emoji": "👨‍👩‍👧‍👦",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Traveling%20in%20late%20August%202025%20with%20my%20husband%20and%20two%20kids%20(&type=comment"
+    },
+    {
+      "text": "I was curious about how the weather warnings impact outdoor activities. We plan on doing the Skogafoss - Skalabrekkufoss hike tomorrow",
+      "summary": "Weather impact concerns",
+      "emoji": "🌪️",
+      "theme": "weather",
+      "score": 2,
+      "sub": "r/VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20was%20curious%20about%20how%20the%20weather%20warnings%20impact%20outdoor%20&type=comment"
+    },
+    {
+      "text": "The good thing is that the hike is out-and-back so you can cut it short when it gets too bad",
+      "summary": "Flexible hiking advice",
+      "emoji": "💡",
+      "theme": "tip",
+      "score": 0,
+      "sub": "r/VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=The%20good%20thing%20is%20that%20the%20hike%20is%20out-and-back%20so%20you%20can%20c&type=comment"
+    },
+    {
+      "text": "The trip was my wife, kids 10 and 12, and myself. It was the kids first time traveling abroad.",
+      "summary": "Family international travel debut",
+      "emoji": "✈️",
+      "theme": "vibe",
+      "score": 13,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=The%20trip%20was%20my%20wife%2C%20kids%2010%20and%2012%2C%20and%20myself.%20It%20was%20the&type=comment"
+    },
+    {
+      "text": "I have a few coworkers who have done similar trips and they've all had great success",
+      "summary": "Coworker success stories validation",
+      "emoji": "👥",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20have%20a%20few%20coworkers%20who%20have%20done%20similar%20trips%20and%20they'&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Between doing the glacier hike or hiking Skaftafell trails, glacier hike for sure. Svartifoss round trip can be done in less than an hour.",
+      "score": 1,
+      "sub": "r/VisitingIceland"
+    },
+    {
+      "text": "The good thing is that the hike is out-and-back so you can cut it short when it gets too bad",
+      "score": 0,
+      "sub": "r/VisitingIceland"
+    },
+    {
+      "text": "I'd definitely plan to bring eye protection when hiking in windy conditions",
+      "score": 0,
+      "sub": "r/VisitingIceland"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:40:34.227Z"
+}

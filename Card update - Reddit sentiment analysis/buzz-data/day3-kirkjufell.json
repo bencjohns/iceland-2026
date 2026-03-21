@@ -1,0 +1,78 @@
+{
+  "cardId": "day3-kirkjufell",
+  "sentiment": "loved",
+  "mentionCount": 5,
+  "tensionSummary": "\"Must-see iconic landmark\" vs \"Planning logistics around it\"",
+  "distribution": {
+    "positive": 4,
+    "mixed": 1,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "We would love some feedback of this itinerary in case we are missing some epic spots",
+      "summary": "Seeking epic spots advice",
+      "emoji": "🗺️",
+      "theme": "logistics",
+      "score": 5,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=We%20would%20love%20some%20feedback%20of%20this%20itinerary%20in%20case%20we%20are&type=comment"
+    },
+    {
+      "text": "Day 2 is doable, Fjaðrárgljúfur and Jökulsárlón are mandatory",
+      "summary": "Mandatory Iceland destinations",
+      "emoji": "✅",
+      "theme": "tip",
+      "score": 7,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Day%202%20is%20doable%2C%20Fja%C3%B0r%C3%A1rglj%C3%BAfur%20and%20J%C3%B6kuls%C3%A1rl%C3%B3n%20are%20mandator&type=comment"
+    },
+    {
+      "text": "My partner and I are planning an Iceland trip in early-mid March and are stuck deciding between two options",
+      "summary": "March trip planning dilemma",
+      "emoji": "🤔",
+      "theme": "logistics",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=My%20partner%20and%20I%20are%20planning%20an%20Iceland%20trip%20in%20early-mid%20M&type=comment"
+    },
+    {
+      "text": "This will be our second trip to Iceland. Our first visit was in 2019 and we did golden circle, Landmannalagur, snorkeling in silfra",
+      "summary": "Returning for second visit",
+      "emoji": "🔄",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=This%20will%20be%20our%20second%20trip%20to%20Iceland.%20Our%20first%20visit%20was&type=comment"
+    },
+    {
+      "text": "My husband is obsessed with waterfalls, and we all enjoy nature and light hiking. How does this itinerary seem?",
+      "summary": "Waterfall obsessed family planning",
+      "emoji": "💧",
+      "theme": "scenery",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=My%20husband%20is%20obsessed%20with%20waterfalls%2C%20and%20we%20all%20enjoy%20nat&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Best moment for Kvernufoss is early in the morning",
+      "score": 7,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Kvernufoss",
+      "mentionCount": 1,
+      "context": "actually nicer than Skogafoss"
+    }
+  ],
+  "scrapedAt": "2026-03-21T17:09:28.118Z"
+}

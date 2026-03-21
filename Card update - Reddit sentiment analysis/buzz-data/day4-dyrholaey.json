@@ -1,0 +1,67 @@
+{
+  "cardId": "day4-dyrholaey",
+  "sentiment": "loved",
+  "mentionCount": 4,
+  "tensionSummary": "\"One of my favorite all time views\" vs \"Puffins were scarce yesterday\"",
+  "distribution": {
+    "positive": 3,
+    "mixed": 1,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "Yesterday the puffins were scarce at Dyrhólaey but there were one or two at the cliffs edge. They were flying around but I kept tracking them to see where they were landing on the cliff. Luckily, this guy landed in a spot on the cliff that was visible from the top.",
+      "summary": "Puffin spotting requires patience",
+      "emoji": "🔍",
+      "theme": "tip",
+      "score": 606,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Yesterday%20the%20puffins%20were%20scarce%20at%20Dyrh%C3%B3laey%20but%20there%20wer&type=comment"
+    },
+    {
+      "text": "That view off Dyrholaey is one of my favorite all time",
+      "summary": "All time favorite view",
+      "emoji": "😍",
+      "theme": "scenery",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=That%20view%20off%20Dyrholaey%20is%20one%20of%20my%20favorite%20all%20time&type=comment"
+    },
+    {
+      "text": "Beautiful shot! Actually, the black sand beach is called reynisfjara, and dyrhólaey is a rock formation with a hole in it a bit further down the beach. The formation you have in the background is reynisdrangar, or \"the three trolls\". Super cool story behind that one.",
+      "summary": "Rock formation with hole",
+      "emoji": "📚",
+      "theme": "tip",
+      "score": 8,
+      "sub": "EarthPorn",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Beautiful%20shot!%20Actually%2C%20the%20black%20sand%20beach%20is%20called%20rey&type=comment"
+    },
+    {
+      "text": "This black sand beach is called Reynisfjara, seen from the east end of Dyrhólaey(not in view)",
+      "summary": "Geographic reference point",
+      "emoji": "📍",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "EarthPorn",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=This%20black%20sand%20beach%20is%20called%20Reynisfjara%2C%20seen%20from%20the%20e&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Track flying puffins to see where they land on the cliff for better spotting",
+      "score": 606,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Dyrhólaey is a rock formation with a hole in it, different from Reynisfjara black sand beach",
+      "score": 8,
+      "sub": "EarthPorn"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:18:14.848Z"
+}

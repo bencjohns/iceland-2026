@@ -1,0 +1,117 @@
+{
+  "cardId": "day5-eldfell",
+  "sentiment": "mixed",
+  "mentionCount": 9,
+  "tensionSummary": "\"Included in ambitious itineraries\" vs \"Limited detailed discussion of experience\"",
+  "distribution": {
+    "positive": 0,
+    "mixed": 9,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "Planning a trip with some friends this coming July. 6x Adults. Have an aggressive itinerary and need some guidance if it's doable or simply way too ambitious.",
+      "summary": "Aggressive itinerary planning concern",
+      "emoji": "⏰",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Planning%20a%20trip%20with%20some%20friends%20this%20coming%20July.%206x%20Adult&type=comment"
+    },
+    {
+      "text": "We just came back from completing a 2 week counter clockwise ring road trip the second and third week of August. I used this page almost exclusively to plan my itinerary, so I wanted to give back to those planning.",
+      "summary": "Ring road trip recap",
+      "emoji": "🗺️",
+      "theme": "logistics",
+      "score": 34,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=We%20just%20came%20back%20from%20completing%20a%202%20week%20counter%20clockwise&type=comment"
+    },
+    {
+      "text": "Hoping others with more experience can confirm if this itinerary is doable or not with a 4 year old (for some context, hes autistic so his nervous system gets overwhelmed quicker than most).",
+      "summary": "Family accessibility concerns",
+      "emoji": "👶",
+      "theme": "logistics",
+      "score": 0,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Hoping%20others%20with%20more%20experience%20can%20confirm%20if%20this%20itine&type=comment"
+    },
+    {
+      "text": "We cooked up this itinerary in January and thought to ask for any extra recommendations, thoughts on the pacing, do's/dont's.",
+      "summary": "Seeking itinerary feedback",
+      "emoji": "📝",
+      "theme": "logistics",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=We%20cooked%20up%20this%20itinerary%20in%20January%20and%20thought%20to%20ask%20fo&type=comment"
+    },
+    {
+      "text": "We'll be in Iceland for 10 days in mid-May and were hoping to get some opinions on our current itinerary. Looking to make the most of our time there.",
+      "summary": "Ten day planning optimization",
+      "emoji": "🕰️",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=We'll%20be%20in%20Iceland%20for%2010%20days%20in%20mid-May%20and%20were%20hoping%20t&type=comment"
+    },
+    {
+      "text": "I would just stay overnight in Heimaey. You can book an early ferry back the next day. Up to you! It's a nice option. Heimaey is small but there is a lot to do.",
+      "summary": "Overnight Heimaey recommendation",
+      "emoji": "🛏️",
+      "theme": "tip",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20would%20just%20stay%20overnight%20in%20Heimaey.%20You%20can%20book%20an%20earl&type=comment"
+    },
+    {
+      "text": "We leave in a couple of weeks… and planning has been HARD because we have also been planning a wedding at the same time…",
+      "summary": "Last minute planning stress",
+      "emoji": "😅",
+      "theme": "logistics",
+      "score": 9,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=We%20leave%20in%20a%20couple%20of%20weeks%E2%80%A6%20and%20planning%20has%20been%20HARD%20be&type=comment"
+    },
+    {
+      "text": "This sub has been amazing for advice. Less than a week out and we thought we might as well add our itinerary, if you all aren't sick of giving itinerary feedback yet!",
+      "summary": "Final week itinerary check",
+      "emoji": "🤞",
+      "theme": "logistics",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=This%20sub%20has%20been%20amazing%20for%20advice.%20Less%20than%20a%20week%20out%20a&type=comment"
+    },
+    {
+      "text": "My partner and I are visiting Iceland this summer. We have an itinerary planned and hotels booked but were curious as to whether anyone has feedback on our schedule.",
+      "summary": "Summer schedule feedback request",
+      "emoji": "📅",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=My%20partner%20and%20I%20are%20visiting%20Iceland%20this%20summer.%20We%20have%20a&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Stay overnight in Heimaey and book an early ferry back the next day",
+      "score": 2,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "You can do all 3 hikes in a day if you wanted to",
+      "score": 2,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:28:51.264Z"
+}

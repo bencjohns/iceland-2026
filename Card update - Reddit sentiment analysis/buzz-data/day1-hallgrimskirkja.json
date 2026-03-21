@@ -1,0 +1,42 @@
+{
+  "cardId": "day1-hallgrimskirkja",
+  "sentiment": "hidden-gem",
+  "mentionCount": 2,
+  "tensionSummary": "\"Planning to visit\" vs \"Worth the time investment\"",
+  "distribution": {
+    "positive": 2,
+    "mixed": 0,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "We're going to be in Reykjavik for 5 nights in April. We have two kids (5 and 6), and we're planning to visit a number of museums and pools during our stay.",
+      "summary": "Family planning Reykjavik visit",
+      "emoji": "👨‍👩‍👧‍👦",
+      "theme": "logistics",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We're%20going%20to%20be%20in%20Reykjavik%20for%205%20nights%20in%20April.%20We%20hav&type=comment"
+    },
+    {
+      "text": "After having lurked /r/visitingiceland for a while and having passed through Keflavík airport a handful of times on travel between Europe and the US, I finally freed up some time and money to actually visit Iceland! As I only had 4 full days in Iceland, I put *a lot* of work into the planning.",
+      "summary": "Extensive planning for visit",
+      "emoji": "📋",
+      "theme": "logistics",
+      "score": 16,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=After%20having%20lurked%20%2Fr%2Fvisitingiceland%20for%20a%20while%20and%20havin&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Put a lot of work into planning for a short 4-day visit",
+      "score": 16,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T16:37:55.954Z"
+}

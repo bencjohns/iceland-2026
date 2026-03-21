@@ -1,0 +1,228 @@
+{
+  "cardId": "day8-perlan",
+  "sentiment": "loved",
+  "mentionCount": 18,
+  "tensionSummary": "\"Favorite natural history museum ever\" vs \"Overrated with text-heavy exhibits\"",
+  "distribution": {
+    "positive": 14,
+    "mixed": 3,
+    "negative": 1
+  },
+  "quotes": [
+    {
+      "text": "Just like the title says I was assaulted (or just about to be?) by a group of 6/7 teens behind the Perlan museum at about 8pm tonight.",
+      "summary": "Safety incident behind museum",
+      "emoji": "😰",
+      "theme": "safety",
+      "score": 109,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=Just%20like%20the%20title%20says%20I%20was%20assaulted%20(or%20just%20about%20to%20b&type=comment"
+    },
+    {
+      "text": "As a resident of the city, I'm sorry that you experienced this and I hope the rest of your trip is safe and uneventful! I'm also glad to hear that the staff at Perlan handled it well.",
+      "summary": "Staff handled incident well",
+      "emoji": "🤝",
+      "theme": "vibe",
+      "score": 106,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=As%20a%20resident%20of%20the%20city%2C%20I'm%20sorry%20that%20you%20experienced%20th&type=comment"
+    },
+    {
+      "text": "Perlan and Reykjavik are so overrated.... and the Middle Eastern and African illegal immigrants have made it worse....",
+      "summary": "Completely overrated experience",
+      "emoji": "👎",
+      "theme": "overrated",
+      "score": -8,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=Perlan%20and%20Reykjavik%20are%20so%20overrated....%20and%20the%20Middle%20Eas&type=comment"
+    },
+    {
+      "text": "The Perlan museum in Reykjavík, Iceland was designed by Ingimundur Sveinsson and opened in 1991. It features a prominent glass dome atop six former hot-water tanks.",
+      "summary": "Architectural marvel glass dome",
+      "emoji": "🏛️",
+      "theme": "vibe",
+      "score": 4,
+      "sub": "ArchitecturePorn",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=The%20Perlan%20museum%20in%20Reykjav%C3%ADk%2C%20Iceland%20was%20designed%20by%20Ingi&type=comment"
+    },
+    {
+      "text": "Is the Perlan Museum worth going to? We are 3 friends in our mid 60's.",
+      "summary": "Worth it for seniors?",
+      "emoji": "🤔",
+      "theme": "logistics",
+      "score": 20,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Is%20the%20Perlan%20Museum%20worth%20going%20to%3F%20We%20are%203%20friends%20in%20our&type=comment"
+    },
+    {
+      "text": "You can experience both the Northern Lights and an Ice cave at the Perlan.. definite YES! :)",
+      "summary": "Definite yes for exhibits",
+      "emoji": "✨",
+      "theme": "vibe",
+      "score": 10,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=You%20can%20experience%20both%20the%20Northern%20Lights%20and%20an%20Ice%20cave%20&type=comment"
+    },
+    {
+      "text": "Perlan is excellent! My family loved it and plan to stop there again next trip.",
+      "summary": "Excellent family experience",
+      "emoji": "😍",
+      "theme": "vibe",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Perlan%20is%20excellent!%20My%20family%20loved%20it%20and%20plan%20to%20stop%20the&type=comment"
+    },
+    {
+      "text": "Our family really likes Perlan, particularly on a clear day when you can see well from the observation deck. The aurora planetarium show is very good. The exhibits are informative and there's real substance to it, though I do agree about it being a little text-heavy.",
+      "summary": "Great views and shows",
+      "emoji": "🌟",
+      "theme": "scenery",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Our%20family%20really%20likes%20Perlan%2C%20particularly%20on%20a%20clear%20day%20&type=comment"
+    },
+    {
+      "text": "The Saga Museum was awesome. If you're by the airport on your way out there is the Vikingland Museum which has a full sized Viking ship",
+      "summary": "Alternative museum recommendations",
+      "emoji": "🛡️",
+      "theme": "tip",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=The%20Saga%20Museum%20was%20awesome.%20If%20you're%20by%20the%20airport%20on%20you&type=comment"
+    },
+    {
+      "text": "Perlan was excellent, I preferred it to the settlement exhibition personally! Lots to learn about the geology and history of Iceland, plus an excellent restaurant and cafe and a viewing balcony to get a good look at the city.",
+      "summary": "Excellent educational and dining",
+      "emoji": "🌟",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Perlan%20was%20excellent%2C%20I%20preferred%20it%20to%20the%20settlement%20exhib&type=comment"
+    },
+    {
+      "text": "At the beginning of our trip I was not all that interested in the Perlan. By the end of it I was so excited! The landscape is so amazing, I wanted to know more about the geology and history, the birds, the glaciers… everything! All of the exhibits are very well done.",
+      "summary": "Transformed from disinterested to excited",
+      "emoji": "🚀",
+      "theme": "underrated",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=At%20the%20beginning%20of%20our%20trip%20I%20was%20not%20all%20that%20interested%20i&type=comment"
+    },
+    {
+      "text": "The Perlan was my favorite attraction.",
+      "summary": "Top favorite attraction",
+      "emoji": "❤️",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=The%20Perlan%20was%20my%20favorite%20attraction.&type=comment"
+    },
+    {
+      "text": "Perlan is one of my favorite natural history museums ever. Note also, if the weather is nice, there are lovely walking trails and some WWII ruins behind the museum.",
+      "summary": "Favorite museum with trails",
+      "emoji": "🏆",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Perlan%20is%20one%20of%20my%20favorite%20natural%20history%20museums%20ever.%20N&type=comment"
+    },
+    {
+      "text": "Was hoping I could get some recommendations and tips about visiting the Perlan museum. How long should I plan to spend there? Should I plan to do lunch at the cafe or restaurant",
+      "summary": "Seeking planning advice",
+      "emoji": "📝",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Was%20hoping%20I%20could%20get%20some%20recommendations%20and%20tips%20about%20v&type=comment"
+    },
+    {
+      "text": "We spent about 4 hours there on New Year's Day and saw all but one exhibit in the museum. We probably could have spent longer, but Perlan was packed as pretty much the only thing open in Reyk that day.",
+      "summary": "Four hours well spent",
+      "emoji": "⏰",
+      "theme": "wait_time",
+      "score": 10,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20spent%20about%204%20hours%20there%20on%20New%20Year's%20Day%20and%20saw%20all%20b&type=comment"
+    },
+    {
+      "text": "Guys - the website for Perlan shows no availability at all for Sept. Is it really fully booked?",
+      "summary": "Fully booked concerns",
+      "emoji": "📅",
+      "theme": "logistics",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Guys%20-%20the%20website%20for%20Perlan%20shows%20no%20availability%20at%20all%20f&type=comment"
+    },
+    {
+      "text": "I was there a few days ago, bought a card from the gift shop, and absentmindedly left it on the table after eating at the cafe.",
+      "summary": "Lost item at cafe",
+      "emoji": "🤦",
+      "theme": "logistics",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20was%20there%20a%20few%20days%20ago%2C%20bought%20a%20card%20from%20the%20gift%20shop&type=comment"
+    },
+    {
+      "text": "Hey! Headed to Perlan next week and I'm in the DMV. I will look for the card!",
+      "summary": "Helpful community member",
+      "emoji": "🤝",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Hey!%20Headed%20to%20Perlan%20next%20week%20and%20I'm%20in%20the%20DMV.%20I%20will%20l&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Visit on a clear day when you can see well from the observation deck",
+      "score": 3,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Plan for about 4 hours to see most exhibits",
+      "score": 10,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "There are lovely walking trails and WWII ruins behind the museum if weather is nice",
+      "score": 1,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Saga Museum",
+      "mentionCount": 1,
+      "context": "described as awesome alternative"
+    },
+    {
+      "name": "Vikingland Museum",
+      "mentionCount": 1,
+      "context": "near airport with full sized Viking ship"
+    },
+    {
+      "name": "Settlement Exhibition",
+      "mentionCount": 1,
+      "context": "mentioned as comparison, Perlan preferred"
+    }
+  ],
+  "scrapedAt": "2026-03-21T17:57:55.317Z"
+}

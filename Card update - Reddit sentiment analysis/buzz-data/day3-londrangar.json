@@ -1,0 +1,107 @@
+{
+  "cardId": "day3-londrangar",
+  "sentiment": "hidden-gem",
+  "mentionCount": 8,
+  "tensionSummary": "\"Amazing scenic stop\" vs \"Just another cliff viewpoint\"",
+  "distribution": {
+    "positive": 6,
+    "mixed": 2,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "I recently came back from a trip to iceland and I thought I would share my experience! I went with my best friend and we had such an amazing time.",
+      "summary": "Amazing Iceland trip experience",
+      "emoji": "😍",
+      "theme": "vibe",
+      "score": 657,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20recently%20came%20back%20from%20a%20trip%20to%20iceland%20and%20I%20thought%20I%20&type=comment"
+    },
+    {
+      "text": "Hi! I am planning an Iceland road trip this May and I have decided the following itinerary. Does this plan sound good?",
+      "summary": "May itinerary planning check",
+      "emoji": "📋",
+      "theme": "logistics",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Hi!%20I%20am%20planning%20an%20Iceland%20road%20trip%20this%20May%20and%20I%20have%20d&type=comment"
+    },
+    {
+      "text": "I see a lot of posts here asking for itinerary help, so I wanted to share an actual 10-day Ring Road trip I designed and guided.",
+      "summary": "Ring Road trip guide",
+      "emoji": "🗺️",
+      "theme": "tip",
+      "score": 76,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20see%20a%20lot%20of%20posts%20here%20asking%20for%20itinerary%20help%2C%20so%20I%20wa&type=comment"
+    },
+    {
+      "text": "First time visit. Couple in 40s, accompanied by 65-year old mother in law (she likes hiking but is not in the best shape).",
+      "summary": "Multi-generational trip planning concerns",
+      "emoji": "👨‍👩‍👧‍👦",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=First%20time%20visit.%20Couple%20in%2040s%2C%20accompanied%20by%2065-year%20old%20&type=comment"
+    },
+    {
+      "text": "We are very used to winter driving including snow, ice and wind. We love cold weather and know how to dress for it.",
+      "summary": "Winter driving confidence expressed",
+      "emoji": "❄️",
+      "theme": "weather",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20are%20very%20used%20to%20winter%20driving%20including%20snow%2C%20ice%20and%20w&type=comment"
+    },
+    {
+      "text": "We are very used to winter driving including snow, ice and wind. We love cold weather and know how to dress for it.",
+      "summary": "Winter preparation expertise shared",
+      "emoji": "🧥",
+      "theme": "weather",
+      "score": 3,
+      "sub": "IcelandTravelTips",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20are%20very%20used%20to%20winter%20driving%20including%20snow%2C%20ice%20and%20w&type=comment"
+    },
+    {
+      "text": "My partner and I will be visiting Iceland from mid- to late August, and we're veryyyy excited! This has been my top-destination for as long as I can think of.",
+      "summary": "Dream destination excitement building",
+      "emoji": "🎉",
+      "theme": "vibe",
+      "score": 5,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=My%20partner%20and%20I%20will%20be%20visiting%20Iceland%20from%20mid-%20to%20late%20&type=comment"
+    },
+    {
+      "text": "Thanks to everyone who contributes to this community, it has been a fantastic resource. We have an 8 y/o, so any kid-friendly suggestions are welcome.",
+      "summary": "Family-friendly itinerary seeking advice",
+      "emoji": "👨‍👩‍👧‍👦",
+      "theme": "logistics",
+      "score": 9,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Thanks%20to%20everyone%20who%20contributes%20to%20this%20community%2C%20it%20has&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Share actual guided trip experience for 10-day Ring Road itinerary planning",
+      "score": 76,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Consider accessibility for older travelers when planning hiking destinations",
+      "score": 1,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:07:20.736Z"
+}

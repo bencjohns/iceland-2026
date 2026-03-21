@@ -1,0 +1,138 @@
+{
+  "cardId": "day5-eldheimar",
+  "sentiment": "hidden-gem",
+  "mentionCount": 11,
+  "tensionSummary": "\"Excellent museum experience\" vs \"Rarely mentioned as priority\"",
+  "distribution": {
+    "positive": 2,
+    "mixed": 9,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "I am feeling super bittersweet now that my first ever solo trip is ending",
+      "summary": "Solo trip emotional ending",
+      "emoji": "🥺",
+      "theme": "vibe",
+      "score": 680,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20am%20feeling%20super%20bittersweet%20now%20that%20my%20first%20ever%20solo%20t&type=comment"
+    },
+    {
+      "text": "Firstly thanks for all the advice I found here in helping shape this trip",
+      "summary": "Grateful trip planning advice",
+      "emoji": "🙏",
+      "theme": "tip",
+      "score": 35,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Firstly%20thanks%20for%20all%20the%20advice%20I%20found%20here%20in%20helping%20sh&type=comment"
+    },
+    {
+      "text": "Hoping others with more experience can confirm if this itinerary is doable or not with a 4 year old",
+      "summary": "Family itinerary planning concern",
+      "emoji": "🤔",
+      "theme": "logistics",
+      "score": 0,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Hoping%20others%20with%20more%20experience%20can%20confirm%20if%20this%20itine&type=comment"
+    },
+    {
+      "text": "First, thank you to several of the people in this sub for posting helpful content",
+      "summary": "Appreciative trip planning thanks",
+      "emoji": "🙏",
+      "theme": "tip",
+      "score": 97,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=First%2C%20thank%20you%20to%20several%20of%20the%20people%20in%20this%20sub%20for%20po&type=comment"
+    },
+    {
+      "text": "Had a great day on the stunning main island of the Vestmannaeyjar",
+      "summary": "Great Westman Islands day",
+      "emoji": "🌟",
+      "theme": "vibe",
+      "score": 77,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Had%20a%20great%20day%20on%20the%20stunning%20main%20island%20of%20the%20Vestmanna&type=comment"
+    },
+    {
+      "text": "My wife and I are in the midst of planning our honeymoon May 15-30 2026",
+      "summary": "Honeymoon planning in progress",
+      "emoji": "💍",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=My%20wife%20and%20I%20are%20in%20the%20midst%20of%20planning%20our%20honeymoon%20May&type=comment"
+    },
+    {
+      "text": "I thought I'd return the favor by sharing some logistical details from our day trip to the Westman Islands",
+      "summary": "Sharing Westman Islands logistics",
+      "emoji": "📝",
+      "theme": "logistics",
+      "score": 9,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20thought%20I'd%20return%20the%20favor%20by%20sharing%20some%20logistical%20de&type=comment"
+    },
+    {
+      "text": "Headed to Iceland with my ten year old son third week in August",
+      "summary": "Father-son Iceland trip planning",
+      "emoji": "👨‍👦",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Headed%20to%20Iceland%20with%20my%20ten%20year%20old%20son%20third%20week%20in%20Aug&type=comment"
+    },
+    {
+      "text": "Currently planning a Ring Road trip around Iceland for the last week of May",
+      "summary": "Ring Road trip planning",
+      "emoji": "🗺️",
+      "theme": "logistics",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Currently%20planning%20a%20Ring%20Road%20trip%20around%20Iceland%20for%20the%20l&type=comment"
+    },
+    {
+      "text": "Heimaey (westman) is a gorgeous little place with beautiful look outs trails, etc., but you also have Eldheimar museum (excellent)",
+      "summary": "Eldheimar museum is excellent",
+      "emoji": "🏛️",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Heimaey%20(westman)%20is%20a%20gorgeous%20little%20place%20with%20beautiful%20&type=comment"
+    },
+    {
+      "text": "Heimaey (westman) is a gorgeous little place with beautiful look outs trails, etc., but you also have Eldheimar museum (excellent)",
+      "summary": "Museum rated as excellent",
+      "emoji": "⭐",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Heimaey%20(westman)%20is%20a%20gorgeous%20little%20place%20with%20beautiful%20&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Ferry to Westman Islands is super easy and efficiently managed if you drive over",
+      "score": 77,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Snaefellsnes Peninsula",
+      "mentionCount": 2,
+      "context": "hard pick between Snaefellsnes and Westman Islands as both are enjoyable"
+    }
+  ],
+  "scrapedAt": "2026-03-21T17:31:02.999Z"
+}

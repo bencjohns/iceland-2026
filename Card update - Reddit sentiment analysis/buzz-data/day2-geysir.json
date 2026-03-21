@@ -1,0 +1,97 @@
+{
+  "cardId": "day2-geysir",
+  "sentiment": "loved",
+  "mentionCount": 7,
+  "tensionSummary": "\"Must-see Golden Circle highlight\" vs \"Just part of the standard itinerary\"",
+  "distribution": {
+    "positive": 6,
+    "mixed": 1,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "My parents and I are doing a 10-day self-drive around Iceland's Ring Road in early June",
+      "summary": "Ring Road planning",
+      "emoji": "🗺️",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=My%20parents%20and%20I%20are%20doing%20a%2010-day%20self-drive%20around%20Icelan&type=comment"
+    },
+    {
+      "text": "Hey everyone, I wanted some help to validate my Iceland itinerary. This will be a low-budget trip",
+      "summary": "Budget itinerary validation",
+      "emoji": "💰",
+      "theme": "cost",
+      "score": 0,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Hey%20everyone%2C%20I%20wanted%20some%20help%20to%20validate%20my%20Iceland%20itin&type=comment"
+    },
+    {
+      "text": "Hi all, we are an Italian couple that is going to be on vacation in Iceland the upcoming Friday on a campervan",
+      "summary": "Campervan trip planning",
+      "emoji": "🚐",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Hi%20all%2C%20we%20are%20an%20Italian%20couple%20that%20is%20going%20to%20be%20on%20vaca&type=comment"
+    },
+    {
+      "text": "Gonna try to keep this short but essentially looking for some feedback on my Iceland itinerary",
+      "summary": "Seeking itinerary feedback",
+      "emoji": "📋",
+      "theme": "logistics",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Gonna%20try%20to%20keep%20this%20short%20but%20essentially%20looking%20for%20som&type=comment"
+    },
+    {
+      "text": "I'm also going in a couple of weeks for almost the same amount of time, and I do agree that there's too much driving involved",
+      "summary": "Too much driving",
+      "emoji": "🚗",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I'm%20also%20going%20in%20a%20couple%20of%20weeks%20for%20almost%20the%20same%20amou&type=comment"
+    },
+    {
+      "text": "Going next week (3rd week of July) and would like someone to check out the list I've made so far",
+      "summary": "July itinerary check",
+      "emoji": "☀️",
+      "theme": "logistics",
+      "score": 0,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Going%20next%20week%20(3rd%20week%20of%20July)%20and%20would%20like%20someone%20to&type=comment"
+    },
+    {
+      "text": "Hi all, i'll be visiting Iceland for ~5 days mid-October with a friend, looking forward towards seeing the northern lights, the classic sights",
+      "summary": "Classic sights included",
+      "emoji": "🌟",
+      "theme": "vibe",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Hi%20all%2C%20i'll%20be%20visiting%20Iceland%20for%20~5%20days%20mid-October%20wit&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Keep itinerary flexible as Iceland can be quite unpredictable",
+      "score": 1,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Consider reducing driving time between destinations",
+      "score": 1,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T16:49:30.698Z"
+}

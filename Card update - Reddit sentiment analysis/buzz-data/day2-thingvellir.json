@@ -1,0 +1,72 @@
+{
+  "cardId": "day2-thingvellir",
+  "sentiment": "loved",
+  "mentionCount": 5,
+  "tensionSummary": "\"Overwhelming scenic beauty\" vs \"Do I need guidance\"",
+  "distribution": {
+    "positive": 4,
+    "mixed": 1,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "I can't recommend the drive from Gullfoss to pingvellir enough. Highway 35 to 37 to 365 (based on google maps). The vistas and remote feeling is overwhelming. I wanted to stay longer.",
+      "summary": "Overwhelming scenic drive",
+      "emoji": "😍",
+      "theme": "scenery",
+      "score": 3,
+      "sub": "EarthPorn",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20can't%20recommend%20the%20drive%20from%20Gullfoss%20to%20pingvellir%20enou&type=comment"
+    },
+    {
+      "text": "Last month during my travel in Iceland, I had the opportunity to explore Þingvellir National Park and experience scenic delights such as the Gulffoss waterfalls, Geysir, the Almannagjá gorge and myriad other areas of prominence.",
+      "summary": "Scenic delights exploration",
+      "emoji": "🌟",
+      "theme": "scenery",
+      "score": 63,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Last%20month%20during%20my%20travel%20in%20Iceland%2C%20I%20had%20the%20opportunit&type=comment"
+    },
+    {
+      "text": "Do I need a guide to explore Thingvellir?",
+      "summary": "Guide necessity question",
+      "emoji": "🤷",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Do%20I%20need%20a%20guide%20to%20explore%20Thingvellir%3F&type=comment"
+    },
+    {
+      "text": "I'm currently working on my animated graduation film at Gobelins art School: a very short animated piece about the beauty and preservation of Þingvellir National Park in Iceland.",
+      "summary": "Beauty worthy of film",
+      "emoji": "🎬",
+      "theme": "vibe",
+      "score": 5,
+      "sub": "Iceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I'm%20currently%20working%20on%20my%20animated%20graduation%20film%20at%20Gobe&type=comment"
+    },
+    {
+      "text": "I'm currently working on my Gobelins art school graduation film, a very short animated piece about the beauty and preservation of Þingvellir National Park in Iceland.",
+      "summary": "Preservation themed beauty",
+      "emoji": "🎨",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "Icelandic",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I'm%20currently%20working%20on%20my%20Gobelins%20art%20school%20graduation%20f&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Take Highway 35 to 37 to 365 route from Gullfoss to Þingvellir for best vistas",
+      "score": 3,
+      "sub": "EarthPorn"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T16:45:33.530Z"
+}

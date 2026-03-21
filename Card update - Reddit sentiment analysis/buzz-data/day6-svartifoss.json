@@ -1,0 +1,36 @@
+{
+  "cardId": "day6-svartifoss",
+  "sentiment": "hidden-gem",
+  "mentionCount": 2,
+  "tensionSummary": "\"Beautiful natural wonder\" vs \"Not enough discussion to show tension\"",
+  "distribution": {
+    "positive": 2,
+    "mixed": 0,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "Source page with Wikipedia link to Svartifoss",
+      "summary": "Informational waterfall share",
+      "emoji": "📸",
+      "theme": "scenery",
+      "score": 1,
+      "sub": "EarthPorn",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Source%20page%20with%20Wikipedia%20link%20to%20Svartifoss&type=comment"
+    },
+    {
+      "text": "Photographer: Giacomo Ciangottini with Wikipedia info link",
+      "summary": "Beautiful waterfall photography",
+      "emoji": "🌟",
+      "theme": "scenery",
+      "score": 3,
+      "sub": "MostBeautiful",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Photographer%3A%20Giacomo%20Ciangottini%20with%20Wikipedia%20info%20link&type=comment"
+    }
+  ],
+  "tips": [],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:42:37.224Z"
+}

@@ -1,0 +1,83 @@
+{
+  "cardId": "day4-seljalandsfoss",
+  "sentiment": "loved",
+  "mentionCount": 5,
+  "tensionSummary": "\"Fantasy realm experience\" vs \"heavily edited photos\"",
+  "distribution": {
+    "positive": 4,
+    "mixed": 1,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "a heavily edited event at Seljalandsfoss, Iceland.",
+      "summary": "Heavily edited photos",
+      "emoji": "📸",
+      "theme": "overrated",
+      "score": 2,
+      "sub": "EarthPorn",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=a%20heavily%20edited%20event%20at%20Seljalandsfoss%2C%20Iceland.&type=comment"
+    },
+    {
+      "text": "We were on our way from Reykjavik to Vik to see Skogafoss and we saw Seljalandsfoss from the highway about 2 miles away. We made a detour and it was MUCH more impressive than Skogafoss.",
+      "summary": "More impressive than Skogafoss",
+      "emoji": "🌟",
+      "theme": "underrated",
+      "score": 2,
+      "sub": "EarthPorn",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20were%20on%20our%20way%20from%20Reykjavik%20to%20Vik%20to%20see%20Skogafoss%20an&type=comment"
+    },
+    {
+      "text": "Summers are short in Iceland. During certain time of year position of the setting sun is ideal for certain pictures in certain spots. This is prime example, as the warm, low angle sunlight illuminates the cavern of this waterfall only for few months before it sets further back towards the ocean.",
+      "summary": "Perfect seasonal lighting window",
+      "emoji": "☀️",
+      "theme": "weather",
+      "score": 141,
+      "sub": "EarthPorn",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Summers%20are%20short%20in%20Iceland.%20During%20certain%20time%20of%20year%20po&type=comment"
+    },
+    {
+      "text": "Seljalandsfoss is an impressive waterfall from the front, but what really sets it apart is behind. The experience made it feel like a fantasy realm, you walk through bright green moss into a hidden cave, get blasted by thundering spray all the while, and look out to see the waterfall being lit by…",
+      "summary": "Fantasy realm experience",
+      "emoji": "🧚",
+      "theme": "vibe",
+      "score": 62,
+      "sub": "EarthPorn",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Seljalandsfoss%20is%20an%20impressive%20waterfall%20from%20the%20front%2C%20bu&type=comment"
+    },
+    {
+      "text": "How is it do you pronounce \"Seljalandsfoss\"? Looks stunning, nonetheless!!",
+      "summary": "Stunning despite pronunciation",
+      "emoji": "😍",
+      "theme": "scenery",
+      "score": 1,
+      "sub": "EarthPorn",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=How%20is%20it%20do%20you%20pronounce%20Seljalandsfoss%3F%20Looks%20stunning%2C&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Visit during summer months when low angle sunlight illuminates the cavern",
+      "score": 141,
+      "sub": "EarthPorn"
+    },
+    {
+      "text": "Walk behind the waterfall through the moss-covered cave for the best experience",
+      "score": 62,
+      "sub": "EarthPorn"
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Skogafoss",
+      "mentionCount": 1,
+      "context": "comparison destination, but Seljalandsfoss found more impressive"
+    }
+  ],
+  "scrapedAt": "2026-03-21T17:11:38.097Z"
+}

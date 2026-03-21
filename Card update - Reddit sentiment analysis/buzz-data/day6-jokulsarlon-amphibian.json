@@ -1,0 +1,42 @@
+{
+  "cardId": "day6-jokulsarlon-amphibian",
+  "sentiment": "hidden-gem",
+  "mentionCount": 2,
+  "tensionSummary": "\"Included in itinerary\" vs \"Limited discussion\"",
+  "distribution": {
+    "positive": 2,
+    "mixed": 0,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "Day 7 - Jökulsárlón Amphibian Boat Tour included in South Coast itinerary",
+      "summary": "Planned glacier lagoon tour",
+      "emoji": "🚤",
+      "theme": "logistics",
+      "score": 5,
+      "sub": "itineraries",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Day%207%20-%20J%C3%B6kuls%C3%A1rl%C3%B3n%20Amphibian%20Boat%20Tour%20included%20in%20South%20Co&type=comment"
+    },
+    {
+      "text": "Day 7 - Jökulsárlón Amphibian Boat Tour scheduled in Iceland visit plan",
+      "summary": "Structured tour planning",
+      "emoji": "📋",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Day%207%20-%20J%C3%B6kuls%C3%A1rl%C3%B3n%20Amphibian%20Boat%20Tour%20scheduled%20in%20Iceland&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Schedule Jökulsárlón Amphibian Boat Tour as part of South Coast day trip",
+      "score": 5,
+      "sub": "itineraries"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:45:26.980Z"
+}

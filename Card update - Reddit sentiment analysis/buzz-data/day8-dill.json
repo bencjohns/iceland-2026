@@ -1,0 +1,123 @@
+{
+  "cardId": "day8-dill",
+  "sentiment": "loved",
+  "mentionCount": 8,
+  "tensionSummary": "\"Michelin star celebration worthy\" vs \"high-end luxury dining\"",
+  "distribution": {
+    "positive": 7,
+    "mixed": 1,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "after getting a TON of advice off of this subreddit I feel obligated to return the favor for anyone planning their own trip",
+      "summary": "Sharing travel wisdom",
+      "emoji": "🤝",
+      "theme": "tip",
+      "score": 15,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=after%20getting%20a%20TON%20of%20advice%20off%20of%20this%20subreddit%20I%20feel%20o&type=comment"
+    },
+    {
+      "text": "Hi, i am now scheduling my honeymoon to Iceland. It's gonna be arrival Dec 8th ~ 19th.",
+      "summary": "December honeymoon planning",
+      "emoji": "💕",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Hi%2C%20i%20am%20now%20scheduling%20my%20honeymoon%20to%20Iceland.%20It's%20gonna%20&type=comment"
+    },
+    {
+      "text": "We went to Iceland in early July and wanted to share our itinerary as well as some tips, packing list, Google My Maps, etc.",
+      "summary": "July ring road recap",
+      "emoji": "🗺️",
+      "theme": "tip",
+      "score": 15,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20went%20to%20Iceland%20in%20early%20July%20and%20wanted%20to%20share%20our%20iti&type=comment"
+    },
+    {
+      "text": "Currently planning my fiancé and I's honeymoon and I have come to a bit of a planning wall!",
+      "summary": "Honeymoon planning challenges",
+      "emoji": "🤔",
+      "theme": "logistics",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Currently%20planning%20my%20fianc%C3%A9%20and%20I's%20honeymoon%20and%20I%20have%20co&type=comment"
+    },
+    {
+      "text": "Iceland is a country known for its natural beauty, progressive culture, and thriving economy. While it's a small island, it offers an array of luxurious places",
+      "summary": "Luxury dining destination",
+      "emoji": "💎",
+      "theme": "vibe",
+      "score": 0,
+      "sub": "WealthyWomen101",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Iceland%20is%20a%20country%20known%20for%20its%20natural%20beauty%2C%20progressi&type=comment"
+    },
+    {
+      "text": "Reykjavik offers a vibrant dining scene with a variety of top-rated restaurants",
+      "summary": "Vibrant dining scene",
+      "emoji": "🍽️",
+      "theme": "food_quality",
+      "score": 5,
+      "sub": "IcelandExplorers",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Reykjavik%20offers%20a%20vibrant%20dining%20scene%20with%20a%20variety%20of%20to&type=comment"
+    },
+    {
+      "text": "We were hoping to celebrate with a fancy Michelin star restaurant or similar. We were hoping to have help choosing between one of the following: Dill Restaurant",
+      "summary": "Michelin star celebration worthy",
+      "emoji": "⭐",
+      "theme": "food_quality",
+      "score": 5,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20were%20hoping%20to%20celebrate%20with%20a%20fancy%20Michelin%20star%20resta&type=comment"
+    },
+    {
+      "text": "This 7-day relaxing Iceland itinerary is designed for travelers who want to experience the country's breathtaking landscapes while indulging in top dining experiences",
+      "summary": "Top dining experience",
+      "emoji": "🌟",
+      "theme": "food_quality",
+      "score": 3,
+      "sub": "IcelandTravelTips",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=This%207-day%20relaxing%20Iceland%20itinerary%20is%20designed%20for%20travel&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Plan honeymoon dining reservations well in advance for special occasions",
+      "score": 5,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Consider Dill Restaurant for Michelin star level celebration dining",
+      "score": 5,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Moss",
+      "mentionCount": 1,
+      "context": "alternative Michelin star option for special celebration"
+    },
+    {
+      "name": "Sjávargrillið",
+      "mentionCount": 1,
+      "context": "alternative fine dining option for honeymoon celebration"
+    },
+    {
+      "name": "Matur og",
+      "mentionCount": 1,
+      "context": "alternative high-end restaurant option"
+    }
+  ],
+  "scrapedAt": "2026-03-21T18:02:30.420Z"
+}

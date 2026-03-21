@@ -1,0 +1,36 @@
+{
+  "cardId": "day3-arnarstapi",
+  "sentiment": "hidden-gem",
+  "mentionCount": 2,
+  "tensionSummary": "\"Planned itinerary inclusion\" vs \"Limited discussion\"",
+  "distribution": {
+    "positive": 2,
+    "mixed": 0,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "Arnarstapi–Hellnar Coastal Walk included in Day Area & Activities Summary",
+      "summary": "Planned coastal walk experience",
+      "emoji": "🗓️",
+      "theme": "logistics",
+      "score": 5,
+      "sub": "itineraries",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Arnarstapi%E2%80%93Hellnar%20Coastal%20Walk%20included%20in%20Day%20Area%20%26%20Activ&type=comment"
+    },
+    {
+      "text": "Arnarstapi–Hellnar Coastal Walk included in Day Area & Activities Summary",
+      "summary": "Itinerary planning inclusion",
+      "emoji": "📋",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Arnarstapi%E2%80%93Hellnar%20Coastal%20Walk%20included%20in%20Day%20Area%20%26%20Activ&type=comment"
+    }
+  ],
+  "tips": [],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:03:12.109Z"
+}

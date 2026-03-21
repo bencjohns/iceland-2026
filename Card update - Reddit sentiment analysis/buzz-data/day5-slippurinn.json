@@ -1,0 +1,42 @@
+{
+  "cardId": "day5-slippurinn",
+  "sentiment": "mixed",
+  "mentionCount": 2,
+  "tensionSummary": "\"Restaurant contact info\" vs \"Just laughing at name\"",
+  "distribution": {
+    "positive": 1,
+    "mixed": 1,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "Haha...slippurinn!",
+      "summary": "Amused by the name",
+      "emoji": "😄",
+      "theme": "vibe",
+      "score": 19,
+      "sub": "drydockporn",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Haha...slippurinn!&type=comment"
+    },
+    {
+      "text": "www.slippurinn.com Send me an email; gislimatt@gmail.com!",
+      "summary": "Restaurant contact sharing",
+      "emoji": "📧",
+      "theme": "logistics",
+      "score": 12,
+      "sub": "KitchenConfidential",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=www.slippurinn.com%20Send%20me%20an%20email%3B%20gislimatt%40gmail.com!&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Contact via email at gislimatt@gmail.com",
+      "score": 12,
+      "sub": "KitchenConfidential"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:36:07.170Z"
+}

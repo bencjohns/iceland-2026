@@ -1,0 +1,36 @@
+{
+  "cardId": "day2-kerid",
+  "sentiment": "mixed",
+  "mentionCount": 2,
+  "tensionSummary": "\"Photography destination\" vs \"Limited discussion content\"",
+  "distribution": {
+    "positive": 0,
+    "mixed": 2,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "Welcome to /r/itookapicture! We talk about making photos here. No off-topic comments please. scenicdurian, what did you want this photo to be like? How did you make it? What's best about it?",
+      "summary": "Photography discussion prompt",
+      "emoji": "📸",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "itookapicture",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Welcome%20to%20%2Fr%2Fitookapicture!%20We%20talk%20about%20making%20photos%20her&type=comment"
+    },
+    {
+      "text": "Welcome to /r/itookapicture! We talk about making photos here. No off-topic comments please. Technicolor_Owl, what did you want this photo to be like? How did you make it? What's best about it?",
+      "summary": "Photography discussion prompt",
+      "emoji": "📸",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "itookapicture",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Welcome%20to%20%2Fr%2Fitookapicture!%20We%20talk%20about%20making%20photos%20her&type=comment"
+    }
+  ],
+  "tips": [],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T16:57:40.779Z"
+}

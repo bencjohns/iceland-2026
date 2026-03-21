@@ -1,0 +1,42 @@
+{
+  "cardId": "day4-plane-wreck",
+  "sentiment": "mixed",
+  "mentionCount": 2,
+  "tensionSummary": "\"I find it really cool\" vs \"not really popular with locals\"",
+  "distribution": {
+    "positive": 1,
+    "mixed": 1,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "I know it's not really popular with locals since theres so much to see in Iceland rather than old wreckage but I like planes so I kinda find it really cool",
+      "summary": "Cool despite local disinterest",
+      "emoji": "✈️",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20know%20it's%20not%20really%20popular%20with%20locals%20since%20theres%20so%20m&type=comment"
+    },
+    {
+      "text": "Near Seljalandsfoss there is a DC-3 plane wreck, which is easier accessible than this one and in my opinion it looks better because it doesnt have stickers allover than the one at Solheimasandur",
+      "summary": "Alternative looks better condition",
+      "emoji": "🤔",
+      "theme": "scenery",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Near%20Seljalandsfoss%20there%20is%20a%20DC-3%20plane%20wreck%2C%20which%20is%20ea&type=comment"
+    }
+  ],
+  "tips": [],
+  "alternatives": [
+    {
+      "name": "DC-3 plane wreck near Seljalandsfoss",
+      "mentionCount": 1,
+      "context": "easier accessible and looks better because it doesn't have stickers all over it"
+    }
+  ],
+  "scrapedAt": "2026-03-21T17:16:08.253Z"
+}

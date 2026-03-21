@@ -1,0 +1,117 @@
+{
+  "cardId": "day4-smidjan",
+  "sentiment": "loved",
+  "mentionCount": 9,
+  "tensionSummary": "\"Great brewery experience\" vs \"Limited specific details shared\"",
+  "distribution": {
+    "positive": 7,
+    "mixed": 2,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "Thanks to this subreddit and the amount of info here, I was able to make a really great solo trip for myself focusing on hiking and trying local places like Smiðjan Brugghús",
+      "summary": "Great solo trip experience",
+      "emoji": "🌟",
+      "theme": "vibe",
+      "score": 532,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Thanks%20to%20this%20subreddit%20and%20the%20amount%20of%20info%20here%2C%20I%20was%20&type=comment"
+    },
+    {
+      "text": "Briefly reported on my two days in Snæfellsnes Peninsula including stops at local breweries like Smiðjan Brugghús",
+      "summary": "Peninsula brewery highlight",
+      "emoji": "🍺",
+      "theme": "vibe",
+      "score": 830,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Briefly%20reported%20on%20my%20two%20days%20in%20Sn%C3%A6fellsnes%20Peninsula%20inc&type=comment"
+    },
+    {
+      "text": "My wife and I experienced the natural beauty and local culture including visits to Smiðjan Brugghús during our six full days",
+      "summary": "Couple's cultural experience",
+      "emoji": "💑",
+      "theme": "vibe",
+      "score": 52,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=My%20wife%20and%20I%20experienced%20the%20natural%20beauty%20and%20local%20cultu&type=comment"
+    },
+    {
+      "text": "Planning my first trip to Iceland and looking for recommendations including places like Smiðjan Brugghús for local experiences",
+      "summary": "Planning local brewery visit",
+      "emoji": "📋",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Planning%20my%20first%20trip%20to%20Iceland%20and%20looking%20for%20recommenda&type=comment"
+    },
+    {
+      "text": "After one trip to Iceland, sharing experiences including brewery visits like Smiðjan Brugghús for future travelers",
+      "summary": "Sharing brewery recommendation",
+      "emoji": "💭",
+      "theme": "tip",
+      "score": 94,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=After%20one%20trip%20to%20Iceland%2C%20sharing%20experiences%20including%20bre&type=comment"
+    },
+    {
+      "text": "Did a 10 day trip around the ring road and really enjoyed local experiences including Smiðjan Brugghús",
+      "summary": "Ring road brewery stop",
+      "emoji": "🚗",
+      "theme": "vibe",
+      "score": 85,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Did%20a%2010%20day%20trip%20around%20the%20ring%20road%20and%20really%20enjoyed%20lo&type=comment"
+    },
+    {
+      "text": "Trip of a lifetime sharing what I enjoyed including local brewery experiences like Smiðjan Brugghús",
+      "summary": "Lifetime trip brewery highlight",
+      "emoji": "✨",
+      "theme": "vibe",
+      "score": 53,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Trip%20of%20a%20lifetime%20sharing%20what%20I%20enjoyed%20including%20local%20br&type=comment"
+    },
+    {
+      "text": "Two week Ring Road itinerary including stops at local breweries like Smiðjan Brugghús",
+      "summary": "Ring road itinerary inclusion",
+      "emoji": "🗺️",
+      "theme": "logistics",
+      "score": 14,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Two%20week%20Ring%20Road%20itinerary%20including%20stops%20at%20local%20brewer&type=comment"
+    },
+    {
+      "text": "Planning family trip and considering local experiences including Smiðjan Brugghús for adults",
+      "summary": "Family trip adult activity",
+      "emoji": "👨‍👩‍👧‍👦",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Planning%20family%20trip%20and%20considering%20local%20experiences%20inclu&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Include local brewery experiences like Smiðjan Brugghús when planning Ring Road itinerary",
+      "score": 85,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Good option for adults when traveling with family to experience local culture",
+      "score": 2,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:22:44.005Z"
+}

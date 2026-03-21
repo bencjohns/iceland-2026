@@ -1,0 +1,52 @@
+{
+  "cardId": "day5-beluga",
+  "sentiment": "loved",
+  "mentionCount": 3,
+  "tensionSummary": "\"Very cool experience\" vs \"Winter logistics concerns\"",
+  "distribution": {
+    "positive": 2,
+    "mixed": 1,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "We were debating going to the Beluga Whale Sanctuary 2/18 when they're open to the public but I know it requires a ferry ride. Has anyone done this in the winter?",
+      "summary": "Winter ferry logistics concern",
+      "emoji": "🤔",
+      "theme": "logistics",
+      "score": 6,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=We%20were%20debating%20going%20to%20the%20Beluga%20Whale%20Sanctuary%202%2F18%20wh&type=comment"
+    },
+    {
+      "text": "The Beluga Sanctuary was very cool. Pay for the tour.",
+      "summary": "Very cool experience",
+      "emoji": "🐋",
+      "theme": "vibe",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=The%20Beluga%20Sanctuary%20was%20very%20cool.%20Pay%20for%20the%20tour.&type=comment"
+    },
+    {
+      "text": "She seems to be at a better weight then she was a few months ago, but still alone with no future",
+      "summary": "Whale welfare update",
+      "emoji": "💙",
+      "theme": "vibe",
+      "score": 315,
+      "sub": "orcas",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=She%20seems%20to%20be%20at%20a%20better%20weight%20then%20she%20was%20a%20few%20months&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Pay for the tour",
+      "score": 3,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:34:02.831Z"
+}

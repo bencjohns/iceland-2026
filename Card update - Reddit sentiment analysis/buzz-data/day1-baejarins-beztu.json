@@ -1,0 +1,103 @@
+{
+  "cardId": "day1-baejarins-beztu",
+  "sentiment": "loved",
+  "mentionCount": 7,
+  "tensionSummary": "\"Transcendent culinary experience\" vs \"Bill Clinton had a stroke after eating these\"",
+  "distribution": {
+    "positive": 5,
+    "mixed": 1,
+    "negative": 1
+  },
+  "quotes": [
+    {
+      "text": "Pylsur are incredible.",
+      "summary": "Simply incredible food",
+      "emoji": "🌟",
+      "theme": "food_quality",
+      "score": 6,
+      "sub": "hotdogs",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Pylsur%20are%20incredible.&type=comment"
+    },
+    {
+      "text": "Best hot dog I ever had was from a gas station in Reykjavik, bacon wrapped. I still dream about it.",
+      "summary": "Dream-worthy bacon wrapped",
+      "emoji": "😍",
+      "theme": "food_quality",
+      "score": 5,
+      "sub": "hotdogs",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Best%20hot%20dog%20I%20ever%20had%20was%20from%20a%20gas%20station%20in%20Reykjavik%2C&type=comment"
+    },
+    {
+      "text": "So good!!! Best hot dog I ever had as well (tie with Denmark). Been a while since I've been to Reykjavik but if they still sell \"Bacon Boats\" you need to get one. Now.",
+      "summary": "Best ever bacon boats",
+      "emoji": "🚤",
+      "theme": "food_quality",
+      "score": 3,
+      "sub": "hotdogs",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=So%20good!!!%20Best%20hot%20dog%20I%20ever%20had%20as%20well%20(tie%20with%20Denmark&type=comment"
+    },
+    {
+      "text": "Oh, that's terrible! Bill Clinton famously had a stroke after eating a couple of those as well. That being said, I love those hot dogs! That Bæjarins Beztu Pylsur stand by the harbor in Reykjavík is the single most successful \"restaurant\" in Iceland.",
+      "summary": "Terrible yet most successful",
+      "emoji": "🤷",
+      "theme": "vibe",
+      "score": -4,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Oh%2C%20that's%20terrible!%20Bill%20Clinton%20famously%20had%20a%20stroke%20afte&type=comment"
+    },
+    {
+      "text": "I love hot dogs probably one of my fav foods. No one understood why I was making it a point to search out the hot dog stand. My now husband thought it was silly when he dragged him there… until he tasted it!",
+      "summary": "Converted the skeptical husband",
+      "emoji": "💕",
+      "theme": "vibe",
+      "score": 5,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20love%20hot%20dogs%20probably%20one%20of%20my%20fav%20foods.%20No%20one%20underst&type=comment"
+    },
+    {
+      "text": "Have you ever had a hot dog or other culinary experience as transcendent as a Bæjarins Beztu Pylsur hot dog?",
+      "summary": "Transcendent culinary experience",
+      "emoji": "✨",
+      "theme": "food_quality",
+      "score": 9,
+      "sub": "bookclub",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Have%20you%20ever%20had%20a%20hot%20dog%20or%20other%20culinary%20experience%20as%20&type=comment"
+    },
+    {
+      "text": "I briefly reported on my two days in Snæfellsnes Peninsula while I was there…",
+      "summary": "Travel report mention",
+      "emoji": "📝",
+      "theme": "logistics",
+      "score": 834,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20briefly%20reported%20on%20my%20two%20days%20in%20Sn%C3%A6fellsnes%20Peninsula%20w&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Get the bacon boats if they still sell them",
+      "score": 3,
+      "sub": "hotdogs"
+    },
+    {
+      "text": "The stand is located by the harbor in Reykjavík",
+      "score": -4,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Denmark hot dogs",
+      "mentionCount": 1,
+      "context": "tied for best hot dog experience"
+    }
+  ],
+  "scrapedAt": "2026-03-21T16:40:06.915Z"
+}

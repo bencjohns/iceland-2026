@@ -1,0 +1,32 @@
+{
+  "cardId": "day2-fiskfelagid",
+  "sentiment": "hidden-gem",
+  "mentionCount": 1,
+  "tensionSummary": "Limited mentions make it unclear - appears in relaxing itinerary context",
+  "distribution": {
+    "positive": 1,
+    "mixed": 0,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "This 7-day relaxing Iceland itinerary is designed for travelers who want to experience the country's breathtaking landscapes while indulging in top dining experiences",
+      "summary": "Top dining experience included",
+      "emoji": "🍽️",
+      "theme": "food_quality",
+      "score": 4,
+      "sub": "IcelandTravelTips",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=This%207-day%20relaxing%20Iceland%20itinerary%20is%20designed%20for%20travel&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Include Fiskfélagið in a relaxing 7-day Iceland itinerary using Reykjavik as home base",
+      "score": 4,
+      "sub": "IcelandTravelTips"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T16:58:16.083Z"
+}

@@ -1,0 +1,488 @@
+{
+  "cardId": "day1-blue-lagoon",
+  "sentiment": "polarizing",
+  "mentionCount": 43,
+  "tensionSummary": "\"Iconic and relaxing experience\" vs \"Disgusting tourist trap\"",
+  "distribution": {
+    "positive": 18,
+    "mixed": 11,
+    "negative": 14
+  },
+  "quotes": [
+    {
+      "text": "We just came back from an incredible 10 day Iceland trip! On the last day, we capped the trip off with a Blue Lagoon visit.",
+      "summary": "Perfect trip finale",
+      "emoji": "🌟",
+      "theme": "vibe",
+      "score": 95,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20just%20came%20back%20from%20an%20incredible%2010%20day%20Iceland%20trip!%20On&type=comment"
+    },
+    {
+      "text": "Based on what you described, this sounds like a chemical or particulate corneal abrasion, and I'd strongly recommend you get it checked by an eye specialist ASAP.",
+      "summary": "Medical eye concern",
+      "emoji": "⚠️",
+      "theme": "safety",
+      "score": 110,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=Based%20on%20what%20you%20described%2C%20this%20sounds%20like%20a%20chemical%20or%20&type=comment"
+    },
+    {
+      "text": "I did Blue Lagoon yesterday in the rain. I absolutely loved it. I did all four masks. No issues. I would absolutely go back to Blue Lagoon.",
+      "summary": "Loved masks experience",
+      "emoji": "😍",
+      "theme": "vibe",
+      "score": 42,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20did%20Blue%20Lagoon%20yesterday%20in%20the%20rain.%20I%20absolutely%20loved%20&type=comment"
+    },
+    {
+      "text": "We just got back Saturday evening from Iceland and went to the Blue Lagoon the first day we flew in but had a completely different experience but we did the private lagoon (ritual) i believe it's called we got our own private room with shower and everything and had a beautiful relaxing day there.",
+      "summary": "Private ritual luxury",
+      "emoji": "✨",
+      "theme": "vibe",
+      "score": 36,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20just%20got%20back%20Saturday%20evening%20from%20Iceland%20and%20went%20to%20t&type=comment"
+    },
+    {
+      "text": "The Blue Lagoon is foul. A lot of the tourist-oriented bathing spots are teeming with",
+      "summary": "Contaminated tourist trap",
+      "emoji": "🤢",
+      "theme": "safety",
+      "score": 32,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=The%20Blue%20Lagoon%20is%20foul.%20A%20lot%20of%20the%20tourist-oriented%20bathi&type=comment"
+    },
+    {
+      "text": "I just got back a few weeks ago and went to sky lagoon. Blue lagoon was my first choice, but just didn't work out. Thanks for making me feel like I didn't miss out lol.",
+      "summary": "Grateful avoided disappointment",
+      "emoji": "😅",
+      "theme": "overrated",
+      "score": 31,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=I%20just%20got%20back%20a%20few%20weeks%20ago%20and%20went%20to%20sky%20lagoon.%20Blue&type=comment"
+    },
+    {
+      "text": "Thanks for the info! Hope your eye is better. I have rosacea and thinking made the mask would not be the best. Maybe Blue Lagoon not the best option.",
+      "summary": "Skin condition concerns",
+      "emoji": "😰",
+      "theme": "safety",
+      "score": 15,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=Thanks%20for%20the%20info!%20Hope%20your%20eye%20is%20better.%20I%20have%20rosacea&type=comment"
+    },
+    {
+      "text": "I got some in my eye too! It was a little painful but nowhere near as bad as your experience. My uncle ended up getting pink eye after Blue Lagoon. His eye would not stop weeping on our way home. It was beautiful but I was so much more relaxed at Sky Lagoon.",
+      "summary": "Eye pain, pink eye",
+      "emoji": "😣",
+      "theme": "safety",
+      "score": 6,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=I%20got%20some%20in%20my%20eye%20too!%20It%20was%20a%20little%20painful%20but%20nowher&type=comment"
+    },
+    {
+      "text": "Thank you for sharing. We just returned from Iceland and had the opposite experience at Blue Lagoon. We used 3 face masks and all was fine (we did rinse carefully using the water stations provided), some people were rinsing with the lagoon water, which, is concerning.",
+      "summary": "Careful mask success",
+      "emoji": "👍",
+      "theme": "tip",
+      "score": 6,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Thank%20you%20for%20sharing.%20We%20just%20returned%20from%20Iceland%20and%20had&type=comment"
+    },
+    {
+      "text": "I will add to that warning. Watch your step! I was at Blue Lagoon a week ago. I slipped on the step getting into the colder pool and fractured my arm and got taken to a nearby hospital. Flew back to the US for surgery and still recovering.",
+      "summary": "Fractured arm accident",
+      "emoji": "💀",
+      "theme": "safety",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=I%20will%20add%20to%20that%20warning.%20Watch%20your%20step!%20I%20was%20at%20Blue%20L&type=comment"
+    },
+    {
+      "text": "A friend of mine went to Blue Lagoon and ended with a severe E. coli UTI for his flight home. Had to take two rounds of antibiotics for it to clear up. I'm heading to Iceland in two weeks, I don't plan on going there.",
+      "summary": "E. coli infection",
+      "emoji": "🦠",
+      "theme": "safety",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=A%20friend%20of%20mine%20went%20to%20Blue%20Lagoon%20and%20ended%20with%20a%20severe&type=comment"
+    },
+    {
+      "text": "We went to Blue Lagoon the day we landed. Felt great after a red-eye flight, but can say, been there, done that now.",
+      "summary": "One-time jetlag relief",
+      "emoji": "🤷",
+      "theme": "overrated",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=We%20went%20to%20Blue%20Lagoon%20the%20day%20we%20landed.%20Felt%20great%20after%20a&type=comment"
+    },
+    {
+      "text": "Been to Iceland many times… never blue lagoon. When Icelanders go to soaps and hot tubs they fully wash with soap and water. Blue lagoon imho is overpriced for tourists that don't wash.",
+      "summary": "Overpriced unwashed tourists",
+      "emoji": "🙄",
+      "theme": "cost",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=Been%20to%20Iceland%20many%20times%E2%80%A6%20never%20blue%20lagoon.%20When%20Icelande&type=comment"
+    },
+    {
+      "text": "Had planned to go there the year the world shut down. Blue Lagoon was the only place in Iceland that did NOT refund my money. Don't feel like I missed too much after hearing of this experience. Still annoyed they kept my money.",
+      "summary": "No refund policy",
+      "emoji": "😤",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=Had%20planned%20to%20go%20there%20the%20year%20the%20world%20shut%20down.%20Blue%20L&type=comment"
+    },
+    {
+      "text": "I've been to Iceland many times and always tell friends/family to avoid the blue lagoon. It's a tourist trap and DISGUSTING. If you're planning a visit… word to the wise: *do not touch the bottom*. The amount of hair, trash, slime, & grime … 🤢🤢… one and done would never go back.",
+      "summary": "Disgusting bottom filth",
+      "emoji": "🤮",
+      "theme": "overrated",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=I've%20been%20to%20Iceland%20many%20times%20and%20always%20tell%20friends%2Ffami&type=comment"
+    },
+    {
+      "text": "Sky Lagoon, Secret Lagoon, Blue Lagoon, Gnomes Lagoon, Magic Earth Mother Farts Lagoon. I get it you are in a fun new place and for some reason marinating in a warm puddle for 7500 kr per person is expected.",
+      "summary": "Expensive warm puddle",
+      "emoji": "💸",
+      "theme": "cost",
+      "score": 176,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=Sky%20Lagoon%2C%20Secret%20Lagoon%2C%20Blue%20Lagoon%2C%20Gnomes%20Lagoon%2C%20Magic&type=comment"
+    },
+    {
+      "text": "I did the Blue Lagoon and the Sky Lagoon and both were enjoyable, however my favourite thermal experience was the tiny Kvika \"foot spa\" near the Grotta Lighthouse. There were no tourists there except me, and I was able to soak my feet for an hour, drink my Gull beer and eat my Lindu Buff chocolate",
+      "summary": "Enjoyable but prefer alternatives",
+      "emoji": "🍺",
+      "theme": "vibe",
+      "score": 10,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20did%20the%20Blue%20Lagoon%20and%20the%20Sky%20Lagoon%20and%20both%20were%20enjoy&type=comment"
+    },
+    {
+      "text": "went to blue lagoon during my first visit before heading back home.. it was one of the most relaxing time I had for myself ever since i don't even remember! i find it that it's okay to try it once, and it also has a different vibe because it is a boujee spa",
+      "summary": "Most relaxing ever",
+      "emoji": "😌",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=went%20to%20blue%20lagoon%20during%20my%20first%20visit%20before%20heading%20bac&type=comment"
+    },
+    {
+      "text": "On our first trip to Iceland we lived out of our backpacks and focused on a very budget savvy trip. We read and were told that we shouldn't do the blue lagoon due to price and it's not ideal for getting away from the crowds. We ended up treating ourselves to it after 2 weeks. It didn't make our",
+      "summary": "Crowded expensive disappointment",
+      "emoji": "😕",
+      "theme": "crowds",
+      "score": 2,
+      "sub": "travelpictures",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=On%20our%20first%20trip%20to%20Iceland%20we%20lived%20out%20of%20our%20backpacks%20a&type=comment"
+    },
+    {
+      "text": "I have traveled to Iceland last year for a personal vacation and I am now returning for a work trip soon. On my trip I went to the blue lagoon (and loved it!). My work colleagues are going to blue lagoon and I am not sure whether to go again with them, or just wander to sky lagoon",
+      "summary": "Loved it, considering repeat",
+      "emoji": "❤️",
+      "theme": "vibe",
+      "score": 38,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20have%20traveled%20to%20Iceland%20last%20year%20for%20a%20personal%20vacation&type=comment"
+    },
+    {
+      "text": "I've been to both and they're honestly quite different, which is why I always struggle to say which one is better. Blue Lagoon is iconic and very unique, but Sky Lagoon feels more intimate and atmospheric, especially with the ocean view and the ritual. Since you've already experienced Blue Lagoon,",
+      "summary": "Iconic but different experiences",
+      "emoji": "⚖️",
+      "theme": "vibe",
+      "score": 101,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I've%20been%20to%20both%20and%20they're%20honestly%20quite%20different%2C%20whic&type=comment"
+    },
+    {
+      "text": "I've been to both and would say Blue Lagoon over Sky. If you can swing it, go for the Retreat Spa at Blue Lagoon. It's fantastic.",
+      "summary": "Retreat spa fantastic",
+      "emoji": "⭐",
+      "theme": "vibe",
+      "score": 12,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I've%20been%20to%20both%20and%20would%20say%20Blue%20Lagoon%20over%20Sky.%20If%20you&type=comment"
+    },
+    {
+      "text": "Blue Lagoon is, in my opinion, *disgusting*. We did a bunch all around the ringroad of Iceland and it came out the bottom for us. Never again. We visited both a couple of years ago, and without a shadow of a doubt, Sky Lagoon is the winner. It's clean, stunningly beautiful, serene and relaxing.",
+      "summary": "Disgusting, worst experience",
+      "emoji": "🤢",
+      "theme": "overrated",
+      "score": 9,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=Blue%20Lagoon%20is%2C%20in%20my%20opinion%2C%20*disgusting*.%20We%20did%20a%20bunch%20&type=comment"
+    },
+    {
+      "text": "My experience was that Sky Lagoon is much nicer. The Blue Lagoon was so overly crowded and mechanical. Everyone raves about the Retreat Spa at Blue - if you're not staying there or opting for the more private experience it's just not as luxe.",
+      "summary": "Crowded and mechanical",
+      "emoji": "🏭",
+      "theme": "crowds",
+      "score": 5,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=My%20experience%20was%20that%20Sky%20Lagoon%20is%20much%20nicer.%20The%20Blue%20La&type=comment"
+    },
+    {
+      "text": "Of those two Blue Lagoon for sure. Iconic. Really fun. Bigger. Go early in the AM to avoid crowds. Sky Lagoon felt off to us. Really crowded, still beautiful though.",
+      "summary": "Iconic and fun",
+      "emoji": "🎉",
+      "theme": "vibe",
+      "score": 6,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Of%20those%20two%20Blue%20Lagoon%20for%20sure.%20Iconic.%20Really%20fun.%20Bigge&type=comment"
+    },
+    {
+      "text": "Sky lagoon is definitely worth going to! The trouble with my solo trip and the spas is I felt a little alone like \"I should be here with someone damn\". So I were you I'd probs follow the crowd, but that's just me. I haven't been to Blue Lagoon yet but Sky Lagoon is absolutely amazing.",
+      "summary": "Solo spa loneliness",
+      "emoji": "😔",
+      "theme": "vibe",
+      "score": 6,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Sky%20lagoon%20is%20definitely%20worth%20going%20to!%20The%20trouble%20with%20my&type=comment"
+    },
+    {
+      "text": "We did both. Blue Lagoon was a \"we're in Iceland and it would be cool to see\" Sky Lagoon was because we wanted a nice experience. Both were great, but Sky is far nicer.",
+      "summary": "Checkbox vs experience",
+      "emoji": "✅",
+      "theme": "vibe",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=We%20did%20both.%20Blue%20Lagoon%20was%20a%20we're%20in%20Iceland%20and%20it%20woul&type=comment"
+    },
+    {
+      "text": "We tried both and sky was miles ahead. Blue lagoon feels like going to a disney world hot spring.",
+      "summary": "Disney World hot spring",
+      "emoji": "🎢",
+      "theme": "overrated",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=We%20tried%20both%20and%20sky%20was%20miles%20ahead.%20Blue%20lagoon%20feels%20lik&type=comment"
+    },
+    {
+      "text": "Been to both, and I personally thought sky lagoon was way better. You should def go there and experience it since you've already done blue lagoon before.",
+      "summary": "Sky way better",
+      "emoji": "👎",
+      "theme": "overrated",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=Been%20to%20both%2C%20and%20I%20personally%20thought%20sky%20lagoon%20was%20way%20be&type=comment"
+    },
+    {
+      "text": "I did both and prefer Blue Lagoon, however I am happy that I tried both.",
+      "summary": "Prefer Blue Lagoon",
+      "emoji": "👍",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20did%20both%20and%20prefer%20Blue%20Lagoon%2C%20however%20I%20am%20happy%20that%20I&type=comment"
+    },
+    {
+      "text": "I went to sky lagoon as blue lagoon wasn't an option due to the volcanic activity at the time. I really enjoyed sky lagoon, I don't feel like I have missed out on not being able to go to blue lagoon at all.",
+      "summary": "Didn't miss out",
+      "emoji": "🤷",
+      "theme": "overrated",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=I%20went%20to%20sky%20lagoon%20as%20blue%20lagoon%20wasn't%20an%20option%20due%20to%20&type=comment"
+    },
+    {
+      "text": "I just did both this past week - Sky is more for grown ups, has a beautiful view of the sea, nicer facilities, nicer cafe, & locker rooms, but no suit spinner to dry your bathing suit. Blue was bigger, had more interesting areas to explore, a suit spinner, my skin did feel better after going,",
+      "summary": "Different strengths both",
+      "emoji": "⚖️",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20just%20did%20both%20this%20past%20week%20-%20Sky%20is%20more%20for%20grown%20ups%2C%20&type=comment"
+    },
+    {
+      "text": "There is a smaller blue lagoon spring on the north end of the island that is way cheaper, less crowded and the exact same thing! I get that this one is close to where most people fly into but if you're doing a road trip around the whole country, look into other options!",
+      "summary": "Cheaper northern alternative",
+      "emoji": "💡",
+      "theme": "tip",
+      "score": 1107,
+      "sub": "interestingasfuck",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=There%20is%20a%20smaller%20blue%20lagoon%20spring%20on%20the%20north%20end%20of%20th&type=comment"
+    },
+    {
+      "text": "Pro tip: if you're visiting Iceland there are other geothermal pools to go to. However, if you're just set on the Blue Lagoon you need to book early because they fill up quickly",
+      "summary": "Book early tip",
+      "emoji": "📅",
+      "theme": "tip",
+      "score": 614,
+      "sub": "pics",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Pro%20tip%3A%20if%20you're%20visiting%20Iceland%20there%20are%20other%20geotherm&type=comment"
+    },
+    {
+      "text": "I loved the Blue Lagoon when I went to Iceland in February. Well, I loved everything about Iceland (except the prices) - what an incredible place. I don't care that the Blue Lagoon is a bit touristy - no shit, look at it, it's all modern buildings and facilities; it's not exactly a natural wonder",
+      "summary": "Loved despite touristy",
+      "emoji": "💕",
+      "theme": "vibe",
+      "score": 202,
+      "sub": "pics",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20loved%20the%20Blue%20Lagoon%20when%20I%20went%20to%20Iceland%20in%20February.%20&type=comment"
+    },
+    {
+      "text": "I'll be going here next month for 9 nights. Gonna rent a camper van for 6 nights and drive around highway 1 that goes around the country. Super excited! Already have our day booked to visit the Blue Lagoon.",
+      "summary": "Super excited visit",
+      "emoji": "🚐",
+      "theme": "vibe",
+      "score": 189,
+      "sub": "pics",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I'll%20be%20going%20here%20next%20month%20for%209%20nights.%20Gonna%20rent%20a%20cam&type=comment"
+    },
+    {
+      "text": "The best part is the slushies at the blue lagoon are called \"Krap\"",
+      "summary": "Krap slushies humor",
+      "emoji": "😂",
+      "theme": "food_quality",
+      "score": 23,
+      "sub": "pics",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=The%20best%20part%20is%20the%20slushies%20at%20the%20blue%20lagoon%20are%20called%20&type=comment"
+    },
+    {
+      "text": "LPT: Don't get steaming drunk on red wine the night before you to the Blue Lagoon. The foul sulphur smell and hangovers don't mix...",
+      "summary": "Hangover sulfur warning",
+      "emoji": "🍷",
+      "theme": "tip",
+      "score": 13,
+      "sub": "pics",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=LPT%3A%20Don't%20get%20steaming%20drunk%20on%20red%20wine%20the%20night%20before%20y&type=comment"
+    },
+    {
+      "text": "We were at Blue lagoon and evacuated yesterday too! The volcano going off was only the second most outrageous thing to happen to us yesterday, second to the £30 paid for a bagel.",
+      "summary": "Volcano evacuation experience",
+      "emoji": "🌋",
+      "theme": "vibe",
+      "score": 73,
+      "sub": "pics",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=We%20were%20at%20Blue%20lagoon%20and%20evacuated%20yesterday%20too!%20The%20volc&type=comment"
+    },
+    {
+      "text": "Oh wow. Blue lagoon is already an amazing experience. Now it was made even more of an Iceland classic for you. Hope you're enjoying your time there!",
+      "summary": "Amazing classic experience",
+      "emoji": "🌟",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "pics",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Oh%20wow.%20Blue%20lagoon%20is%20already%20an%20amazing%20experience.%20Now%20it&type=comment"
+    },
+    {
+      "text": "Blue Lagoon, Iceland and Lava. Nice bit of combination",
+      "summary": "Nice lava combination",
+      "emoji": "🔥",
+      "theme": "scenery",
+      "score": 2,
+      "sub": "Damnthatsinteresting",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Blue%20Lagoon%2C%20Iceland%20and%20Lava.%20Nice%20bit%20of%20combination&type=comment"
+    },
+    {
+      "text": "blue lagoon?? more like mordor",
+      "summary": "Mordor comparison",
+      "emoji": "👁️",
+      "theme": "scenery",
+      "score": 2,
+      "sub": "Damnthatsinteresting",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=blue%20lagoon%3F%3F%20more%20like%20mordor&type=comment"
+    },
+    {
+      "text": "Is it still a blue lagoon?",
+      "summary": "Still blue question",
+      "emoji": "❓",
+      "theme": "scenery",
+      "score": 1,
+      "sub": "Damnthatsinteresting",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Is%20it%20still%20a%20blue%20lagoon%3F&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Go early in the AM to avoid crowds",
+      "score": 6,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Book early because they fill up quickly",
+      "score": 614,
+      "sub": "pics"
+    },
+    {
+      "text": "Don't get steaming drunk on red wine the night before - the foul sulphur smell and hangovers don't mix",
+      "score": 13,
+      "sub": "pics"
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Sky Lagoon",
+      "mentionCount": 12,
+      "context": "more intimate, atmospheric, ocean view, cleaner, less crowded, more relaxing"
+    },
+    {
+      "name": "Secret Lagoon",
+      "mentionCount": 2,
+      "context": "cheaper alternative"
+    },
+    {
+      "name": "Hvammsvik Hot Springs",
+      "mentionCount": 2,
+      "context": "amazing experience, favorite thermal spot"
+    },
+    {
+      "name": "Kvika foot spa",
+      "mentionCount": 1,
+      "context": "no tourists, peaceful, can drink beer"
+    },
+    {
+      "name": "Northern blue lagoon spring",
+      "mentionCount": 1,
+      "context": "way cheaper, less crowded, exact same thing"
+    }
+  ],
+  "scrapedAt": "2026-03-21T18:08:47.425Z"
+}

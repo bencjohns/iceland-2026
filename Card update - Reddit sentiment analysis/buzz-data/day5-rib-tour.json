@@ -1,0 +1,32 @@
+{
+  "cardId": "day5-rib-tour",
+  "sentiment": "hidden-gem",
+  "mentionCount": 1,
+  "tensionSummary": "\"Planning scenic adventure\" vs \"Limited context available\"",
+  "distribution": {
+    "positive": 0,
+    "mixed": 1,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "I will be arriving in Oslo on the weekend and spend 2 days.. explore the city a bit and then planning to take the scenic ride to Myrdal -> Flam. Basically, I have used ChatGPT to tailor an itinerary.. my two questions would be: overall feasibility and or tweaks to the recommended trip?",
+      "summary": "Planning scenic Norway itinerary",
+      "emoji": "🗺️",
+      "theme": "logistics",
+      "score": 3,
+      "sub": "NorwayTravelAdvice",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20will%20be%20arriving%20in%20Oslo%20on%20the%20weekend%20and%20spend%202%20days..&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Use ChatGPT to help tailor travel itineraries for scenic routes",
+      "score": 3,
+      "sub": "NorwayTravelAdvice"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:31:53.531Z"
+}

@@ -1,0 +1,143 @@
+{
+  "cardId": "day1-matur-og-drykkur",
+  "sentiment": "loved",
+  "mentionCount": 11,
+  "tensionSummary": "\"Really special fine dining\" vs \"Won't work for picky eaters\"",
+  "distribution": {
+    "positive": 8,
+    "mixed": 3,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "I can confirm there are at least 9 copies available at the city library. Searches show 12+ more so not sure if the book itself is rare but the edition probably.",
+      "summary": "Cookbook availability confirmed",
+      "emoji": "📚",
+      "theme": "logistics",
+      "score": 3,
+      "sub": "Iceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20can%20confirm%20there%20are%20at%20least%209%20copies%20available%20at%20the%20c&type=comment"
+    },
+    {
+      "text": "Our final day is in Reykjavik and looking to book a nice meal to finish the holiday. Has anybody here visited Matur og Drykkur? Looking for something really special.",
+      "summary": "Seeking special finale meal",
+      "emoji": "✨",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Our%20final%20day%20is%20in%20Reykjavik%20and%20looking%20to%20book%20a%20nice%20mea&type=comment"
+    },
+    {
+      "text": "My friend is not a seafood person and doesn't like mushrooms, but is open to most other food. I would like to try Matur og Drykkur. Will my friend be able to enjoy a meal there?",
+      "summary": "Dietary restriction concerns",
+      "emoji": "🤔",
+      "theme": "food_quality",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=My%20friend%20is%20not%20a%20seafood%20person%20and%20doesn't%20like%20mushrooms&type=comment"
+    },
+    {
+      "text": "I think you can specify a vegetarian tasting menu but I don't think your friend will enjoy iceland much if they have a strong aversion to seafood. It featured pretty heavily in the meal at matur og drykkur when I was there.",
+      "summary": "Heavy seafood focus warning",
+      "emoji": "🐟",
+      "theme": "food_quality",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20think%20you%20can%20specify%20a%20vegetarian%20tasting%20menu%20but%20I%20don'&type=comment"
+    },
+    {
+      "text": "My wife and I plan to visit this April. I've made a rough itinerary, but need expert help.",
+      "summary": "April trip planning mention",
+      "emoji": "📅",
+      "theme": "logistics",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=My%20wife%20and%20I%20plan%20to%20visit%20this%20April.%20I've%20made%20a%20rough%20it&type=comment"
+    },
+    {
+      "text": "I am looking for recommendations for restaurants that are children friendly (preferably with kids menu).",
+      "summary": "Child-friendly restaurant search",
+      "emoji": "👨‍👩‍👧‍👦",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20am%20looking%20for%20recommendations%20for%20restaurants%20that%20are%20ch&type=comment"
+    },
+    {
+      "text": "So after only three meals in Iceland I've suddenly become way too interested in Icelandic cooking. Like… how is everything combined so good?? Especially for the vegetables. I did some quick research and found an old Icelandic cookbook that was republished in 2009. Matur og Drykkur by Helga",
+      "summary": "Inspired by Icelandic cuisine",
+      "emoji": "🤩",
+      "theme": "food_quality",
+      "score": 10,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=So%20after%20only%20three%20meals%20in%20Iceland%20I've%20suddenly%20become%20wa&type=comment"
+    },
+    {
+      "text": "This one might be an alternative as Matur og drykkur is sold out. And it is in English",
+      "summary": "Cookbook alternative suggestion",
+      "emoji": "📖",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=This%20one%20might%20be%20an%20alternative%20as%20Matur%20og%20drykkur%20is%20sold&type=comment"
+    },
+    {
+      "text": "We went to Iceland in early July and wanted to share our itinerary as well as some tips, packing list, Google My Maps, etc. We rented a car and drove the full Ring Road over two weeks",
+      "summary": "Comprehensive trip recap mention",
+      "emoji": "🗺️",
+      "theme": "tip",
+      "score": 15,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20went%20to%20Iceland%20in%20early%20July%20and%20wanted%20to%20share%20our%20iti&type=comment"
+    },
+    {
+      "text": "Seen all of these restaurants recommended on this subreddit across multiple posts, but would like to know, for those that have tried multiple, how you'd rank them. The price tags are a little hefty, but we can definitely do 1, maybe 2, of them.",
+      "summary": "Restaurant ranking request",
+      "emoji": "💰",
+      "theme": "cost",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Seen%20all%20of%20these%20restaurants%20recommended%20on%20this%20subreddit%20&type=comment"
+    },
+    {
+      "text": "I have been searching and searching this sub for a few days to get ideas/recommendations for a very nice dinner our last night in Iceland. I put it all in a spreadsheet and thought I would share the list.",
+      "summary": "Special dinner research compiled",
+      "emoji": "📊",
+      "theme": "logistics",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20have%20been%20searching%20and%20searching%20this%20sub%20for%20a%20few%20days%20&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "You can specify a vegetarian tasting menu but seafood features heavily in the regular meal",
+      "score": 1,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "The menu changes often and is only a tasting menu (not a la carte)",
+      "score": 2,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Icelandic Food and Cookery",
+      "mentionCount": 1,
+      "context": "English language alternative when Matur og Drykkur cookbook is sold out"
+    }
+  ],
+  "scrapedAt": "2026-03-21T16:43:26.804Z"
+}

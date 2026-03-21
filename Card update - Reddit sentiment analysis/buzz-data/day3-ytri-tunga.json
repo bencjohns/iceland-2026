@@ -1,0 +1,52 @@
+{
+  "cardId": "day3-ytri-tunga",
+  "sentiment": "hidden-gem",
+  "mentionCount": 3,
+  "tensionSummary": "\"One of the best pit stops with 20+ seals\" vs \"Only saw maybe two seals\"",
+  "distribution": {
+    "positive": 2,
+    "mixed": 1,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "No idea why ytri tunga beach is not mentioned on this sub enough. Very few posts mention them. It was our last minute pit stop and one of the best. Seals are seen very close to shore. You can sit silently and watch them merrily playing or just floating around. We easily saw over 20 seals…",
+      "summary": "Underrated seal watching paradise",
+      "emoji": "🌟",
+      "theme": "underrated",
+      "score": 18,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=No%20idea%20why%20ytri%20tunga%20beach%20is%20not%20mentioned%20on%20this%20sub%20en&type=comment"
+    },
+    {
+      "text": "Also is one of the few \"golden sand\" beaches in Iceland at Ytri Tunga, opposed to our classic black sand beaches",
+      "summary": "Rare golden sand beach",
+      "emoji": "✨",
+      "theme": "scenery",
+      "score": 2,
+      "sub": "r/VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Also%20is%20one%20of%20the%20few%20golden%20sand%20beaches%20in%20Iceland%20at%20Y&type=comment"
+    },
+    {
+      "text": "I recently visited Ytri Tunga (and only saw maybe two seals lol) and I forgot to pay while there and figure to do it online.",
+      "summary": "Limited seal sightings experience",
+      "emoji": "🤷",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "r/VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20recently%20visited%20Ytri%20Tunga%20(and%20only%20saw%20maybe%20two%20seals%20&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "You can sit silently and watch them merrily playing or just floating around",
+      "score": 18,
+      "sub": "r/VisitingIceland"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:00:21.997Z"
+}

@@ -1,0 +1,183 @@
+{
+  "cardId": "day8-whale-watching",
+  "sentiment": "mixed",
+  "mentionCount": 14,
+  "tensionSummary": "\"Beautiful whale activity\" vs \"Not really worth doing in winter\"",
+  "distribution": {
+    "positive": 6,
+    "mixed": 6,
+    "negative": 2
+  },
+  "quotes": [
+    {
+      "text": "As public opinion changes and consumption of whale",
+      "summary": "Commercial whaling ending",
+      "emoji": "📰",
+      "theme": "vibe",
+      "score": 156,
+      "sub": "worldnews",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=As%20public%20opinion%20changes%20and%20consumption%20of%20whale&type=comment"
+    },
+    {
+      "text": "If I get to Iceland, you have put whale watching on my to-do list!",
+      "summary": "Adding to bucket list",
+      "emoji": "✅",
+      "theme": "vibe",
+      "score": 3,
+      "sub": "travel",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=If%20I%20get%20to%20Iceland%2C%20you%20have%20put%20whale%20watching%20on%20my%20to-do&type=comment"
+    },
+    {
+      "text": "We can invite the Iceland players to do a whole other kind of whale watching on our beaches",
+      "summary": "Playful football banter",
+      "emoji": "⚽",
+      "theme": "vibe",
+      "score": 1016,
+      "sub": "soccer",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=We%20can%20invite%20the%20Iceland%20players%20to%20do%20a%20whole%20other%20kind%20o&type=comment"
+    },
+    {
+      "text": "Fuck them, theyre all loaded and more than able to afford a whale watching holiday!",
+      "summary": "Expensive luxury activity",
+      "emoji": "💰",
+      "theme": "cost",
+      "score": 56,
+      "sub": "soccer",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=Fuck%20them%2C%20theyre%20all%20loaded%20and%20more%20than%20able%20to%20afford%20a%20&type=comment"
+    },
+    {
+      "text": "Went whale watching in Eyjafjörður, Iceland. Beautiful area with lots of whale activity",
+      "summary": "Beautiful abundant whale sightings",
+      "emoji": "🐋",
+      "theme": "scenery",
+      "score": 321,
+      "sub": "whales",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Went%20whale%20watching%20in%20Eyjafj%C3%B6r%C3%B0ur%2C%20Iceland.%20Beautiful%20area%20&type=comment"
+    },
+    {
+      "text": "I just wanted to debunk some common myths about whale watching in Reykjavík during winter, using some of our incredible success rates",
+      "summary": "Winter myth debunking",
+      "emoji": "❄️",
+      "theme": "tip",
+      "score": 7,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20just%20wanted%20to%20debunk%20some%20common%20myths%20about%20whale%20watchi&type=comment"
+    },
+    {
+      "text": "Whale watching in Reykjavik yesterday, two humpbacks in bay. Tour tried to get us as close as possible while respecting whale space",
+      "summary": "Recent successful humpback sighting",
+      "emoji": "🐋",
+      "theme": "scenery",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Whale%20watching%20in%20Reykjavik%20yesterday%2C%20two%20humpbacks%20in%20bay.&type=comment"
+    },
+    {
+      "text": "It is just does not make much sense. I cannot imagine me on a boat during winter, when it's cold and windy, waiting for whales",
+      "summary": "Winter conditions too harsh",
+      "emoji": "🥶",
+      "theme": "weather",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=It%20is%20just%20does%20not%20make%20much%20sense.%20I%20cannot%20imagine%20me%20on%20&type=comment"
+    },
+    {
+      "text": "I went whale watching December 2024 and we saw our first whale within 5 minutes of leaving the dock",
+      "summary": "Quick December whale success",
+      "emoji": "⚡",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20went%20whale%20watching%20December%202024%20and%20we%20saw%20our%20first%20wha&type=comment"
+    },
+    {
+      "text": "Went to Husavik in March and the whale watching trip got cancelled due to weather. Tried again in Reykjavik but no whale was in sight",
+      "summary": "Weather cancellation and disappointment",
+      "emoji": "😞",
+      "theme": "weather",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Went%20to%20Husavik%20in%20March%20and%20the%20whale%20watching%20trip%20got%20can&type=comment"
+    },
+    {
+      "text": "common Mythe, Whale watching is fun... lol",
+      "summary": "Skeptical about fun factor",
+      "emoji": "🙄",
+      "theme": "overrated",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=common%20Mythe%2C%20Whale%20watching%20is%20fun...%20lol&type=comment"
+    },
+    {
+      "text": "whales tend to come closer to iceland in the summer and sightings are less likely in the winter. It could also be a brutal trip in terms of seasickness and windchill",
+      "summary": "Summer better, winter brutal",
+      "emoji": "🤢",
+      "theme": "weather",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=whales%20tend%20to%20come%20closer%20to%20iceland%20in%20the%20summer%20and%20sigh&type=comment"
+    },
+    {
+      "text": "Late March is actually still a good time for whale watching in Iceland. Sightings are never guaranteed, but humpback whales have been very consistent",
+      "summary": "March still good timing",
+      "emoji": "📅",
+      "theme": "tip",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Late%20March%20is%20actually%20still%20a%20good%20time%20for%20whale%20watching%20&type=comment"
+    },
+    {
+      "text": "I mean things like ski trips, all inclusive",
+      "summary": "Luxury vacation context",
+      "emoji": "✈️",
+      "theme": "vibe",
+      "score": 968,
+      "sub": "changemyview",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20mean%20things%20like%20ski%20trips%2C%20all%20inclusive&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Winter whale watching has incredible success rates in Reykjavík",
+      "score": 7,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Late March is still a good time for whale watching with consistent humpback sightings",
+      "score": 2,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Summer has better sighting rates and weather conditions than winter",
+      "score": 2,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Eyjafjörður",
+      "mentionCount": 2,
+      "context": "beautiful area with lots of whale activity and consistent sightings"
+    },
+    {
+      "name": "Husavík",
+      "mentionCount": 2,
+      "context": "alternative location though weather can cause cancellations"
+    }
+  ],
+  "scrapedAt": "2026-03-21T18:00:14.201Z"
+}

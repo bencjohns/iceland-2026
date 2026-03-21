@@ -1,0 +1,123 @@
+{
+  "cardId": "day6-fjadrargljufur",
+  "sentiment": "mixed",
+  "mentionCount": 9,
+  "tensionSummary": "\"Stunning hidden canyon\" vs \"Overposted EarthPorn karma farm\"",
+  "distribution": {
+    "positive": 3,
+    "mixed": 6,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "When you visit Fjaðrárgljúfur, be sure to stop in at Kirkjubæjarklaustur to try the Harðfiskur.",
+      "summary": "Local food recommendation",
+      "emoji": "🍽️",
+      "theme": "tip",
+      "score": 18,
+      "sub": "EarthPorn",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=When%20you%20visit%20Fja%C3%B0r%C3%A1rglj%C3%BAfur%2C%20be%20sure%20to%20stop%20in%20at%20Kirkjub&type=comment"
+    },
+    {
+      "text": "Fjaðrárgljúfur? I hardly know her!",
+      "summary": "Sexual pun joke",
+      "emoji": "😏",
+      "theme": "vibe",
+      "score": 12,
+      "sub": "EarthPorn",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Fja%C3%B0r%C3%A1rglj%C3%BAfur%3F%20I%20hardly%20know%20her!&type=comment"
+    },
+    {
+      "text": "Isn't it Fjaðrárgljúfur cold there at this time?",
+      "summary": "Weather pun question",
+      "emoji": "🥶",
+      "theme": "weather",
+      "score": 3,
+      "sub": "EarthPorn",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Isn't%20it%20Fja%C3%B0r%C3%A1rglj%C3%BAfur%20cold%20there%20at%20this%20time%3F&type=comment"
+    },
+    {
+      "text": "Little known fact: \"Fjaðrárgljúfur\" has only been typed one time, every other appearance in history is someone copying and pasting it.",
+      "summary": "Name pronunciation difficulty",
+      "emoji": "📋",
+      "theme": "vibe",
+      "score": 1179,
+      "sub": "EarthPorn",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Little%20known%20fact%3A%20Fja%C3%B0r%C3%A1rglj%C3%BAfur%20has%20only%20been%20typed%20one%20&type=comment"
+    },
+    {
+      "text": "I'm just looking forward to the day when someone posts **Fjaðrárgljúfur** here, and no one says \"gesundheit\". That will be the moment when I know reddit has finally found original thought, in folks' never-ending quest to crack puns/jokes for valueless internet points.",
+      "summary": "Tired of repetitive jokes",
+      "emoji": "😤",
+      "theme": "overrated",
+      "score": 13,
+      "sub": "EarthPorn",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I'm%20just%20looking%20forward%20to%20the%20day%20when%20someone%20posts%20**Fja&type=comment"
+    },
+    {
+      "text": "\"Fjaðrárgljúfur Canyon\" Bless you!",
+      "summary": "Gesundheit pronunciation joke",
+      "emoji": "🤧",
+      "theme": "vibe",
+      "score": 10,
+      "sub": "EarthPorn",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Fja%C3%B0r%C3%A1rglj%C3%BAfur%20Canyon%20Bless%20you!&type=comment"
+    },
+    {
+      "text": "Cool. I wonder what tomorrow's photo of Fjaðrárgljúfur will look like.",
+      "summary": "Frequent reposting complaint",
+      "emoji": "🔄",
+      "theme": "overrated",
+      "score": 3,
+      "sub": "EarthPorn",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Cool.%20I%20wonder%20what%20tomorrow's%20photo%20of%20Fja%C3%B0r%C3%A1rglj%C3%BAfur%20will%20&type=comment"
+    },
+    {
+      "text": "I don't notice r/EarthPorn in my feed very often, but when I do, it's the quarterly Fjaðrárgljúfur post. (That's not a complaint.)",
+      "summary": "Regular feature acceptance",
+      "emoji": "🗓️",
+      "theme": "vibe",
+      "score": 14,
+      "sub": "EarthPorn",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20don't%20notice%20r%2FEarthPorn%20in%20my%20feed%20very%20often%2C%20but%20when%20I&type=comment"
+    },
+    {
+      "text": "How to pronounce Fjaðrárgljúfur. The ð seems silent to my ears",
+      "summary": "Pronunciation help offered",
+      "emoji": "🗣️",
+      "theme": "tip",
+      "score": 3,
+      "sub": "EarthPorn",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=How%20to%20pronounce%20Fja%C3%B0r%C3%A1rglj%C3%BAfur.%20The%20%C3%B0%20seems%20silent%20to%20my%20ea&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Stop in at Kirkjubæjarklaustur to try the Harðfiskur when visiting",
+      "score": 18,
+      "sub": "EarthPorn"
+    },
+    {
+      "text": "The ð in Fjaðrárgljúfur seems silent in pronunciation",
+      "score": 3,
+      "sub": "EarthPorn"
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Kirkjubæjarklaustur",
+      "mentionCount": 1,
+      "context": "nearby stop for traditional Harðfiskur food"
+    }
+  ],
+  "scrapedAt": "2026-03-21T17:38:21.284Z"
+}

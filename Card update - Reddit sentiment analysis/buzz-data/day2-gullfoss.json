@@ -1,0 +1,87 @@
+{
+  "cardId": "day2-gullfoss",
+  "sentiment": "loved",
+  "mentionCount": 6,
+  "tensionSummary": "\"Breathtaking waterfall experience\" vs \"Weird light tricks and reflections\"",
+  "distribution": {
+    "positive": 5,
+    "mixed": 1,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "Gullfoss is breathtaking. Did you get to see the rainbow?",
+      "summary": "Breathtaking rainbow views",
+      "emoji": "🌈",
+      "theme": "scenery",
+      "score": 3,
+      "sub": "EarthPorn",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Gullfoss%20is%20breathtaking.%20Did%20you%20get%20to%20see%20the%20rainbow%3F&type=comment"
+    },
+    {
+      "text": "The Gullfoss waterfall is one of Iceland's most famous attractions and one of the most important stops on the Golden Circle route. What you often remember here is not just the view, but the entire experience: the roar of the water",
+      "summary": "Famous immersive waterfall experience",
+      "emoji": "🌟",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "dziadziatravelguide",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=The%20Gullfoss%20waterfall%20is%20one%20of%20Iceland's%20most%20famous%20attra&type=comment"
+    },
+    {
+      "text": "There were a number of people around and while the reflective noiseless object moved at great speed from left to right and then upwards above cloud cover others with better cameras must have got better pics",
+      "summary": "UFO sighting location context",
+      "emoji": "🛸",
+      "theme": "crowds",
+      "score": 127,
+      "sub": "UFOs",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=There%20were%20a%20number%20of%20people%20around%20and%20while%20the%20reflectiv&type=comment"
+    },
+    {
+      "text": "Visited gullfoss too - beautiful place. There are also a lot of small to medium sized birds flying around that leave trails when you take photos",
+      "summary": "Beautiful but photo challenges",
+      "emoji": "📸",
+      "theme": "scenery",
+      "score": 3,
+      "sub": "UFOs",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Visited%20gullfoss%20too%20-%20beautiful%20place.%20There%20are%20also%20a%20lot&type=comment"
+    },
+    {
+      "text": "Gullfoss has some crazy light tricks going on - it's literally a rainbow production machine. I wouldn't be surprised if it's some weird reflection there",
+      "summary": "Rainbow production machine oddities",
+      "emoji": "🤷",
+      "theme": "weather",
+      "score": 1,
+      "sub": "UFOs",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Gullfoss%20has%20some%20crazy%20light%20tricks%20going%20on%20-%20it's%20literal&type=comment"
+    },
+    {
+      "text": "What always strikes me about Gullfoss is that it's starkly different in every season. When I visited it was in May, and it was practically a different waterfall",
+      "summary": "Dramatic seasonal transformations",
+      "emoji": "🔄",
+      "theme": "weather",
+      "score": 3,
+      "sub": "EarthPorn",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=What%20always%20strikes%20me%20about%20Gullfoss%20is%20that%20it's%20starkly%20d&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Visit in different seasons for completely different waterfall experiences",
+      "score": 3,
+      "sub": "EarthPorn"
+    },
+    {
+      "text": "Be aware that birds can create trails in photos",
+      "score": 3,
+      "sub": "UFOs"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T16:51:39.540Z"
+}

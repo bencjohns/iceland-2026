@@ -1,0 +1,303 @@
+{
+  "cardId": "day2-silfra",
+  "sentiment": "polarizing",
+  "mentionCount": 26,
+  "tensionSummary": "\"There's nowhere else on earth like it\" vs \"Painfully cold and not fun\"",
+  "distribution": {
+    "positive": 8,
+    "mixed": 12,
+    "negative": 6
+  },
+  "quotes": [
+    {
+      "text": "I have been to Iceland before in the summer, and very lucky to have seen the northern lights in Norway and Sweden and been into a ice cave and seen the glaciers in Svalbard.",
+      "summary": "Experienced Iceland traveler",
+      "emoji": "🗺️",
+      "theme": "vibe",
+      "score": 0,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20have%20been%20to%20Iceland%20before%20in%20the%20summer%2C%20and%20very%20lucky%20&type=comment"
+    },
+    {
+      "text": "I'll be a counterpoint - four of us went to Silfra and really enjoyed it. There's nowhere else on earth like it. The visibility is unmatched.",
+      "summary": "Nowhere else like it",
+      "emoji": "🌟",
+      "theme": "scenery",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I'll%20be%20a%20counterpoint%20-%20four%20of%20us%20went%20to%20Silfra%20and%20reall&type=comment"
+    },
+    {
+      "text": "I thought silfra was cool but it was not fun for me or my wife. She had a panic attack getting in the water. I found out that I am not a good snorkeler while in the water.",
+      "summary": "Cool but not fun",
+      "emoji": "😰",
+      "theme": "safety",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=I%20thought%20silfra%20was%20cool%20but%20it%20was%20not%20fun%20for%20me%20or%20my%20wi&type=comment"
+    },
+    {
+      "text": "I did Silfra and I will tell you this… it was beautiful and I doubt I will ever experience anything like this before. Key notes: my fingers were frozen cold, I got hit a few times and hit others.",
+      "summary": "Beautiful but challenging",
+      "emoji": "🥶",
+      "theme": "weather",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20did%20Silfra%20and%20I%20will%20tell%20you%20this%E2%80%A6%20it%20was%20beautiful%20and%20&type=comment"
+    },
+    {
+      "text": "Silfra is painfully cold.",
+      "summary": "Painfully cold experience",
+      "emoji": "❄️",
+      "theme": "weather",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=Silfra%20is%20painfully%20cold.&type=comment"
+    },
+    {
+      "text": "I did the Silfra snorkeling and 2 of the 6 people tapped out before we got in the water. The suit is not for the claustrophobic.",
+      "summary": "Claustrophobic suit issues",
+      "emoji": "😷",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20did%20the%20Silfra%20snorkeling%20and%202%20of%20the%206%20people%20tapped%20out&type=comment"
+    },
+    {
+      "text": "The ice cave was a highlight of our trip. Silfra snorkeling was a lowlight - by a lot.",
+      "summary": "Major trip lowlight",
+      "emoji": "👎",
+      "theme": "overrated",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=The%20ice%20cave%20was%20a%20highlight%20of%20our%20trip.%20Silfra%20snorkeling%20&type=comment"
+    },
+    {
+      "text": "I mean I think both the ice cave tour and Silfra were two of my highlights of the trip so you can't go wrong",
+      "summary": "Trip highlight experience",
+      "emoji": "✨",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20mean%20I%20think%20both%20the%20ice%20cave%20tour%20and%20Silfra%20were%20two%20of&type=comment"
+    },
+    {
+      "text": "Any recommendations for a Silfra swim?",
+      "summary": "Seeking tour recommendations",
+      "emoji": "❓",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Any%20recommendations%20for%20a%20Silfra%20swim%3F&type=comment"
+    },
+    {
+      "text": "Yes, definitely do it! I booked this tour last year with my wife, we had a blast. The guides were very professional.",
+      "summary": "Definitely worth doing",
+      "emoji": "🎉",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Yes%2C%20definitely%20do%20it!%20I%20booked%20this%20tour%20last%20year%20with%20my%20&type=comment"
+    },
+    {
+      "text": "I'm debating whether to squeeze in a snorkeling trip in Silfra with Dive.is before my flight out of Iceland, I'm seeing mixed reviews online.",
+      "summary": "Mixed reviews debate",
+      "emoji": "🤔",
+      "theme": "logistics",
+      "score": 24,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I'm%20debating%20whether%20to%20squeeze%20in%20a%20snorkeling%20trip%20in%20Silf&type=comment"
+    },
+    {
+      "text": "I've not snorkelled in silfra but I have spent many, many hours underwater in a drysuit in similar temperatures and wearing a drysuit really isn't that bad.",
+      "summary": "Drysuit experience advice",
+      "emoji": "🤿",
+      "theme": "tip",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I've%20not%20snorkelled%20in%20silfra%20but%20I%20have%20spent%20many%2C%20many%20ho&type=comment"
+    },
+    {
+      "text": "So I'm going soon, and some of the reasons Silfra snorkeling didn't make it to my list is - I'm solo travelling, so there's no one to really share it with - it will take half your day",
+      "summary": "Solo travel concerns",
+      "emoji": "🕐",
+      "theme": "wait_time",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=So%20I'm%20going%20soon%2C%20and%20some%20of%20the%20reasons%20Silfra%20snorkeling&type=comment"
+    },
+    {
+      "text": "I had no idea that you could even do a wetsuit. I scuba dive and wetsuits are only rated for water temperatures above 15 degrees Celsius. Silfra is well below that and you would for sure be at risk of hypothermia.",
+      "summary": "Hypothermia risk warning",
+      "emoji": "⚠️",
+      "theme": "safety",
+      "score": 33,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=I%20had%20no%20idea%20that%20you%20could%20even%20do%20a%20wetsuit.%20I%20scuba%20dive&type=comment"
+    },
+    {
+      "text": "There's no way they allow wetsuits in Silfra, even with the thickest suit you'd risk hypothermia in minutes.",
+      "summary": "Wetsuit safety concern",
+      "emoji": "🚫",
+      "theme": "safety",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=There's%20no%20way%20they%20allow%20wetsuits%20in%20Silfra%2C%20even%20with%20the%20&type=comment"
+    },
+    {
+      "text": "They have free diving tours in silfra tho, they're called freedive Iceland. I was there last week, I did the dry suit but I saw them in the wet suit.",
+      "summary": "Wetsuit option exists",
+      "emoji": "🏊",
+      "theme": "tip",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=They%20have%20free%20diving%20tours%20in%20silfra%20tho%2C%20they're%20called%20fr&type=comment"
+    },
+    {
+      "text": "I'm visiting Iceland in mid-March and planning to snorkel in Silfra. I'm considering the 12:00 PM Silfra tour instead of 9:00 AM.",
+      "summary": "Tour timing question",
+      "emoji": "⏰",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I'm%20visiting%20Iceland%20in%20mid-March%20and%20planning%20to%20snorkel%20in&type=comment"
+    },
+    {
+      "text": "for someone who is not a good swimmer and has never snorkeled before , will this silfra tour in the dry suit be worth it?",
+      "summary": "Non-swimmer worthiness question",
+      "emoji": "🏊‍♀️",
+      "theme": "safety",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=for%20someone%20who%20is%20not%20a%20good%20swimmer%20and%20has%20never%20snorkele&type=comment"
+    },
+    {
+      "text": "This is a very valid concern. I'm a scuba instructor and I would say close to half of my students struggle with this in the beginning and have at least some panic.",
+      "summary": "Instructor breathing concerns",
+      "emoji": "😤",
+      "theme": "safety",
+      "score": 6,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=This%20is%20a%20very%20valid%20concern.%20I'm%20a%20scuba%20instructor%20and%20I%20w&type=comment"
+    },
+    {
+      "text": "You don't need to be good at swimming, the suit keeps you afloat. The question is just whether silfra is worth it, overall",
+      "summary": "Suit keeps you afloat",
+      "emoji": "🎈",
+      "theme": "tip",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=You%20don't%20need%20to%20be%20good%20at%20swimming%2C%20the%20suit%20keeps%20you%20af&type=comment"
+    },
+    {
+      "text": "I never did the Silfra snorkeling, but I do dive. There are specific drysuit undergarments for divers who dive in cold water.",
+      "summary": "Cold water gear advice",
+      "emoji": "🧥",
+      "theme": "tip",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20never%20did%20the%20Silfra%20snorkeling%2C%20but%20I%20do%20dive.%20There%20are%20&type=comment"
+    },
+    {
+      "text": "I am not a confident swimmer at all, I just learned how to swim last year. I did go snorkeling in Thailand with a snorkleing vest and did OK. Am I going to be fine for Silfra?",
+      "summary": "Beginner swimmer anxiety",
+      "emoji": "😬",
+      "theme": "safety",
+      "score": 15,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20am%20not%20a%20confident%20swimmer%20at%20all%2C%20I%20just%20learned%20how%20to%20s&type=comment"
+    },
+    {
+      "text": "I went a few weeks ago! The suit makes you float, you do not need to be able to swim at all. What I did not expect was the core engagement haha but I had a blast.",
+      "summary": "Had a blast recently",
+      "emoji": "😄",
+      "theme": "vibe",
+      "score": 12,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20went%20a%20few%20weeks%20ago!%20The%20suit%20makes%20you%20float%2C%20you%20do%20not&type=comment"
+    },
+    {
+      "text": "For anyone that's snorkeled at Silfra - how wet does your hair get? I understand that the wetsuit covers your hair, but I assume it gets at least somewhat wet.",
+      "summary": "Hair wetness logistics",
+      "emoji": "💇",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=For%20anyone%20that's%20snorkeled%20at%20Silfra%20-%20how%20wet%20does%20your%20ha&type=comment"
+    },
+    {
+      "text": "My family and I booked the Silfra snorkeling tour for this Saturday, March 22nd back in October. We just got an email this morning informing us that our tour has been cancelled.",
+      "summary": "Last minute cancellation",
+      "emoji": "😞",
+      "theme": "logistics",
+      "score": 5,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=My%20family%20and%20I%20booked%20the%20Silfra%20snorkeling%20tour%20for%20this%20S&type=comment"
+    },
+    {
+      "text": "I too would try inquiring with another tour operator and see if they are operating on Saturday. Perhaps your tour operator overbooked, is understaffed or something else specific.",
+      "summary": "Try different operators",
+      "emoji": "💡",
+      "theme": "tip",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20too%20would%20try%20inquiring%20with%20another%20tour%20operator%20and%20see&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "The suit keeps you afloat, you don't need to be a good swimmer",
+      "score": 2,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Buy specific drysuit undergarments for cold water diving in advance if not provided",
+      "score": 1,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Try inquiring with multiple tour operators if one cancels",
+      "score": 1,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Ice cave tour",
+      "mentionCount": 2,
+      "context": "More enjoyable and less stressful alternative"
+    },
+    {
+      "name": "Glacier hike",
+      "mentionCount": 1,
+      "context": "Way cooler experience than Silfra"
+    }
+  ],
+  "scrapedAt": "2026-03-21T16:48:03.796Z"
+}

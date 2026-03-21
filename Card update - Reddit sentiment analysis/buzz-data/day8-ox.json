@@ -1,0 +1,107 @@
+{
+  "cardId": "day8-ox",
+  "sentiment": "legendary",
+  "mentionCount": 8,
+  "tensionSummary": "\"Plan trips around reservations\" vs minimal criticism found",
+  "distribution": {
+    "positive": 8,
+    "mixed": 0,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "Wife and I had a wonderful time at Óx. What a fantastic and intimate experience with 15 strangers. Would highly recommend if you're interested and can get in. I've heard people literally plan trips to Iceland around the reservation and can understand why.",
+      "summary": "Trip-worthy intimate dining experience",
+      "emoji": "🌟",
+      "theme": "vibe",
+      "score": 183,
+      "sub": "MichelinStars",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Wife%20and%20I%20had%20a%20wonderful%20time%20at%20%C3%93x.%20What%20a%20fantastic%20and%20&type=comment"
+    },
+    {
+      "text": "Wife and I had a wonderful time at Óx. What a fantastic and intimate experience with 15 strangers. Would highly recommend if you're interested and can get in. I've heard people literally plan trips to Iceland around the reservation and can understand why.",
+      "summary": "Trip-worthy intimate dining experience",
+      "emoji": "🌟",
+      "theme": "vibe",
+      "score": 94,
+      "sub": "MichelinStars",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Wife%20and%20I%20had%20a%20wonderful%20time%20at%20%C3%93x.%20What%20a%20fantastic%20and%20&type=comment"
+    },
+    {
+      "text": "Dozens of Michelin-starred meals later, ÓX still remains my favourite of all time. I honestly can't fault it, I still think of that Rye bread regularly... It's going to be the very first place I visit next time I'm in Reykjavik, wouldn't be surprised if they're 2* by then.",
+      "summary": "Flawless favorite among Michelin veterans",
+      "emoji": "👑",
+      "theme": "food_quality",
+      "score": 4,
+      "sub": "finedining",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Dozens%20of%20Michelin-starred%20meals%20later%2C%20%C3%93X%20still%20remains%20my%20&type=comment"
+    },
+    {
+      "text": "My December trip is almost here and I'm starting to plan my bag and I was wondering if there's a specific dress code for Óx? I'm going to celebrate my birthday there this year",
+      "summary": "Birthday celebration dress code inquiry",
+      "emoji": "🎂",
+      "theme": "logistics",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=My%20December%20trip%20is%20almost%20here%20and%20I'm%20starting%20to%20plan%20my%20&type=comment"
+    },
+    {
+      "text": "I wouldn't wear rain pants to Óx, but there will be a mix of attire. I went with my Icelandic in-laws to celebrate two milestone birthdays and everyone dressed up; however, there were several tourists who were dining with us in button-down shirts/cardigans and basic pants.",
+      "summary": "Mixed attire acceptable advice",
+      "emoji": "👔",
+      "theme": "tip",
+      "score": 5,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20wouldn't%20wear%20rain%20pants%20to%20%C3%93x%2C%20but%20there%20will%20be%20a%20mix%20of&type=comment"
+    },
+    {
+      "text": "I wore a lopapeysa and hiking skirt. Some people showed up to Óx dressed formal and some showed up in their normal outdoorsy clothes.",
+      "summary": "Casual outdoorsy attire works",
+      "emoji": "🧥",
+      "theme": "tip",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20wore%20a%20lopapeysa%20and%20hiking%20skirt.%20Some%20people%20showed%20up%20t&type=comment"
+    },
+    {
+      "text": "My wife and I were in Reykjavik last week and were fortunate enough to visit ÓX. This happened to be our first Michelin starred restaurant and we were absolutely blown away. The restaurant itself is meant to look like the chef's grandmother's house",
+      "summary": "Blown away first Michelin experience",
+      "emoji": "🤯",
+      "theme": "vibe",
+      "score": 109,
+      "sub": "finedining",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=My%20wife%20and%20I%20were%20in%20Reykjavik%20last%20week%20and%20were%20fortunate&type=comment"
+    },
+    {
+      "text": "One of the best fine dining experiences I've ever had! 1 Michelin star Óx in Reykjavik, Iceland. The best 1 Michelin star restaurant I've ever done and definitely deserves more stars.",
+      "summary": "Best one-star deserves more",
+      "emoji": "⭐",
+      "theme": "underrated",
+      "score": 48,
+      "sub": "finedining",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=One%20of%20the%20best%20fine%20dining%20experiences%20I've%20ever%20had!%201%20Mic&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Mixed attire acceptable - don't wear rain pants but casual outdoorsy clothes work alongside formal wear",
+      "score": 5,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "People plan entire trips to Iceland around getting reservations here",
+      "score": 183,
+      "sub": "MichelinStars"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T18:04:44.404Z"
+}

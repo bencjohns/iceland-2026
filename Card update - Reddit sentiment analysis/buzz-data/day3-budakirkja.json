@@ -1,0 +1,107 @@
+{
+  "cardId": "day3-budakirkja",
+  "sentiment": "hidden-gem",
+  "mentionCount": 8,
+  "tensionSummary": "\"Must-see photo destination\" vs \"Logistical planning challenge\"",
+  "distribution": {
+    "positive": 6,
+    "mixed": 2,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "Welcome to /r/itookapicture! We talk about making photos here. No off-topic comments please.",
+      "summary": "Photography showcase post",
+      "emoji": "📸",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "itookapicture",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Welcome%20to%20%2Fr%2Fitookapicture!%20We%20talk%20about%20making%20photos%20her&type=comment"
+    },
+    {
+      "text": "Welcome to /r/itookapicture! We talk about making photos here. No off-topic comments please.",
+      "summary": "Another photography showcase",
+      "emoji": "📷",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "itookapicture",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Welcome%20to%20%2Fr%2Fitookapicture!%20We%20talk%20about%20making%20photos%20her&type=comment"
+    },
+    {
+      "text": "This is the trip plan that came up basis some research reading blogs. Please let me know if this is reasonable for a first time self-drive trip for three adults.",
+      "summary": "First timer planning inclusion",
+      "emoji": "🗺️",
+      "theme": "logistics",
+      "score": 4,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=This%20is%20the%20trip%20plan%20that%20came%20up%20basis%20some%20research%20readi&type=comment"
+    },
+    {
+      "text": "Would love advice on doing the 2 days in Snæfellsnes vs doing golden circle, staying",
+      "summary": "Family itinerary consideration",
+      "emoji": "👨‍👩‍👧‍👦",
+      "theme": "logistics",
+      "score": 0,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Would%20love%20advice%20on%20doing%20the%202%20days%20in%20Sn%C3%A6fellsnes%20vs%20doin&type=comment"
+    },
+    {
+      "text": "Day 2: Golden Circle & Hot Springs",
+      "summary": "Multi-day itinerary planning",
+      "emoji": "📋",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Day%202%3A%20Golden%20Circle%20%26%20Hot%20Springs&type=comment"
+    },
+    {
+      "text": "Hello all, we, a group of 4 people, are planning a 9 day road trip in Iceland for this late September of 2025.",
+      "summary": "Group trip planning",
+      "emoji": "🚗",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Hello%20all%2C%20we%2C%20a%20group%20of%204%20people%2C%20are%20planning%20a%209%20day%20roa&type=comment"
+    },
+    {
+      "text": "Our 10-day Iceland Adventure (First Two Weeks of May 2025) - This forum was a lifesaver, it helped us figure out the perfect number of days to explore the Ring Road.",
+      "summary": "Successful trip completion",
+      "emoji": "🌟",
+      "theme": "vibe",
+      "score": 17,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Our%2010-day%20Iceland%20Adventure%20(First%20Two%20Weeks%20of%20May%202025)%20-&type=comment"
+    },
+    {
+      "text": "Finally got a chance to visit this beautiful island in Sept for 4 days. Just wanna check this iternary isnt crazy! 3-Day Iceland Itinerary – Too Ambitious or Doable? (Golden Circle, South Coast, Snæfellsnes)",
+      "summary": "Ambitious itinerary validation",
+      "emoji": "⚡",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Finally%20got%20a%20chance%20to%20visit%20this%20beautiful%20island%20in%20Sept%20&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Include Búðakirkja in Snæfellsnes peninsula itinerary for photography opportunities",
+      "score": 4,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Consider 10 days for Ring Road trip to properly explore destinations like Búðakirkja",
+      "score": 17,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:02:32.279Z"
+}

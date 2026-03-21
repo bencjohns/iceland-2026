@@ -1,0 +1,47 @@
+{
+  "cardId": "day5-ferry",
+  "sentiment": "mixed",
+  "mentionCount": 2,
+  "tensionSummary": "\"Planning logistics carefully\" vs \"Just need basic info\"",
+  "distribution": {
+    "positive": 0,
+    "mixed": 2,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "As part of a 12 day trip in early June, we are planning to stay overnight in Þórsmörk and then head immediately to the Westman Islands ferry. Currently, our plan is to be on a 10:30 bus from Húsadalur (Volcano Huts) due to arrive at 12:00 at Hvolsvöllur (N1 Gas Station)",
+      "summary": "Complex timing coordination needed",
+      "emoji": "⏰",
+      "theme": "logistics",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=As%20part%20of%20a%2012%20day%20trip%20in%20early%20June%2C%20we%20are%20planning%20to%20s&type=comment"
+    },
+    {
+      "text": "I'm taking the ferry to the Westman Islands ferry in late May and I'm interested to know if the have any food offerings on board like a cafe or the like? I'm driving from Reykjavik and just trying to plan my morning accordingly.",
+      "summary": "Seeking onboard food options",
+      "emoji": "🍽️",
+      "theme": "food_quality",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I'm%20taking%20the%20ferry%20to%20the%20Westman%20Islands%20ferry%20in%20late%20Ma&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Plan bus timing carefully when connecting from Þórsmörk to catch the Westman Islands ferry",
+      "score": 2,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Check ferry food options in advance when driving from Reykjavik to plan your morning meal timing",
+      "score": 2,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:27:00.877Z"
+}

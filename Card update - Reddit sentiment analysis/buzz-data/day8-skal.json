@@ -1,0 +1,36 @@
+{
+  "cardId": "day8-skal",
+  "sentiment": "mixed",
+  "mentionCount": 2,
+  "tensionSummary": "\"Celebratory toast\" vs \"Technical gaming frustrations\"",
+  "distribution": {
+    "positive": 1,
+    "mixed": 0,
+    "negative": 1
+  },
+  "quotes": [
+    {
+      "text": "Skál!",
+      "summary": "Celebratory Icelandic toast",
+      "emoji": "🍻",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Sk%C3%A1l!&type=comment"
+    },
+    {
+      "text": "A to B they're fine, mostly, forget those \"encounters\" with wild life/random soldiers. I'm sure it's intended. Same for slow swim speeds, it makes sense. But trying to jump off a half foot ledge? Pfft not today. Nothing better than the stutter step hit the right spot -poof- now you're down.",
+      "summary": "Gaming movement mechanics frustration",
+      "emoji": "😤",
+      "theme": "logistics",
+      "score": 2192,
+      "sub": "assassinscreed",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=A%20to%20B%20they're%20fine%2C%20mostly%2C%20forget%20those%20encounters%20with%20&type=comment"
+    }
+  ],
+  "tips": [],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T18:06:47.793Z"
+}

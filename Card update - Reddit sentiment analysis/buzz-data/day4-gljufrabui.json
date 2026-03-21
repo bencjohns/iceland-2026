@@ -1,0 +1,56 @@
+{
+  "cardId": "day4-gljufrabui",
+  "sentiment": "hidden-gem",
+  "mentionCount": 4,
+  "tensionSummary": "\"Hidden beautiful waterfall\" vs \"Not enough detailed discussion\"",
+  "distribution": {
+    "positive": 3,
+    "mixed": 1,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "Under the Gljúfrabúi hidden waterfall in southern Iceland",
+      "summary": "Hidden waterfall showcase",
+      "emoji": "💎",
+      "theme": "scenery",
+      "score": 1,
+      "sub": "NoSillySuffix",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Under%20the%20Glj%C3%BAfrab%C3%BAi%20hidden%20waterfall%20in%20southern%20Iceland&type=comment"
+    },
+    {
+      "text": "Under the Gljúfrabúi hidden waterfall in southern Iceland",
+      "summary": "Photography worthy destination",
+      "emoji": "📸",
+      "theme": "scenery",
+      "score": 1,
+      "sub": "ImagesOfIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Under%20the%20Glj%C3%BAfrab%C3%BAi%20hidden%20waterfall%20in%20southern%20Iceland&type=comment"
+    },
+    {
+      "text": "tentative 5-day itinerary covering the South Coast and some stops along the Golden Circle",
+      "summary": "South Coast inclusion",
+      "emoji": "🗺️",
+      "theme": "logistics",
+      "score": 0,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=tentative%205-day%20itinerary%20covering%20the%20South%20Coast%20and%20some%20&type=comment"
+    },
+    {
+      "text": "going to iceland late october/early november searching this sub trying to plan our itinerary",
+      "summary": "Itinerary planning consideration",
+      "emoji": "📋",
+      "theme": "logistics",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=going%20to%20iceland%20late%20october%2Fearly%20november%20searching%20this%20&type=comment"
+    }
+  ],
+  "tips": [],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:12:50.376Z"
+}

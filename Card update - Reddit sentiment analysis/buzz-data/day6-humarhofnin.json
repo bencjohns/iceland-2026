@@ -1,0 +1,72 @@
+{
+  "cardId": "day6-humarhofnin",
+  "sentiment": "hidden-gem",
+  "mentionCount": 5,
+  "tensionSummary": "\"Incredible langoustine pizza\" vs \"barely mentioned in travel plans\"",
+  "distribution": {
+    "positive": 1,
+    "mixed": 4,
+    "negative": 0
+  },
+  "quotes": [
+    {
+      "text": "Any tips recommendations for this itinerary? Is this doable ?",
+      "summary": "Itinerary planning help",
+      "emoji": "🗺️",
+      "theme": "logistics",
+      "score": 0,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Any%20tips%20recommendations%20for%20this%20itinerary%3F%20Is%20this%20doable%20&type=comment"
+    },
+    {
+      "text": "So i know eating out is absurdly expensive in Iceland...but even though we'll be camping and making our own food most of the time, there's a pretty good chance that we'll be eating at a restaurant at least once every other day or so",
+      "summary": "Restaurant budget planning",
+      "emoji": "💰",
+      "theme": "cost",
+      "score": 13,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=So%20i%20know%20eating%20out%20is%20absurdly%20expensive%20in%20Iceland...but%20&type=comment"
+    },
+    {
+      "text": "Will be visiting Iceland next week (oh my god is it really that soon?) and I am finalizing a bunch of my plans. I've received many recommendations on restaurants and places to have a nice dinner.",
+      "summary": "Restaurant recommendations needed",
+      "emoji": "📝",
+      "theme": "logistics",
+      "score": 3,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Will%20be%20visiting%20Iceland%20next%20week%20(oh%20my%20god%20is%20it%20really%20t&type=comment"
+    },
+    {
+      "text": "Went counter clockwise. Here's my days: Thursday 28/6 - Northern Lights Inn and Blue Lagoon Friday 29/6 - Pick up Sunny (our RV's nickname) and head out and tackle the golden circle.",
+      "summary": "Trip itinerary sharing",
+      "emoji": "🚐",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Went%20counter%20clockwise.%20Here's%20my%20days%3A%20Thursday%2028%2F6%20-%20Nort&type=comment"
+    },
+    {
+      "text": "Humarhöfnin Veitingahús is incredible! Langoustine pizza is relatively cheap & so good. Have fun in Höfn!",
+      "summary": "Incredible langoustine pizza",
+      "emoji": "🍕",
+      "theme": "food_quality",
+      "score": 5,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Humarh%C3%B6fnin%20Veitingah%C3%BAs%20is%20incredible!%20Langoustine%20pizza%20is%20&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Langoustine pizza is relatively cheap & so good",
+      "score": 5,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T17:48:52.882Z"
+}

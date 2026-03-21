@@ -1,0 +1,153 @@
+{
+  "cardId": "day4-reynisfjara",
+  "sentiment": "loved",
+  "mentionCount": 12,
+  "tensionSummary": "\"Magical and beautiful\" vs \"Terrifying waves kill tourists\"",
+  "distribution": {
+    "positive": 6,
+    "mixed": 4,
+    "negative": 2
+  },
+  "quotes": [
+    {
+      "text": "This is us in the gif. I am sharing my experience and the video/gif as a warning to other tourists who are planning to visit this beach.",
+      "summary": "Warning other tourists",
+      "emoji": "⚠️",
+      "theme": "safety",
+      "score": 890,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=This%20is%20us%20in%20the%20gif.%20I%20am%20sharing%20my%20experience%20and%20the%20vi&type=comment"
+    },
+    {
+      "text": "The portion of the signage that indicates where to avoid when the warning lights are being used has been missing",
+      "summary": "Missing safety signage",
+      "emoji": "🚨",
+      "theme": "safety",
+      "score": 39,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=The%20portion%20of%20the%20signage%20that%20indicates%20where%20to%20avoid%20whe&type=comment"
+    },
+    {
+      "text": "Reynisfjara was magical. And slightly terrifying because of the strength of the waves. But mostly magical.",
+      "summary": "Magical but terrifying waves",
+      "emoji": "✨",
+      "theme": "vibe",
+      "score": 18,
+      "sub": "travel",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Reynisfjara%20was%20magical.%20And%20slightly%20terrifying%20because%20of%20&type=comment"
+    },
+    {
+      "text": "I once had a dream about laying down on a black sand beach as the waves slowly cascaded onto me; I think I just found the destination for my first ever solo vacation.",
+      "summary": "Dream destination found",
+      "emoji": "💭",
+      "theme": "vibe",
+      "score": 2,
+      "sub": "travel",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20once%20had%20a%20dream%20about%20laying%20down%20on%20a%20black%20sand%20beach%20a&type=comment"
+    },
+    {
+      "text": "Source: guidetoiceland.is/travel-iceland/drive/reynisfjara",
+      "summary": "Sharing information source",
+      "emoji": "ℹ️",
+      "theme": "tip",
+      "score": 1,
+      "sub": "interestingasfuck",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Source%3A%20guidetoiceland.is%2Ftravel-iceland%2Fdrive%2Freynisfjara&type=comment"
+    },
+    {
+      "text": "Not too…",
+      "summary": "Incomplete thought",
+      "emoji": "🤷",
+      "theme": "vibe",
+      "score": 1,
+      "sub": "interestingasfuck",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=Not%20too%E2%80%A6&type=comment"
+    },
+    {
+      "text": "The Minister of Industries… danger may force reynisfjara closures",
+      "summary": "Government considering closures",
+      "emoji": "🏛️",
+      "theme": "safety",
+      "score": 55,
+      "sub": "VisitingIceland",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=The%20Minister%20of%20Industries%E2%80%A6%20danger%20may%20force%20reynisfjara%20clo&type=comment"
+    },
+    {
+      "text": "tourists will not respect signs, or barriers. People behave like morons all the time. I've lost count of how many morons I've seen crossing the ropes",
+      "summary": "Tourists ignore safety barriers",
+      "emoji": "🤦",
+      "theme": "safety",
+      "score": 17,
+      "sub": "VisitingIceland",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=tourists%20will%20not%20respect%20signs%2C%20or%20barriers.%20People%20behave%20&type=comment"
+    },
+    {
+      "text": "The philippines have a lot of black sand beach",
+      "summary": "Alternative locations exist",
+      "emoji": "🏖️",
+      "theme": "tip",
+      "score": 4,
+      "sub": "interestingasfuck",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=The%20philippines%20have%20a%20lot%20of%20black%20sand%20beach&type=comment"
+    },
+    {
+      "text": "Wow! Is that the only black sand beach in Iceland? Curious what makes black sand lol.",
+      "summary": "Curious about black sand",
+      "emoji": "🤔",
+      "theme": "scenery",
+      "score": 2,
+      "sub": "interestingasfuck",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=Wow!%20Is%20that%20the%20only%20black%20sand%20beach%20in%20Iceland%3F%20Curious%20w&type=comment"
+    },
+    {
+      "text": "So excellent question and super cool that you noticed this! the basalt columns in Reynisfjara are part of the Reynisfjall, a mountain formed",
+      "summary": "Geological features explanation",
+      "emoji": "🪨",
+      "theme": "scenery",
+      "score": 29,
+      "sub": "geology",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=So%20excellent%20question%20and%20super%20cool%20that%20you%20noticed%20this!%20&type=comment"
+    },
+    {
+      "text": "The black beach in Iceland — Reynisfjara, 'the beach that kills tourists' — is not just a label because of the color of the sand",
+      "summary": "Beach that kills tourists",
+      "emoji": "💀",
+      "theme": "safety",
+      "score": 72,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=The%20black%20beach%20in%20Iceland%20%E2%80%94%20Reynisfjara%2C%20'the%20beach%20that%20ki&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Respect safety signs and barriers - tourists often ignore them putting themselves in danger",
+      "score": 17,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Be aware of the strength of the waves - they can be terrifying and dangerous",
+      "score": 18,
+      "sub": "travel"
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Philippines black sand beaches",
+      "mentionCount": 1,
+      "context": "Alternative black sand beach destinations exist"
+    }
+  ],
+  "scrapedAt": "2026-03-21T17:20:29.614Z"
+}

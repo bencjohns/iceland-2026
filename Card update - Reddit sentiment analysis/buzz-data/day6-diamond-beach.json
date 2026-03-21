@@ -1,0 +1,98 @@
+{
+  "cardId": "day6-diamond-beach",
+  "sentiment": "polarizing",
+  "mentionCount": 7,
+  "tensionSummary": "\"Truly amazing celestial experience\" vs \"Stop ruining Iceland's real names\"",
+  "distribution": {
+    "positive": 3,
+    "mixed": 2,
+    "negative": 2
+  },
+  "quotes": [
+    {
+      "text": "I was there in 2017, I've thought about Iceland almost everyday since then. Diamond Beach is truly amazing, we watched hunks of ice float by ranging in sizes from a softball to a Buick. The ice rolls out into the ocean and circles back onto the shore, washing up like celestial whales.",
+      "summary": "Life-changing celestial ice experience",
+      "emoji": "🌟",
+      "theme": "vibe",
+      "score": 67,
+      "sub": "woahdude",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20was%20there%20in%202017%2C%20I've%20thought%20about%20Iceland%20almost%20every&type=comment"
+    },
+    {
+      "text": "I think I see why they call it Diamond Beach",
+      "summary": "Understanding the diamond reference",
+      "emoji": "💎",
+      "theme": "scenery",
+      "score": 8,
+      "sub": "woahdude",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I%20think%20I%20see%20why%20they%20call%20it%20Diamond%20Beach&type=comment"
+    },
+    {
+      "text": "I assume this is talking about the beach at Jokulsarlon Glacial Lagoon. (A search for \"Diamond Beach\" would probably get you there, but Jokulsarlon definitely will.)",
+      "summary": "Clarifying the real name",
+      "emoji": "📍",
+      "theme": "logistics",
+      "score": 141,
+      "sub": "EarthPorn",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=I%20assume%20this%20is%20talking%20about%20the%20beach%20at%20Jokulsarlon%20Glac&type=comment"
+    },
+    {
+      "text": "In October 2015, I showed up to the diamond beach before sunrise. I'm an early riser, and I typically use it to my advantage when visiting touristy type places. I parked my car, walked down towards the beach, and saw well over 50 photographers lined up waiting for the sun to rise.",
+      "summary": "Crowded with sunrise photographers",
+      "emoji": "📸",
+      "theme": "crowds",
+      "score": 8,
+      "sub": "EarthPorn",
+      "camp": "mixed",
+      "permalink": "https://www.reddit.com/search/?q=In%20October%202015%2C%20I%20showed%20up%20to%20the%20diamond%20beach%20before%20sun&type=comment"
+    },
+    {
+      "text": "Quick! What's the actual name of that beach? And no, it isn't Diamond Beach.",
+      "summary": "Challenging the fake name",
+      "emoji": "❌",
+      "theme": "overrated",
+      "score": 126,
+      "sub": "EarthPorn",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=Quick!%20What's%20the%20actual%20name%20of%20that%20beach%3F%20And%20no%2C%20it%20isn'&type=comment"
+    },
+    {
+      "text": "I've never seen an image of Diamond Beach before.",
+      "summary": "First time seeing images",
+      "emoji": "👀",
+      "theme": "underrated",
+      "score": 70,
+      "sub": "EarthPorn",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=I've%20never%20seen%20an%20image%20of%20Diamond%20Beach%20before.&type=comment"
+    },
+    {
+      "text": "Diamond beach isn't a name! Stop trying to ruin the names in Iceland!",
+      "summary": "Angry about name appropriation",
+      "emoji": "😡",
+      "theme": "overrated",
+      "score": 4,
+      "sub": "EarthPorn",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=Diamond%20beach%20isn't%20a%20name!%20Stop%20trying%20to%20ruin%20the%20names%20in&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Show up before sunrise and use early rising to your advantage when visiting touristy places",
+      "score": 8,
+      "sub": "EarthPorn"
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Jokulsarlon Glacial Lagoon",
+      "mentionCount": 1,
+      "context": "the actual proper name for this location"
+    }
+  ],
+  "scrapedAt": "2026-03-21T17:47:38.234Z"
+}

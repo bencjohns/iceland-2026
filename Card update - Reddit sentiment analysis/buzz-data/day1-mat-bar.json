@@ -1,0 +1,57 @@
+{
+  "cardId": "day1-mat-bar",
+  "sentiment": "mixed",
+  "mentionCount": 3,
+  "tensionSummary": "\"Amazing trip planning resource\" vs \"Irrelevant promotional content\"",
+  "distribution": {
+    "positive": 2,
+    "mixed": 0,
+    "negative": 1
+  },
+  "quotes": [
+    {
+      "text": "We decided on the spur of the moment a few months ago to have a 4 night holiday in Iceland, focusing on Reykjavik. We are Aussies living in NYC and the delight of being able to be in Iceland - Iceland! - in less than 6 hours is still amazing to us.",
+      "summary": "Spontaneous Iceland adventure delight",
+      "emoji": "✈️",
+      "theme": "logistics",
+      "score": 116,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20decided%20on%20the%20spur%20of%20the%20moment%20a%20few%20months%20ago%20to%20hav&type=comment"
+    },
+    {
+      "text": "We just got back from the most incredible trip to Iceland. I wanted to share our itinerary in case it is helpful for others planning a trip. Our group was my family (husband, daughter age 6) and my in-laws (sister in-law and parent in-laws in their early 70s). Everyone had the most amazing time!!",
+      "summary": "Incredible multigenerational Iceland trip",
+      "emoji": "🌟",
+      "theme": "vibe",
+      "score": 21,
+      "sub": "VisitingIceland",
+      "camp": "positive",
+      "permalink": "https://www.reddit.com/search/?q=We%20just%20got%20back%20from%20the%20most%20incredible%20trip%20to%20Iceland.%20I&type=comment"
+    },
+    {
+      "text": "Du lịch ẩm thực chưa bao giờ hết hot. Thưởng thức những món ăn ngon là cách tuyệt vời nhất để hành khách hòa mình vào văn hóa địa phương. Mua vé vn airlines đến với nơi đây",
+      "summary": "Promotional airline spam content",
+      "emoji": "📢",
+      "theme": "logistics",
+      "score": 1,
+      "sub": "u_Huongcaobeo",
+      "camp": "negative",
+      "permalink": "https://www.reddit.com/search/?q=Du%20l%E1%BB%8Bch%20%E1%BA%A9m%20th%E1%BB%B1c%20ch%C6%B0a%20bao%20gi%E1%BB%9D%20h%E1%BA%BFt%20hot.%20Th%C6%B0%E1%BB%9Fng%20th%E1%BB%A9c%20nh%E1%BB%AFng%20m%C3%B3n%20&type=comment"
+    }
+  ],
+  "tips": [
+    {
+      "text": "Iceland is accessible from NYC in less than 6 hours",
+      "score": 116,
+      "sub": "VisitingIceland"
+    },
+    {
+      "text": "Plan 4 nights focusing on Reykjavik for a good trip",
+      "score": 116,
+      "sub": "VisitingIceland"
+    }
+  ],
+  "alternatives": [],
+  "scrapedAt": "2026-03-21T16:41:11.446Z"
+}
