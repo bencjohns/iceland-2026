@@ -1,6 +1,6 @@
 # Iceland Trip Planner — Project Status
 
-**Last updated:** 2026-03-19
+**Last updated:** 2026-03-20
 **Live URL:** https://bencjohns.github.io/iceland-2026/
 **Repo:** https://github.com/bencjohns/iceland-2026
 
@@ -23,11 +23,17 @@
 ### Interactive Map View
 - [x] Full-screen Leaflet map with CARTO Voyager tiles
 - [x] 48 geocoded attractions with color-coded pins by day + category emoji icons
-- [x] Compact popup on pin click (photo, name, cost, vote counts)
-- [x] "View Full Details" expands to full CardComponent in modal overlay
-- [x] Day filter legend — click a day to show only that day's pins
+- [x] Compact popup on pin click (photo, name, cost, vote counts, Reddit rating)
+- [x] "View Full Details" expands to full CardComponent in modal overlay; Reddit Buzz opens correctly from map view
+- [x] Map container clips within bounds (overflow hidden) — no bleed over sticky header
+- [x] Day filter legend — click a day to show only that day's pins; colored dash indicator for days with routes
 - [x] List/Map toggle in filter bar
 - [x] All existing filters (type, cost, booking) apply to map view
+- [x] Route visualization — OSRM driving directions draw actual road paths between planned stops per day
+- [x] Planned stops show numbered markers (1, 2, 3...) at 34px; unplanned stops fade to gray (22px, 0.45 opacity)
+- [x] "Show Route" / "Hide Route" toggle button (bottom-left, teal when active)
+- [x] Routes auto-enable when side panel opens, respect day filter
+- [x] OSRM responses cached in-memory to avoid redundant API calls
 
 ### My Trip Side Panel (Primary Planning Interface)
 - [x] Floating "My Trip" button accessible from all pages (List, Map, Most Liked, Itineraries)
@@ -43,6 +49,7 @@
 - [x] "+ Add stop" per day with searchable card picker modal (Type/Cost/Booking filters)
 - [x] "+ Add Day" to create additional days beyond the 8 trip days
 - [x] + button on every card (top-right, List + Map view) to add directly to trip
+- [x] Add-to-trip from Reddit Buzz dashboard — side panel opens above buzz overlay (z-2002), newly added stop highlighted with teal ring + auto-scroll, highlight clears after 2.5s
 - [x] Auto-detect region labels for extra days using GPS nearest-centroid matching
 
 ### Trip Drafts System
@@ -75,10 +82,11 @@
 - [x] Current user selection stays local (per-browser)
 
 ### Navigation & Filtering
-- [x] Sticky header + filter bar (All Days, Must-Decide, Restaurants, Suggestions, Most Liked, Itineraries)
+- [x] Sticky header + filter bar (All Days, Must-Decide, Restaurants, Suggestions, Most Liked, Itineraries); clicking "Iceland 2026" title returns to list view on all days (preserves advanced filters)
 - [x] Advanced filters: activity type, cost tier, booking lead time — toggle off by re-clicking
 - [x] Day navigator (right-side dots with "DAY" label, click to scroll)
 - [x] Floating day bar (shows current day when scrolling, text-lg title matching card titles) — fixed, uses portal to document.body
+- [x] Auto-hiding header — title/stats/user row collapses on scroll (>80px), leaving only filter bar + floating day bar visible
 
 ### Card Details
 - [x] Image carousel (full left/right click zones, arrow key support)
@@ -86,7 +94,7 @@
 - [x] Reddit rating (1–5 stars)
 - [x] Book-soon flags with lead time
 - [x] Drive distance from previous stop
-- [x] Google Search + Reddit Search links per card
+- [x] Compact details row: time estimate, parking, booking link, and Google search all on one line
 - [x] Booking URLs
 
 ### UX & Onboarding
@@ -110,7 +118,7 @@
 - **Image count** — Many cards still have only 2–3 Unsplash photos instead of the target 5. The 12 restaurant cards have local images downloaded from official sites.
 - **No offline support** — App requires internet for Firebase + Unsplash images + CDN scripts.
 - **Firebase test mode** — Database rules are open (read/write: true). Fine for a private family app, but test mode expires after 30 days — rules will need to be updated before then.
-- **Drive time estimates** — Itinerary drive times use haversine × 1.4 road factor, not real routing. Accuracy varies; Iceland's roads can be slower than the 70 km/h average assumed.
+- **Drive time estimates** — Itinerary drive times use haversine × 1.4 road factor, not real routing. Accuracy varies; Iceland's roads can be slower than the 70 km/h average assumed. (Map route lines use real OSRM routing, but the side panel estimates do not.)
 
 ## Future Ideas
 
@@ -122,7 +130,7 @@
 - Packing list feature
 - Weather API integration for real forecasts closer to the trip
 - Mobile app wrapper (PWA)
-- Real routing API (OSRM) for accurate drive times in itinerary builder
+- Real routing API (OSRM) for accurate drive times in itinerary side panel (map routes already use OSRM)
 
 ## Tech Stack
 

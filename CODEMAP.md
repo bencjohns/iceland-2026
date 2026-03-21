@@ -96,7 +96,7 @@ STATUS.md               — Project status
 | `HeroSection` | 1305 | Trip overview: dates, travelers with vote counts, route map |
 | `FilterBar` | 1354 | Tab filters (All Days, Must-Decide, Restaurants, Family Suggestions, Most Liked, Itineraries) + expandable advanced filters (Type, Cost, Booking, Hype) + List/Map toggle. Hype filter = Reddit rating minimum (5, 4+, 3+, 2+). Elements tagged with `data-tour` attributes for spotlight tour |
 | `DayNavigator` | 1459 | Fixed right-side dots (Day 1–8) with "DAY" label header, click to scroll, highlights active day. Hidden on mobile (<900px) |
-| `MapView` | 1479 | Full-screen Leaflet map with color-coded pins, compact popups (including Reddit rating), day filter legend with route indicators. Route visualization: fetches OSRM driving directions per day, draws road-following polylines, caches responses. Planned stops show numbered markers at 34px; unplanned stops fade to gray 22px/0.45 opacity. "Show Route"/"Hide Route" toggle (bottom-left). Receives `activeDraft`, `showRoute`, `onToggleRoute`, `onAddToTrip` |
+| `MapView` | 1479 | Full-screen Leaflet map (`overflow-hidden` wrapper) with color-coded pins, compact popups (including Reddit rating), day filter legend with route indicators. Route visualization: fetches OSRM driving directions per day, draws road-following polylines, caches responses. Planned stops show numbered markers at 34px; unplanned stops fade to gray 22px/0.45 opacity. "Show Route"/"Hide Route" toggle (bottom-left). Receives `activeDraft`, `showRoute`, `onToggleRoute`, `onAddToTrip`, `onOpenBuzz`. Expanded card modal closes when Reddit Buzz dashboard opens (z-index handoff) |
 | `DayHeaderContent` | 1606 | Shared markup for day headers (title at text-lg, distances, weather, flight). Used by both DayHeader and FloatingDayBar |
 | `DayHeader` | 1636 | In-page day section header with scroll anchor |
 | `FloatingDayBar` | 1645 | Fixed-position compact day bar via portal to `document.body`, z-index 45, opacity-based fade transition. Title font matches card titles (text-lg) |
@@ -104,19 +104,19 @@ STATUS.md               — Project status
 | `SENTIMENT_STYLES` | ~1870 | Badge colors for 6 sentiment labels: legendary (purple), loved (green), polarizing (amber), mixed (gray), overhyped (red), hidden-gem (teal) |
 | `getFamilyVsReddit()` | ~1882 | Returns callout object when family votes diverge from Reddit sentiment (e.g., "Your family loves it, but Reddit says skip") |
 | `getQuoteIntensity()` | ~1900 | Normalizes quote score against `GLOBAL_MAX_SCORE` for gradient opacity (floor 0.1) |
-| `RedditBuzzTapTarget` | ~1905 | Clickable row on cards: Snoo icon + sentiment badge + mention count + mini distribution bar + tension summary. Replaces `StarRating` for cards with buzz data |
+| `RedditBuzzTapTarget` | ~1905 | Clickable row on cards: sentiment badge + mention count + mini distribution bar + tension summary. Replaces `StarRating` for cards with buzz data |
 | `RedditBuzzBadge` | ~1940 | Compact inline badge (sentiment label + count) for LeaderboardView, DraftCompareView, ItineraryView |
-| `QuoteBubble` | ~1955 | Quote display — featured variant (tinted bg, full text, score+sub) and compact variant (emoji+summary+score, click to expand). Reddit link icon on expanded |
+| `QuoteBubble` | ~1955 | Quote display — featured variant (tinted bg, full text, score+sub) and compact variant (emoji+summary+score, click to expand). Blue globe pill button links to Reddit permalink |
 | `RedditBuzzDashboard` | ~2000 | Full overlay portal (z-2000): card on left (desktop), 3-column panel on right (Hype/Fence-sitters/Skeptic). Column headers with colored dots+counts, "X MORE TAKES" divider, tips in Hype, alternatives in Skeptic. ESC/backdrop close, content swap animation. Mobile: full-screen with tabs. Footer shows mention count + subreddit count |
 | `StarRating` | ~2100 | Reddit hype score (1–5 stars) — kept as fallback for 3 cards without buzz data and user-submitted suggestions |
 | `VoteButtons` | 1719 | Upvote/downvote buttons with voter name lists. Tagged `data-tour="vote-buttons"` |
 | `CommentSection` | 1775 | Expandable comments with threaded replies. Tagged `data-tour="comments"` |
-| `CardComponent` | 1873 | Full card: image carousel, cost badge, tier, description, details, Google/Reddit links, votes, comments. + "Add to Trip" button (top-right) with day picker dropdown. Tagged `data-tour="add-to-trip"` |
+| `CardComponent` | 1873 | Full card: image carousel, cost badge, tier, description, compact details row (time + parking + booking + Google), votes, comments. + "Add to Trip" button (top-right) with day picker dropdown. Tagged `data-tour="add-to-trip"` |
 | `SuggestionModal` | 2009 | Form to submit new activity/restaurant suggestion via `AnimatedModal`. Accepts `open` prop for animated lifecycle. Link field accepts bare domains (auto-prepends `https://`) |
 | `LeaderboardView` | 2111 | "Most Liked" — ranked cards by net vote score with thumbnail images, descriptions, and estimated cost |
 | `DraftCompareView` | 2207 | Side-by-side comparison of all drafts with 1+ stops. Horizontal scrolling grid (one column per draft, rows by day). Consensus highlighting for stops in 2+ drafts. Inline expand/collapse with horizontal card layout (image left, details right). Expand All / Collapse All. Uses composite keys (`draftId__cardId`) for independent expand per column |
 | `ItineraryView` | 2483 | Two sub-tabs: **"Compare"** (default, renders DraftCompareView) and **"Browse Trips"** (family grid → person's drafts → expandable day-by-day view). Default subTab is `'compare'` |
-| `ItinerarySidePanel` | 3086 | Slide-out right panel (380px, z-1003) via portal. Pre-seeded 8 trip days with dates/regions in headers (e.g., "Day 3 · Sep 7 📍 Snæfellsnes"). Draft switcher pills (hidden with 1 draft, shown with 2+), inline title rename, liked-but-unplanned cards grouped by region. Each stop in bordered card with mouse-based drag-and-drop: positions snapshotted at drag start for stable hit-testing, siblings displaced via `translateY` transforms with 200ms ease transitions (dnd-kit displacement model), absolutely-positioned teal indicator line, cross-day support, 5px movement threshold to distinguish clicks from drags, `didDrag` ref flag prevents click-on-release from opening card detail. Arrow buttons as desktop fallback. Card picker via `AnimatedModal` with Type/Cost/Booking/Hype filters. Expanded card modal via `AnimatedModal`. Reads/writes to active draft in `/trip-drafts/` |
+| `ItinerarySidePanel` | 3086 | Slide-out right panel (380px, dynamic z: 1003 normally, 2002 when buzz dashboard open) via portal. Pre-seeded 8 trip days with dates/regions in headers (e.g., "Day 3 · Sep 7 📍 Snæfellsnes"). Draft switcher pills (hidden with 1 draft, shown with 2+), inline title rename, liked-but-unplanned cards grouped by region. Each stop in bordered card with mouse-based drag-and-drop: positions snapshotted at drag start for stable hit-testing, siblings displaced via `translateY` transforms with 200ms ease transitions (dnd-kit displacement model), absolutely-positioned teal indicator line, cross-day support, 5px movement threshold to distinguish clicks from drags, `didDrag` ref flag prevents click-on-release from opening card detail. Arrow buttons as desktop fallback. Card picker via `AnimatedModal` with Type/Cost/Booking/Hype filters. Expanded card modal via `AnimatedModal`. `highlightStopId` prop: teal ring + auto-scroll + 2.5s auto-clear. Reads/writes to active draft in `/trip-drafts/` |
 
 ### App Component (lines 3702–4233)
 
@@ -145,6 +145,8 @@ STATUS.md               — Project status
 | `showSuggestionModal` | React state only | No |
 | `showHomeBaseModal` | React state only | No |
 | `buzzCardId` | React state only (null or card ID for open dashboard) | No |
+| `highlightStopId` | React state only (null or card ID for highlight in side panel) | No |
+| `headerHidden` | React state only (scroll-driven, hides header row >80px) | No |
 
 **Key handlers:**
 | Handler | What it does |

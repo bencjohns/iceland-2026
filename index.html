@@ -6600,7 +6600,7 @@
       );
     }
 
-    function MapView({ filteredCards, currentUser, votes, comments, onVote, onAddComment, onDeleteSuggestion, stickyHeight, onAddToTrip, panelDayCount, homeBase, activeDraft, showRoute, onToggleRoute }) {
+    function MapView({ filteredCards, currentUser, votes, comments, onVote, onAddComment, onDeleteSuggestion, stickyHeight, onAddToTrip, panelDayCount, homeBase, activeDraft, showRoute, onToggleRoute, onOpenBuzz }) {
       const mapRef = useRef(null);
       const mapInstanceRef = useRef(null);
       const markersRef = useRef([]);
@@ -6768,7 +6768,7 @@
       const mapHeight = 'calc(100vh - ' + (stickyHeight || 140) + 'px)';
 
       return (
-        <div className="relative">
+        <div className="relative overflow-hidden">
           <div ref={mapRef} className="map-container w-full" style={{ height: mapHeight }} />
           {unplottedCount > 0 && (
             <div className={`absolute bottom-4 left-4 z-[1000] bg-white/95 backdrop-blur rounded-lg px-3 py-2 text-xs text-gray-500 shadow`}
@@ -6812,7 +6812,8 @@
                   votes={votes} comments={comments} onVote={onVote}
                   onAddComment={onAddComment} delay={0}
                   onDeleteSuggestion={expandedCard.isUserSubmitted ? onDeleteSuggestion : undefined}
-                  onAddToTrip={onAddToTrip} panelDayCount={panelDayCount} homeBase={homeBase} />
+                  onAddToTrip={onAddToTrip} panelDayCount={panelDayCount} homeBase={homeBase}
+                  onOpenBuzz={(cardId) => { setExpandedCard(null); onOpenBuzz(cardId); }} />
               </div>
             )}
           </AnimatedModal>
@@ -6976,14 +6977,6 @@
         <button onClick={() => onOpenBuzz(cardId)}
           className="w-full text-left group hover:bg-gray-50 rounded-lg transition-colors -mx-1 px-1 py-0.5">
           <div className="flex items-center gap-1.5">
-            <svg viewBox="0 0 20 20" className="w-4 h-4 shrink-0 text-orange-500" fill="currentColor">
-              <circle cx="10" cy="10" r="10"/>
-              <circle cx="7" cy="8" r="1.5" fill="white"/>
-              <circle cx="13" cy="8" r="1.5" fill="white"/>
-              <path d="M6 13 Q10 16 14 13" stroke="white" strokeWidth="1.5" fill="none"/>
-              <rect x="9" y="1" width="2" height="4" rx="1" fill="white"/>
-              <line x1="10" y1="1" x2="14" y2="0" stroke="white" strokeWidth="1.5"/>
-            </svg>
             <span className="text-[11px] text-gray-500 font-medium">Reddit Buzz:</span>
             <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${style.bg} ${style.text}`}>
               {style.label}
@@ -7035,8 +7028,14 @@
             <div className="flex items-center gap-2 mt-2">
               <span className="text-xs font-bold" style={{ opacity: Math.max(0.5, intensity) }}>{quote.score} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{width:'1em',height:'1em',display:'inline',verticalAlign:'-0.15em'}}><path d="M12 19V5M5 12l7-7 7 7"/></svg></span>
               <span className="text-[11px] text-gray-400">{quote.sub}</span>
-              {quote.permalink && <a href={quote.permalink} target="_blank" rel="noopener noreferrer" className="ml-auto text-[11px] text-gray-400 hover:text-orange-500 transition-colors" onClick={e => e.stopPropagation()} title="View on Reddit">
-                <svg viewBox="0 0 20 20" fill="currentColor" style={{width:'14px',height:'14px'}}><circle cx="10" cy="10" r="10"/><circle cx="7" cy="8" r="1.5" fill="white"/><circle cx="13" cy="8" r="1.5" fill="white"/><path d="M6 13 Q10 16 14 13" stroke="white" strokeWidth="1.5" fill="none"/><rect x="9" y="1" width="2" height="4" rx="1" fill="white"/><line x1="10" y1="1" x2="14" y2="0" stroke="white" strokeWidth="1.5"/></svg>
+              {quote.permalink && <a href={quote.permalink} target="_blank" rel="noopener noreferrer"
+                className="ml-auto inline-flex items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200 text-blue-500 hover:text-blue-600 transition-colors border-2 border-blue-500 hover:border-blue-600"
+                style={{ width: 32, height: 16, padding: 0 }}
+                onClick={e => e.stopPropagation()} title="View on Reddit">
+                <svg viewBox="0 0 20 20" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <circle cx="10" cy="10" r="8" /><ellipse cx="10" cy="10" rx="3.5" ry="8" />
+                  <line x1="2" y1="7.5" x2="18" y2="7.5" /><line x1="2" y1="12.5" x2="18" y2="12.5" />
+                </svg>
               </a>}
             </div>
           </div>
@@ -7060,8 +7059,14 @@
               <p className="text-xs text-gray-600 italic leading-relaxed">"{quote.text}"</p>
               <div className="flex items-center gap-1 mt-1">
                 <span className="text-[10px] text-gray-400">{quote.score} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{width:'1em',height:'1em',display:'inline',verticalAlign:'-0.15em'}}><path d="M12 19V5M5 12l7-7 7 7"/></svg> · {quote.sub}</span>
-                {quote.permalink && <a href={quote.permalink} target="_blank" rel="noopener noreferrer" className="ml-auto text-[10px] text-gray-400 hover:text-orange-500 transition-colors" onClick={e => e.stopPropagation()} title="View on Reddit">
-                  <svg viewBox="0 0 20 20" fill="currentColor" style={{width:'12px',height:'12px'}}><circle cx="10" cy="10" r="10"/><circle cx="7" cy="8" r="1.5" fill="white"/><circle cx="13" cy="8" r="1.5" fill="white"/><path d="M6 13 Q10 16 14 13" stroke="white" strokeWidth="1.5" fill="none"/><rect x="9" y="1" width="2" height="4" rx="1" fill="white"/><line x1="10" y1="1" x2="14" y2="0" stroke="white" strokeWidth="1.5"/></svg>
+                {quote.permalink && <a href={quote.permalink} target="_blank" rel="noopener noreferrer"
+                  className="ml-auto inline-flex items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200 text-blue-500 hover:text-blue-600 transition-colors border-2 border-blue-500 hover:border-blue-600"
+                  style={{ width: 28, height: 14, padding: 0 }}
+                  onClick={e => e.stopPropagation()} title="View on Reddit">
+                  <svg viewBox="0 0 20 20" className="w-2.5 h-2.5" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <circle cx="10" cy="10" r="8" /><ellipse cx="10" cy="10" rx="3.5" ry="8" />
+                    <line x1="2" y1="7.5" x2="18" y2="7.5" /><line x1="2" y1="12.5" x2="18" y2="12.5" />
+                  </svg>
                 </a>}
               </div>
             </div>
@@ -7651,40 +7656,23 @@
           </div>
 
           {/* Details */}
-          <div className="px-4 pt-3 space-y-1 text-xs text-gray-500">
-            <div className="flex flex-wrap gap-x-4 gap-y-1">
+          <div className="px-4 pt-3 text-xs text-gray-500">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
               <span>⏱ {card.timeNeeded}</span>
               {card.parkingCost && <span>🅿️ {card.parkingCost}</span>}
-            </div>
-            {card.bookAheadLabel && <div>📅 {card.bookAheadLabel}</div>}
-            {(card.bookingUrl || card.bookingSiteName) && (
-              <div>
-                {card.bookingUrl ? (
-                  <a href={card.bookingUrl} target="_blank" rel="noopener noreferrer"
-                    className="text-teal hover:underline">
-                    🔗 Book at {card.bookingSiteName || card.bookingUrl}
-                  </a>
-                ) : (
-                  <span className="text-gray-400">🔗 {card.bookingSiteName}</span>
-                )}
-              </div>
-            )}
-            {card.link && (
-              <div>
+              {card.bookingUrl ? (
+                <a href={card.bookingUrl} target="_blank" rel="noopener noreferrer"
+                  className="text-teal hover:underline">
+                  🔗 {card.bookingSiteName || 'Book'}
+                </a>
+              ) : card.link ? (
                 <a href={card.link} target="_blank" rel="noopener noreferrer"
                   className="text-teal hover:underline">🔗 {card.link}</a>
-              </div>
-            )}
-            <div className="flex items-center gap-3 pt-1">
+              ) : null}
               <a href={`https://www.google.com/search?q=${encodeURIComponent(card.name + ' Iceland')}`}
                 target="_blank" rel="noopener noreferrer"
-                className="text-teal hover:underline inline-flex items-center gap-1">
+                className="text-gray-400 hover:text-teal hover:underline">
                 🔍 Google
-              </a>
-              <a href={`https://www.google.com/search?q=${encodeURIComponent(card.name + ' Iceland reddit')}`}
-                target="_blank" rel="noopener noreferrer"
-                className="text-terracotta hover:underline inline-flex items-center gap-1">
-                💬 Reddit
               </a>
             </div>
           </div>
@@ -8786,7 +8774,7 @@
     // ═══════════════════════════════════════════
 
     function ItinerarySidePanel({ open, onClose, currentUser, votes, comments, allCards, onVote, onAddComment,
-        tripDrafts, activeDraftId, onSetDraftDay, onUpdateDraftDayCount, onCreateDraft, onSetActiveDraft, onRenameDraft, homeBase }) {
+        tripDrafts, activeDraftId, onSetDraftDay, onUpdateDraftDayCount, onCreateDraft, onSetActiveDraft, onRenameDraft, homeBase, highlightStopId, onClearHighlight, aboveBuzz }) {
       const [collapsedDays, setCollapsedDays] = useState({});
       const [pickerDay, setPickerDay] = useState(null);
       const [pickerSearch, setPickerSearch] = useState('');
@@ -9130,17 +9118,34 @@
         }
       }, [open]);
 
+      // Auto-scroll to and clear highlighted stop
+      useEffect(() => {
+        if (!highlightStopId || !open) return;
+        const t = setTimeout(() => {
+          const el = document.querySelector(`[data-stop-id="${highlightStopId}"]`);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 350);
+        const t2 = setTimeout(() => { if (onClearHighlight) onClearHighlight(); }, 2500);
+        return () => { clearTimeout(t); clearTimeout(t2); };
+      }, [highlightStopId, open]);
+
+      const backdropZ = aboveBuzz ? 2001 : 1002;
+      const panelZ = aboveBuzz ? 2002 : 1003;
+
       const panel = (
         <div>
-          {/* Backdrop (mobile) */}
+          {/* Backdrop */}
           {open && (
-            <div className="side-panel-backdrop fixed inset-0 bg-black/30 md:bg-black/20 z-[1002]"
+            <div className="side-panel-backdrop fixed inset-0 bg-black/30 md:bg-black/20"
+              style={{ zIndex: backdropZ }}
               onClick={onClose} />
           )}
 
           {/* Panel */}
-          <div className={`side-panel fixed top-0 right-0 bottom-0 z-[1003] bg-white shadow-2xl flex flex-col`}
-            style={{ width: 380, transform: open ? 'translateX(0)' : 'translateX(100%)' }}>
+          <div className="side-panel fixed top-0 right-0 bottom-0 bg-white shadow-2xl flex flex-col"
+            style={{ width: 380, transform: open ? 'translateX(0)' : 'translateX(100%)', zIndex: panelZ }}>
 
             {/* Header */}
             <div className="px-4 py-3 border-b border-gray-100 shrink-0">
@@ -9309,10 +9314,12 @@
                               if (!card) return null;
                               const img = (IMAGE_URLS[card.id] || [])[0];
                               const isDragging = dragState.fromDay === dayNum && dragState.fromIdx === idx;
+                              const isHighlighted = highlightStopId === cardId;
                               return (
-                                <div key={cardId}>
+                                <div key={cardId} data-stop-id={cardId}>
                                   <div className={`panel-stop flex items-center gap-2 p-2 rounded-xl border cursor-grab active:cursor-grabbing select-none ${
-                                    isDragging ? 'bg-gray-200 border-gray-300' : 'bg-white border-gray-100'}`}
+                                    isDragging ? 'bg-gray-200 border-gray-300' : isHighlighted ? 'bg-teal-50 border-teal ring-2 ring-teal/30' : 'bg-white border-gray-100'}`}
+                                    style={isHighlighted ? { transition: 'all 0.5s ease' } : undefined}
                                     data-stop-row data-stop-day={dayNum} data-stop-idx={idx}
                                     onMouseDown={(e) => handlePointerDown(dayNum, idx, e)}>
                                     <span className="text-gray-300 text-xs shrink-0">⠿</span>
@@ -9533,12 +9540,15 @@
       const [showFloatingDay, setShowFloatingDay] = useState(false);
       const [advancedFilters, setAdvancedFilters] = useState({ category: 'all', cost: 'all', booking: 'all', rating: 'all' });
       const [stickyHeight, setStickyHeight] = useState(100);
+      const [headerHidden, setHeaderHidden] = useState(false);
+      const lastScrollY = useRef(0);
       const [itineraries, setItineraries] = useState({});
       const [itineraryComments, setItineraryComments] = useState({});
       const [viewMode, setViewMode] = useState('list');
       const [sidePanelOpen, setSidePanelOpen] = useState(false);
       const [showRoute, setShowRoute] = useState(false);
       const [buzzCardId, setBuzzCardId] = useState(null);
+      const [highlightStopId, setHighlightStopId] = useState(null);
       const [panelDayCount, setPanelDayCount] = useState(DAYS.length);
       const [tripDrafts, setTripDrafts] = useState({});
       const stickyRef = useRef(null);
@@ -9627,7 +9637,7 @@
         return () => ro.disconnect();
       }, [currentUser]);
 
-      // Scroll tracking for day navigator
+      // Scroll tracking for day navigator + header auto-hide
       useEffect(() => {
         const handleScroll = () => {
           const headerH = stickyRef.current ? stickyRef.current.offsetHeight : 100;
@@ -9646,6 +9656,10 @@
           setShowFloatingDay(show);
           // Keep stickyHeight in sync for FloatingDayBar positioning
           if (stickyRef.current) setStickyHeight(headerH);
+          // Auto-hide header row when scrolled past 80px
+          const y = window.scrollY;
+          setHeaderHidden(y > 80);
+          lastScrollY.current = y;
         };
         window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll(); // run once immediately
@@ -9814,6 +9828,7 @@
           handleSetDraftDay(draftId, targetDay, [...existing, cardId]);
         }
         setSidePanelOpen(true);
+        setHighlightStopId(cardId);
       };
 
       // Combine pre-loaded cards with suggestions
@@ -9889,8 +9904,10 @@
       return (
         <div className="min-h-screen pb-24">
           <div ref={stickyRef} className="sticky top-0 z-40 bg-[#FAFAF7]/95 backdrop-blur-md shadow-sm">
-            <Header currentUser={currentUser} onSwitchUser={handleSelectUser} stats={stats} onOpenHomeBase={() => setShowHomeBaseModal(true)}
-              onTitleClick={() => { setViewMode('list'); setActiveFilter('all'); }} />
+            <div className="overflow-hidden transition-all duration-300" style={{ maxHeight: headerHidden ? 0 : 60 }}>
+              <Header currentUser={currentUser} onSwitchUser={handleSelectUser} stats={stats} onOpenHomeBase={() => setShowHomeBaseModal(true)}
+                onTitleClick={() => { setViewMode('list'); setActiveFilter('all'); }} />
+            </div>
             <FilterBar activeFilter={activeFilter} onFilterChange={setActiveFilter}
               advancedFilters={advancedFilters} onAdvancedChange={setAdvancedFilters}
               viewMode={viewMode} onViewModeChange={setViewMode} />
@@ -9918,7 +9935,8 @@
               onAddComment={handleAddComment} onDeleteSuggestion={handleDeleteSuggestion}
               stickyHeight={stickyHeight}
               onAddToTrip={handleAddToTrip} panelDayCount={activeDraftDayCount} homeBase={homeBase}
-              activeDraft={getActiveDraft()} showRoute={showRoute} onToggleRoute={() => setShowRoute(p => !p)} />
+              activeDraft={getActiveDraft()} showRoute={showRoute} onToggleRoute={() => setShowRoute(p => !p)}
+              onOpenBuzz={handleOpenBuzz} />
           ) : (
             <div className="max-w-7xl mx-auto px-6">
               {DAYS.map(dayData => {
@@ -10037,6 +10055,9 @@
             onSetActiveDraft={handleSetActiveDraft}
             onRenameDraft={handleRenameDraft}
             homeBase={homeBase}
+            highlightStopId={highlightStopId}
+            onClearHighlight={() => setHighlightStopId(null)}
+            aboveBuzz={!!buzzCardId}
           />
 
           <SuggestionModal currentUser={currentUser}
