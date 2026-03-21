@@ -1,6 +1,6 @@
 # Iceland Trip Planner — Code Map
 
-Single-file React app (`index.html`, ~4237 lines). No build system — React 18, Babel, and Tailwind loaded via CDN. Firebase Realtime Database for shared state. Leaflet for map view.
+Single-file React app (`index.html`, ~7500 lines). No build system — React 18, Babel, and Tailwind loaded via CDN. Firebase Realtime Database for shared state. Leaflet for map view. Reddit sentiment analysis powered by scraped data + Claude classification.
 
 ## File Structure
 
@@ -11,6 +11,16 @@ distances.json          — Pre-computed OSRM driving distances for all 1,128 ca
 scripts/
   compute-distances.mjs — One-time script: fetches real road distances from OSRM public API
   inject-distances.mjs  — Embeds distances.json into index.html as DRIVE_DISTANCES constant
+Card update - Reddit sentiment analysis/
+  card-configs.mjs      — Search aliases for all 48 cards (used by scraper)
+  fetch-reddit-buzz.mjs — Scraper: searches Reddit, extracts mentions, classifies with Claude API
+  bundle-buzz-data.mjs  — Bundles buzz-data/*.json into JS constants for index.html
+  buzz-data/*.json      — Individual scrape outputs per card (45 with data, 3 empty)
+  reddit-buzz-bundle.js — Generated bundle output (pasted into index.html)
+  reddit-scraping-optimization.md — Research: Arctic Shift API for faster scraping
+  index.html            — Original prototype UI (reference only)
+  V2 - from web app convo/
+    REDDIT-BUZZ-HANDOFF.md — Spec: architecture decisions and brand tokens
 todo.md                 — Feature backlog
 CODEMAP.md              — This file
 STATUS.md               — Project status
@@ -22,7 +32,7 @@ STATUS.md               — Project status
 - CDN scripts: React 18, ReactDOM 18, Babel Standalone, Tailwind CSS, Firebase (app + database compat), Leaflet 1.9.4 (JS + CSS)
 - Google Fonts: Playfair Display (display) + DM Sans (body)
 - Tailwind config: custom colors (`teal`, `terracotta`, `cream`), custom fonts
-- CSS: animations (`fadeInUp`, `scaleClick`), card grid responsive breakpoints, day navigator dots, scrollbar styling, Leaflet popup overrides, itinerary stop hover styles, side panel slide transition
+- CSS: animations (`fadeInUp`, `scaleClick`), card grid responsive breakpoints, day navigator dots, scrollbar styling, Leaflet popup overrides, itinerary stop hover styles, side panel slide transition, Reddit Buzz dashboard transitions and scrollbar
 
 ### Firebase Init (lines 79–95)
 - `firebase.initializeApp(...)` with project config
@@ -40,6 +50,8 @@ STATUS.md               — Project status
 | `DRIVE_DISTANCES` | 867 | Pre-computed OSRM road distances/times for all 1,128 card pairs. Keyed as `"cardA|cardB"` (alphabetical). Values: `{km, minutes}` |
 | `DAY_COLORS` | 493 | 8-color palette for day-coded map pins and itinerary badges |
 | `REGION_CENTROIDS` | 495 | 7 GPS centroids (Reykjavik, Golden Circle, Snæfellsnes, South Coast, Westman Islands, Southeast/Glaciers, KEF Airport) for auto-detecting stop regions |
+| `GLOBAL_MAX_SCORE` | ~525 | Max Reddit upvote score across all scraped quotes (2192). Used for gradient intensity normalization |
+| `REDDIT_BUZZ_DATA` | ~526 | Object keyed by card ID. Each value: `{sentiment, mentionCount, tensionSummary, distribution, quotes[], tips[], alternatives[], scrapedAt}`. 45 cards with data, ~383 classified quotes total. Quotes have: `text, summary, emoji, theme, score, sub, camp, permalink` |
 
 ### Region Utilities (lines 505–535)
 | Function | Purpose |
@@ -89,7 +101,14 @@ STATUS.md               — Project status
 | `DayHeader` | 1636 | In-page day section header with scroll anchor |
 | `FloatingDayBar` | 1645 | Fixed-position compact day bar via portal to `document.body`, z-index 45, opacity-based fade transition. Title font matches card titles (text-lg) |
 | `ImageCarousel` | 1658 | Photo carousel with full left/right half click zones + arrow key support |
-| `StarRating` | 1735 | Reddit hype score (1–5 stars) with tooltip explaining the scale (5 = bucket-list legendary, 1 = niche/skippable) |
+| `SENTIMENT_STYLES` | ~1870 | Badge colors for 6 sentiment labels: legendary (purple), loved (green), polarizing (amber), mixed (gray), overhyped (red), hidden-gem (teal) |
+| `getFamilyVsReddit()` | ~1882 | Returns callout object when family votes diverge from Reddit sentiment (e.g., "Your family loves it, but Reddit says skip") |
+| `getQuoteIntensity()` | ~1900 | Normalizes quote score against `GLOBAL_MAX_SCORE` for gradient opacity (floor 0.1) |
+| `RedditBuzzTapTarget` | ~1905 | Clickable row on cards: Snoo icon + sentiment badge + mention count + mini distribution bar + tension summary. Replaces `StarRating` for cards with buzz data |
+| `RedditBuzzBadge` | ~1940 | Compact inline badge (sentiment label + count) for LeaderboardView, DraftCompareView, ItineraryView |
+| `QuoteBubble` | ~1955 | Quote display — featured variant (tinted bg, full text, score+sub) and compact variant (emoji+summary+score, click to expand). Reddit link icon on expanded |
+| `RedditBuzzDashboard` | ~2000 | Full overlay portal (z-2000): card on left (desktop), 3-column panel on right (Hype/Fence-sitters/Skeptic). Column headers with colored dots+counts, "X MORE TAKES" divider, tips in Hype, alternatives in Skeptic. ESC/backdrop close, content swap animation. Mobile: full-screen with tabs. Footer shows mention count + subreddit count |
+| `StarRating` | ~2100 | Reddit hype score (1–5 stars) — kept as fallback for 3 cards without buzz data and user-submitted suggestions |
 | `VoteButtons` | 1719 | Upvote/downvote buttons with voter name lists. Tagged `data-tour="vote-buttons"` |
 | `CommentSection` | 1775 | Expandable comments with threaded replies. Tagged `data-tour="comments"` |
 | `CardComponent` | 1873 | Full card: image carousel, cost badge, tier, description, details, Google/Reddit links, votes, comments. + "Add to Trip" button (top-right) with day picker dropdown. Tagged `data-tour="add-to-trip"` |
@@ -125,6 +144,7 @@ STATUS.md               — Project status
 | `stickyHeight` | React state (ResizeObserver + scroll handler) | No |
 | `showSuggestionModal` | React state only | No |
 | `showHomeBaseModal` | React state only | No |
+| `buzzCardId` | React state only (null or card ID for open dashboard) | No |
 
 **Key handlers:**
 | Handler | What it does |
@@ -144,6 +164,8 @@ STATUS.md               — Project status
 | `handleRenameDraft` | Updates draft title |
 | `handleSetActiveDraft` | Sets `db.ref('trip-drafts/{user}/activeDraftId')` |
 | `handleAddToTrip` | Adds card to active draft's target day, opens side panel |
+| `handleOpenBuzz` | Sets `buzzCardId` to open Reddit Buzz dashboard for a card |
+| `handleCloseBuzz` | Clears `buzzCardId` to close dashboard |
 
 **Derived values:**
 | Value | Purpose |
@@ -164,6 +186,7 @@ STATUS.md               — Project status
 4. ItinerarySidePanel (portal to body, z-1003) — always available from any page, edits active draft
 5. All modals use `AnimatedModal` for fade+scale enter/exit transitions
 6. Auto-creates first draft on initial load via `ensureActiveDraft` useEffect
+7. `RedditBuzzDashboard` (portal to body, z-2000) — opens when `buzzCardId` is set, above everything including side panel
 
 ### data-tour Attributes (Spotlight Tour Targets)
 | Attribute | Element | Tour Step |
